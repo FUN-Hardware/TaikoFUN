@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="TaikoFUN/TaikoFUN.vcxproj" />
+  <Project Path="TaikoFUN/TaikoFUN.vcxproj" Id="89e4fb28-c413-444f-b521-5467f34225ed" />
 </Solution>
