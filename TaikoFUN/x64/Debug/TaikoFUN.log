@@ -1,0 +1,73 @@
+﻿  ChartData.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Core/ChartData.cpp' をコンパイルしています)
+  
+  Debug.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Debug/Debug.cpp' をコンパイルしています)
+  
+  main.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\main.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+  コードを生成中...
+  TaikoFUN.vcxproj -> C:\Users\flank\source\repos\TaikoFUN\x64\Debug\TaikoFUN.exe
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\カンケーガール.mp3
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Config\config_bgstage.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\balloonnumber.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\balloon_roll.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combonumber1.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combonumber2.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combonumber3.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combostring1.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combostring2.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\combostring3.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\coursesymbol_easy.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\coursesymbol_edit.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\coursesymbol_hard.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\coursesymbol_normal.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\coursesymbol_oni.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\explosion_down.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\explosion_soul.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\explosion_up.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\gogofire.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\gogosplash_particle.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\judgestring.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\minitaiko_don.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\minitaiko_ka.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\note.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\number.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\number_roll.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\number_score.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\result.txt
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_bg.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_bg_expert.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_bg_master.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_bg_normal.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_don.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_gogo.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_hit.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_ka.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\scrollfield_roll.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\senote.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\senote_bg.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Playing\soul.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Result\board.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Result\fullcombo.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Result\newrecord.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Result\number.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\bgstage.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\bgstageg.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\bgstage_clear.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\comboballoon.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\minitaiko.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\resultbg_clear.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\resultbg_failure.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\songselectbg.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SkinColor\soulprogressbar.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\SongSelect\box.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Image\Title\title_bgstage.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\don.wav
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\ka.wav
+  57 個のファイルをコピーしました

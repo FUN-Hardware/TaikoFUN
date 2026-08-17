@@ -1,12 +1,18 @@
 #pragma once
 
-void Update();
-void Draw();
+
+
 
 enum class GameState
 {
 	Title,
 	Playing,
 	Result,
-	Debug
+	Debug,
+	Null
 };
+
+void Update(GameState state);
+void Draw(GameState state);
+
+

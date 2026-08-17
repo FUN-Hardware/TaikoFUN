@@ -1,8 +1,9 @@
-﻿################################################################################
+################################################################################
 # この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
 ################################################################################
 
-/TaikoFUN/TaikoFUN.vcxproj
-/TaikoFUN/TaikoFUN.vcxproj.filters
-/TaikoFUN/TaikoFUN.vcxproj.user
-/TaikoFUN/.vs/
+/TaikoFUN.vcxproj
+/TaikoFUN.vcxproj.filters
+/TaikoFUN.vcxproj.user
+/.vs/
+/TaikoFUN/Resource/
