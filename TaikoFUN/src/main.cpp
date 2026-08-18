@@ -8,6 +8,8 @@
 #include "Scenes.h"
 #include "Input/Input.h"
 #include "Debug/Fps.h"
+#include "Core/Tween.h"
+#include "Core/Time.h"
 
 GameState gGameState = GameState::Debug;
 GameState preGameState = GameState::Null;
@@ -56,13 +58,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	}
 	
-
+	db.reset();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
-	return 0;				// ソフトの終了 
+	return 0;				// ソフトの終了
 }
 
 void Update(GameState state) {
+
+	Time::Update();
+
 
 	Input::Update();
 	FPS::Update();

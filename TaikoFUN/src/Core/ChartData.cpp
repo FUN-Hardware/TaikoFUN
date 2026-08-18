@@ -2,20 +2,21 @@
 #include "dxlib.h"
 
 
-void SongData::playSong() {
-	PlaySoundMem(songHandle, DX_PLAYTYPE_BACK);
+void SongData::playSong(bool restart) {
+	songHandle.play(restart);
 	songStartTime = GetNowHiPerformanceCount();
 	_songProgTime = 0;
 }
 
 void SongData::loadSong(const char* path) {
-	songHandle = LoadSoundMem(path);
+	songHandle.load(path);
 }
 
 
 
-void ChartData::loadSong(const char* path, double bpm) {
+void ChartData::loadSong(const char* path, double bpm, double offset) {
 	songData.loadSong(path);
 	this->bpm = bpm;
+	this->songData.offsetTime = offset * 1000000;
 }
 

@@ -1,0 +1,12 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.cpp",
+        "ProvidedModule": "",
+        "Includes": [
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

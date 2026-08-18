@@ -1,0 +1,41 @@
+	/*
+
+enum class EasingMode {
+    In,
+    Out,
+    InOut,
+    OutIn
+};
+
+// 基本のIn関数とモードを受け取って最終的な補間値を返す汎用関数
+double ApplyEasing(double t, EasingMode mode, const std::function<double(double)>& easeInFunc) {
+    switch (mode) {
+        case EasingMode::In:
+            return easeInFunc(t);
+
+        case EasingMode::Out:
+            return 1.0 - easeInFunc(1.0 - t);
+
+        case EasingMode::InOut:
+            if (t < 0.5) {
+                return 0.5 * easeInFunc(t * 2.0);
+            } else {
+                return 1.0 - 0.5 * easeInFunc((1.0 - t) * 2.0);
+            }
+
+        case EasingMode::OutIn:
+            if (t < 0.5) {
+                return 0.5 * (1.0 - easeInFunc(1.0 - t * 2.0));
+            } else {
+                return 0.5 + 0.5 * easeInFunc(t * 2.0 - 1.0);
+            }
+    }
+    return t;
+}
+
+// 使い方例（Quad の場合）
+auto quadIn = [](double t) { return t * t; };
+
+double valInOut = ApplyEasing(0.3, EasingMode::InOut, quadIn);
+double valOutIn = ApplyEasing(0.3, EasingMode::OutIn, quadIn);
+	*/

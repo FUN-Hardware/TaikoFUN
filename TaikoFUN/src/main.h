@@ -14,5 +14,3 @@ enum class GameState
 
 void Update(GameState state);
 void Draw(GameState state);
-
-
