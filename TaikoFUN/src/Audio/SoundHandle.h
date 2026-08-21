@@ -31,7 +31,7 @@ struct SoundHandle
 		PlaySoundMem(handle, DX_PLAYTYPE_BACK, restart);
 	}
 
-	void Stop() {
+	void stop() {
 		StopSoundMem(handle);
 	}
 

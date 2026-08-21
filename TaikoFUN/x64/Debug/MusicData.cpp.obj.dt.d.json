@@ -1,0 +1,12 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\debug\\musicdata.cpp",
+        "ProvidedModule": "",
+        "Includes": [
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\debug\\musicdata.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

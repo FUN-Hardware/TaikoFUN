@@ -1,4 +1,4 @@
-#include "Debug.h"
+﻿#include "Debug.h"
 #include "DxLib.h"
 #include "Input/Input.h"
 #include "Fps.h"
@@ -15,7 +15,7 @@ Debug::Debug() {
 	songHandle = 0;
 	currentTime = 0;
 	songPlaying = false;
-	chartData.loadSong("Resource/Debug/カンケーガール.mp3", 183.0, 4.4);
+	chartData.loadSong("Resource/Debug/カンケーガール.mp3", 185.0, 4.4);
 	double soundVol = 0.8;
 	ChangeVolumeSoundMem(255 * soundVol, chartData.songData.songHandle.handle);
 	for (int i = 0; i < 100; i++) {
@@ -49,7 +49,7 @@ void Debug::Draw() {
 
 
 	int strY = 16;
-	DrawFormatString(10, strY, GetColor(255, 255, 255), "Current Time: %lld", NowTime);
+	DrawFormatString(10, strY, GetColor(255, 255, 255), "Current Time: %lld, %ld", NowTime, NowTime/1000000);
 	strY += 20;
 	DrawFormatString(10, strY, GetColor(255, 255, 255), "keyState_SPACE: %s", Input::isKeyDown(KEY_INPUT_SPACE) ? "TRUE" : "FALSE");
 	strY += 20;
@@ -63,7 +63,11 @@ void Debug::Draw() {
 	strY += 20;
 	DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime from offset us: %lld", chartData.songData._songProgTimefromOffset);
 	strY += 20;
-	DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime sec: %lf", chartData.songData._songProgTime / 1000000.0);
+	DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime sec: %lf", chartData.songData._songProgTime / 10000.0);
+	strY += 20;
+	DrawFormatString(10, strY, GetColor(255, 255, 255), "Last paused time stamp : %lld", chartData.songData.lastPausedTimeStamp);
+	strY += 20;
+	DrawFormatString(10, strY, GetColor(255, 255, 255), "Total paused duration: %lf", chartData.songData.totalPausedDuration / 1000000.0);
 	strY += 20;
 	DrawFormatString(10, strY, GetColor(255, 255, 255), "BPM: %.2f", chartData.bpm);
 	strY += 20;
@@ -82,23 +86,26 @@ void Debug::Draw() {
 
 
 
-	DrawFormatString(10, h - 450, GetColor(255, 255, 255), "WindowSize h: %d", h);
+	DrawFormatString(10, h - 300, GetColor(255, 255, 255), "WindowSize h: %d", h);
 	strY += 20;
 
 	l.Draw();
 
 	strY = h - 200;
-	DrawFormatString(10, strY, GetColor(255, 255, 255), "a");
+	DrawFormatString(10, strY, GetColor(255, 255, 255), "〇");
 
 	int noteX;
 	long long noteRelativeTime; // 曲の再生位置によるノーツの相対時間(us)
 	/// ノーツ仮描画
+	int index = 0;
+	const int notesIndex = chartData.nextNoteIndex;
 	for (const auto& note : chartData.notes) {
 
 		noteRelativeTime = note.absTime - chartData.songData.songProgTimefromOffset();
 		noteX = ((noteRelativeTime/1000000.0) / (240.0/note.bpm)) * 960.0;
 		// 240/BPM = 1小節の秒数。1小節当たり960pxとする。よって、(相対時間)/(240/BPM) * 960 = ノーツのX座標
-		DrawFormatString(noteX, strY, GetColor(255, 255, 255), "s"); // 画面内のみ描画
+		if(noteX < 1300)DrawFormatString(noteX, strY, (index == notesIndex) ? GetColor(255, 0, 0) : GetColor(255, 255, 255), "〇"); // 画面内のみ描画
+		index++;
 	}
 
 }
@@ -115,7 +122,7 @@ void Debug::Input() {
 
 		if (songPlaying) {
 
-			StopSoundMem(chartData.songData.songHandle.handle);
+			chartData.songData.stopSong();
 
 		}
 		else {
@@ -153,6 +160,11 @@ void Debug::Input() {
 	if (hit) {
 		time = chartData.songData.songProgTimefromOffset() > 0 ? std::to_string(chartData.songData.songProgTimefromOffset()) : "0";
 		
+		l.add(type + ", " + time + ", " + success, 10.0);
 	}
+
+
+
+	/// 
 
 }

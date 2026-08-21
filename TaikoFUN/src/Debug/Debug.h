@@ -56,6 +56,9 @@ class Debug
 
 	int soundHandles[10];
 
+	
+
+
 	ChartData chartData;
 	Logs l;
 
