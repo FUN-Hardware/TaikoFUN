@@ -5,15 +5,27 @@
 #include "Audio/SoundHandle.h"
 // ノーツデータと譜面データ
 
+enum class NoteType {
+	Don,
+	Katsu,
+};
+
+enum class JudgeType {
+	GOOD,
+	OK,
+	BAD,
+	MISS
+};
+
 struct Note
 {
 
-	double bpm;				// ノーツの速度(流れる速さはこれに依存する)			SCROLLは譜面読み込み時に計算して結果をここに入れてもいいかも？例)BPM 185, scroll 0.5 : 185*0.5 = bpm
-	long long absTime;		// ノーツの絶対座標　(曲オフセットからの相対時間)	ノーツが流れてくる位置
-	int type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
+	const double bpm;				// ノーツの速度(流れる速さはこれに依存する)			SCROLLは譜面読み込み時に計算して結果をここに入れてもいいかも？例)BPM 185, scroll 0.5 : 185*0.5 = bpm
+	const long long absTime;		// ノーツの絶対座標　(曲オフセットからの相対時間)	ノーツが流れてくる位置
+	const NoteType type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
 
 	bool isJudged = false;  // 既に判定を下かどうかを保持
-
+	bool isMissed = false;
 	// ToDo: 連打の実装、SCROLLなどの状態の実装
 };
 
@@ -29,15 +41,12 @@ struct SongData
 
 	SoundHandle songHandle;				// 曲のハンドル
 
-	long long judgeGOOD = 3300; // 良判定範囲時間(us)
-	long long judgeOK = 6600; // 可判定範囲時間(us)
-	long long judgeBAD = 10000; // 不可判定範囲時間(us)
-
 
 
 	void playSong(bool restart = false);
 	void stopSong();
 	void loadSong(const char* path);
+	long long getSongCurrentTimeUs(bool applyOffset = false);
 	long long songProgTime() { 
 		_songProgTime = GetNowHiPerformanceCount() - songStartTime - totalPausedDuration;
 		return _songProgTime; 
@@ -48,6 +57,13 @@ struct SongData
 	}
 };
 
+
+// 描画に渡す判定結果のリストの要素のデータ
+struct JudgeLog {
+	JudgeType type;
+	long long timeStamp; // 曲時間におけるタイムスタンプ
+	bool isBig = false; //大音符
+};
 
 class ChartData
 {
@@ -64,17 +80,32 @@ public:
 	std::vector<Note> notes; // マイクロ秒単位
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
 
-	int good=0, ok=0, bad=0; // ノーツの判定結果集計 good:良 ok:可 bad:不可
-	int score = 0; // スコア
+	long long judgeGOOD = 33000; // 良判定範囲時間(us)
+	long long judgeOK = 66000; // 可判定範囲時間(us)
+	long long judgeBAD = 100000; // 不可判定範囲時間(us)
 
-	void loadSong(const char* path, double bpm = 120.0, double offset = 0.0);
+	std::vector<JudgeLog> judgelogs;
+
+
+	int good=0, ok=0, bad=0, miss=0; // ノーツの判定結果集計 good:良 ok:可 bad:不可 miss:叩かずにスルー
+	int score = 0; // スコア
+	int scoreGOOD = 200;	// 良判定のスコア (とりあえずハードコードで)
+	int scoreOK = scoreGOOD / 2;
+	int scoreBAD = 0;
+	int scoreMISS = 0;
+
+	void loadSong(const char* path, double bpm, double offset = 0.0);
 	void playSong(bool restart = false);
 
-
-	void noteJudge();
-	void nextNotes();
-
 	void Update();
+	void Input();
 
+	void nextNotes();
+	long long noteRelativeTime(size_t noteIdx);	// 音源の再生位置からのノーツの相対座標を返す
+
+
+private: 
+	void updateMissNotes();	// ノーツが通り過ぎたことを更新する
+	void judgeNote();
 };
 

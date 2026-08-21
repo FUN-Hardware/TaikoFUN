@@ -47,7 +47,7 @@ class Debug
 	long long songStartTime;
 	long long songTime;
 	int songHandle;
-
+	int debugPage = 0;
 	long currentTime;
 
 	bool songPlaying;

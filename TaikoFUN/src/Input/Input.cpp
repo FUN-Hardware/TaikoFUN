@@ -1,8 +1,10 @@
 #include "Input.h"
 #include "DxLib.h"
+#include "Core/ChartData.h"
 
 #include <algorithm>
 #include <iterator>
+#include <unordered_map>
 
 
 namespace {
@@ -11,6 +13,7 @@ namespace {
 		char allKeyStates[256];
 		char allKeyStatesBuf[256];
 
+		std::unordered_map<NoteType, bool> triggeredInput;	// ドンとカツの入力のみを保持
 	public:
 
 		Input() {
@@ -27,6 +30,10 @@ namespace {
 			std::copy(std::begin(allKeyStates), std::end(allKeyStates), std::begin(allKeyStatesBuf));
 			GetHitKeyStateAll(allKeyStates);
 
+			
+			triggeredInput[NoteType::Don] = (isKeyTriggered(KEY_INPUT_F) || isKeyTriggered(KEY_INPUT_J));
+			triggeredInput[NoteType::Katsu] = (isKeyTriggered(KEY_INPUT_D) || isKeyTriggered(KEY_INPUT_K));
+
 		}
 
 		bool isKeyTriggered(int keyCode) {
@@ -37,6 +44,9 @@ namespace {
 			return allKeyStates[keyCode];
 		}
 
+		bool isNoteKeyTriggered(NoteType type) {
+			return triggeredInput[type];
+		}
 	};
 
 
@@ -58,4 +68,7 @@ namespace Input {
 		return g_state.isKeyDown(keyCode);
 	}
 
+	bool isNoteKeyTriggered(NoteType type) {
+		return g_state.isNoteKeyTriggered(type);
+	}
 }

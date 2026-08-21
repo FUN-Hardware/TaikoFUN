@@ -12,3 +12,4 @@ class text
 
 };
 
+void DrawFormatString2Right(int x, int y, unsigned int color, std::string str); // 右寄せ描画
