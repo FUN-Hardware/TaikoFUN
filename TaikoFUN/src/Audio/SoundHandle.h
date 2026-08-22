@@ -14,6 +14,7 @@ struct SoundHandle
 	SoundHandle(std::string path) {
 		handle = LoadSoundMem(path.c_str());
 	}
+
 	~SoundHandle() {
 		StopSoundMem(handle);		// サウンドを削除する前に明示的に止めておかないとフリーズするため、自動で停止してから削除するクラスを作ったよ
 		DeleteSoundMem(handle);

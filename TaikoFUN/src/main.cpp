@@ -10,6 +10,7 @@
 #include "Debug/Fps.h"
 #include "Core/Tween.h"
 #include "Core/Time.h"
+#include "Skin/SkinData.h"
 
 GameState gGameState = GameState::Debug;
 GameState preGameState = GameState::Null;
@@ -35,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 
-
+	Skin::loadSkin();
 
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)

@@ -8,7 +8,12 @@
 enum class NoteType {
 	Don,
 	Katsu,
+	DonBig,
+	KatsuBig,
+	Judge
 };
+
+std::string GetNoteImageKey(NoteType type);
 
 enum class JudgeType {
 	GOOD,

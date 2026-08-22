@@ -2,6 +2,19 @@
 #include "dxlib.h"
 #include "Time.h"
 #include "Input/Input.h"
+
+
+std::string GetNoteImageKey(NoteType type) {
+	switch (type) {
+	case NoteType::Don: return "note/Don";
+	case NoteType::Katsu: return "note/Katsu";
+	case NoteType::DonBig: return "note/BidDon";
+	case NoteType::KatsuBig: return "note/BigKatsu";
+	case NoteType::Judge: return "note/Judgeframe";
+	}
+	return "";
+}
+
 void SongData::playSong(bool restart) {
 	songHandle.play(restart);
 	if (restart) {
