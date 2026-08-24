@@ -45,7 +45,7 @@ struct SongData
 	long long totalPausedDuration; // 一時停止した時間の合計 (us)
 
 	SoundHandle songHandle;				// 曲のハンドル
-
+	bool playing = false;
 
 
 	void playSong(bool restart = false);
@@ -53,7 +53,7 @@ struct SongData
 	void loadSong(const char* path);
 	long long getSongCurrentTimeUs(bool applyOffset = false);
 	long long songProgTime() { 
-		_songProgTime = GetNowHiPerformanceCount() - songStartTime - totalPausedDuration;
+		_songProgTime = GetNowHiPerformanceCount() - songStartTime - totalPausedDuration;	// GetSoundCurrentTimeによって必要なくなりました。
 		return _songProgTime; 
 	}
 	long long songProgTimefromOffset() {
@@ -77,11 +77,12 @@ public:
 	ChartData() = default;
 	ChartData(const char* path) {
 		songData.loadSong(path);
+
 	}
 
 
 	SongData songData;
-	double bpm;
+	double bpm = 120.0;
 	std::vector<Note> notes; // マイクロ秒単位
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
 
@@ -99,8 +100,13 @@ public:
 	int scoreBAD = 0;
 	int scoreMISS = 0;
 
+	int combo = 0;
+	int MAXcombo = 0;
+
 	void loadSong(const char* path, double bpm, double offset = 0.0);
 	void playSong(bool restart = false);
+
+	void init(); // 初期化処理
 
 	void Update();
 	void Input();

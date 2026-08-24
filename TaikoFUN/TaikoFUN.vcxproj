@@ -163,6 +163,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Playing\PlayScene.h" />
     <ClInclude Include="src\Skin\SkinData.h" />
     <ClInclude Include="src\Audio\SoundHandle.h" />
     <ClInclude Include="src\Core\General.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Core\text.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Playing\PlayScene.cpp" />
     <ClCompile Include="src\Skin\SkinData.cpp" />
     <ClCompile Include="src\Audio\SoundHandle.cpp" />
     <ClCompile Include="src\Core\General.cpp" />

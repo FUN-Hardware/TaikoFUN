@@ -8,7 +8,7 @@
 struct SoundHandle
 {
 
-	int handle = -1;
+	int handle = -2;
 
 	SoundHandle() = default;
 	SoundHandle(std::string path) {

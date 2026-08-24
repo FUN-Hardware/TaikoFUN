@@ -86,7 +86,10 @@ void SkinData::LoadPlaySceneSkin() {
 	
 	emplaceImg("play/bg", "Resource/Image/SkinColor/bgstage.png");
 	emplaceImg("play/minitaiko", "Resource/Image/SkinColor/minitaiko.png");
-	//imgs.emplace("play/minitaiko", imgData("Resource/Image/SkinColor/minitaiko.png"));
+	emplaceImg("play/ScrollField/bg", "Resource/Image/Playing/scrollfield_bg.png");
+	emplaceImg("play/ScrollField/don", "Resource/Image/Playing/scrollfield_don.png");
+	emplaceImg("play/ScrollField/katsu", "Resource/Image/Playing/scrollfield_ka.png");
+	emplaceImg("play/ScrollField/hit", "Resource/Image/Playing/scrollfield_hit.png");
 
 }
 
@@ -95,18 +98,18 @@ void SkinData::LoadNotesImgs(const std::string& path) {
 	int baseImgW = 0, baseImgH = 0;
 	GetGraphSize(baseImgHandle, &baseImgW, &baseImgH);
 
-	int handles[14];
-	int DivNum = 14;
-	int DivX = 14;
+	int handles[15];
+	int DivNum = 15;
+	int DivX = 15;
 	int DivY = 1;
 	int XSize = baseImgW / DivX;
 	int YSize = baseImgH / DivY;
 	LoadDivGraph(path.c_str(), DivNum, DivX, DivY, XSize, YSize, handles);
 
-	emplaceImg("note/Judgeframe",		handles[0], XSize, YSize, path);		// 判定枠
+	emplaceImg("note/Judgeframe",	handles[0], XSize, YSize, path);			// 判定枠
 	emplaceImg("note/Don",			handles[1], XSize, YSize, path);			// ドン
-	emplaceImg("note/Katsu",			handles[2], XSize, YSize, path);		// カッ
-	emplaceImg("note/BigDon",			handles[3], XSize, YSize, path);		// 大ドン
+	emplaceImg("note/Katsu",		handles[2], XSize, YSize, path);			// カッ
+	emplaceImg("note/BigDon",		handles[3], XSize, YSize, path);			// 大ドン
 	emplaceImg("note/BigKatsu",		handles[4], XSize, YSize, path);			// 大カッ
 	emplaceImg("note/RollHead",		handles[5], XSize, YSize, path);			// 連打(頭)
 	emplaceImg("note/RollBody",		handles[6], XSize, YSize, path);			// 連打(体)
