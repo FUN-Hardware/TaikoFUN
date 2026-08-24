@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.h",
+        "Source": "c:\\users\\dotdo\\source\\repos\\fun-hardware\\taikofun\\taikofun\\src\\core\\text.h",
         "ProvidedModule": "",
         "Includes": [
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\string",
@@ -96,7 +96,7 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xpolymorphic_allocator.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\ctype.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.h"
+            "c:\\users\\dotdo\\source\\repos\\fun-hardware\\taikofun\\taikofun\\src\\core\\general.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
