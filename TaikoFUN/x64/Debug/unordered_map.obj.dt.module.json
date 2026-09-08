@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\unordered_map.obj",
+            "outputs": [
+                "x64\\Debug\\unordered_map.obj.dt.module.json",
+                "x64\\Debug\\unordered_map.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

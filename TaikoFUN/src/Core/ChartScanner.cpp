@@ -12,7 +12,7 @@ std::vector<ChartScanner::ChartFile> ChartScanner::scanCharts(const std::filesys
 			chartFiles.push_back(chartFile);
 		}
 	}
-	std::cout << chartFiles.size() << " chart files found in " << directoryPath << std::endl;
+	//std::cout << chartFiles.size() << " chart files found in " << directoryPath << std::endl;
 
 	return chartFiles;
 }

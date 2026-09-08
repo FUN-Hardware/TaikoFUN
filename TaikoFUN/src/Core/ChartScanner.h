@@ -5,7 +5,7 @@
 
 struct ChartScanner {
 
-	/*読み込むCSVファイルのテーブル一覧を定義した構造体*/
+	//読み込むCSVファイルのテーブル一覧を定義した構造体
 
 	typedef struct ChartFile {
 		std::string Id;
@@ -17,5 +17,6 @@ struct ChartScanner {
 
 	
 	std::vector<ChartFile> scanCharts(const std::filesystem::path& directoryPath);
-
+	
 };
+

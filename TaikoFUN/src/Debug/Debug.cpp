@@ -6,6 +6,7 @@
 #include <string>
 #include "Core/text.h"
 #include "Skin/SkinData.h"
+#include "File/ChartLoader.h"
 
 #define NowTime GetNowHiPerformanceCount()
 
@@ -16,6 +17,7 @@ Debug::Debug() {
 	currentTime = 0;
 	songPlaying = false;
 	chartData.loadSong("Resource/Debug/カンケーガール.mp3", 185.0, 4.2);
+	
 	double soundVol = 0.8;
 	ChangeVolumeSoundMem(255 * soundVol, chartData.songData.songHandle.handle);
 	for (int i = 0; i < 100; i++) {
@@ -49,7 +51,8 @@ void Debug::Draw() {
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "FPS: %d", FPS::getFps());
 
 	int strY = 16;
-
+	std::string temp = "#TITLE: シャイニングスター";
+	std::string substr = temp.substr(temp.find(':')+1);
 	switch(debugPage){
 	case 0:
 		DrawFormatString(10, strY, GetColor(255, 255, 255), "Current Time: %lld, %ld", NowTime, NowTime/1000000);
@@ -83,6 +86,8 @@ void Debug::Draw() {
 		DrawFormatString(10, strY, GetColor(255, 255, 255), "CheckSoundMem: %s", CheckSoundMem(chartData.songData.songHandle.handle) ? "TRUE" : "FALSE");
 		strY += 20;
 		DrawFormatString(10, strY, GetColor(255, 255, 255), "playingSongFlag: %s", songPlaying ? "TRUE" : "FALSE");
+		strY += 20;
+		DrawFormatString(10, strY, GetColor(255, 255, 255), "#: %d, :: %d, title: %s", temp.find("#"), temp.find(":"), substr.c_str());
 		strY += 20;
 		break;
 	case 1:

@@ -60,6 +60,7 @@ class Debug
 
 
 	ChartData chartData;
+
 	Logs l;
 
 public:

@@ -2,7 +2,7 @@
 #include "DxLib.h"
 
 #include <memory>
-
+#include <cassert>
 
 
 
@@ -130,9 +130,23 @@ void SkinData::LoadSoundData() {
 	emplaceSnd("Don", ("Resource/Sound/General/don.wav"));
 	emplaceSnd("Katsu", ("Resource/Sound/General/ka.wav"));
 }
-
+/*
 imgData& SkinData::GetTexture(const std::string& key) {
 	return *imgs.at(key);
+}
+*/
+imgData& SkinData::GetTexture(const std::string& key) {
+	auto it = imgs.find(key);
+	if (it == imgs.end()) {
+		// エラーログ（デバッグ用）
+		OutputDebugString(("Missing skin key: " + key + "\n").c_str());
+		std::string errormsg = "Missing skin key: " + key;
+		assert(false && errormsg.c_str());
+		// フォールバック: 存在しない場合はデフォルト imgData を挿入して返す
+		imgs.emplace(key, std::make_unique<imgData>()); // handle=-1 のプレースホルダ
+		return *imgs.at(key);
+	}
+	return *it->second;
 }
 
 SoundHandle& SkinData::GetSound(const std::string& key) {
@@ -145,6 +159,7 @@ namespace Skin {
 	}
 
 	imgData& GetTexture(const std::string& key){
+
 		return g_SkinData.GetTexture(key);
 	}
 

@@ -10,7 +10,7 @@ std::string GetNoteImageKey(NoteType type) {
 	switch (type) {
 	case NoteType::Don: return "note/Don";
 	case NoteType::Katsu: return "note/Katsu";
-	case NoteType::DonBig: return "note/BidDon";
+	case NoteType::DonBig: return "note/BigDon";
 	case NoteType::KatsuBig: return "note/BigKatsu";
 	case NoteType::Judge: return "note/Judgeframe";
 	}
@@ -50,12 +50,16 @@ long long SongData::getSongCurrentTimeUs(bool applyOffset) {
 
 
 
+void ChartData::loadSong(const char* path) {
+	songData.loadSong(path);
+	this->songData.offsetTime = offset * 1000000.0;
+}
 
-void ChartData::loadSong(const char* path, double bpm, double offset) {
+void ChartData::loadSong(const char* path, double bpm, double _offset) {
 	
 	songData.loadSong(path);
 	this->bpm = bpm;
-	this->songData.offsetTime = offset * 1000000.0;
+	this->songData.offsetTime = _offset * 1000000.0;
 }
 
 void ChartData::playSong(bool restart) {
@@ -139,11 +143,20 @@ void ChartData::updateMissNotes() {
 		judgelogs.push_back({JudgeType::MISS, songData.getSongCurrentTimeUs()});
 		miss++;
 		combo = 0;
-		this->nextNoteIndex++;
-		PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);
+		nextNotes();
+		//PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);	//デバッグ用
 	}
 	
 
+}
+
+void ChartData::nextNotes() {
+	if (nextNoteIndex < notes.size()-1) {
+		nextNoteIndex++;
+		if (notes[nextNoteIndex].type == NoteType::None) {
+			nextNotes();
+		}
+	}
 }
 
 
@@ -179,5 +192,5 @@ void ChartData::judgeNote() {
 	}
 
 	MAXcombo = max(combo, MAXcombo);
-	nextNoteIndex++;
+	nextNotes();
 }

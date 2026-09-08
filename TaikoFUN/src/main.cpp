@@ -11,6 +11,7 @@
 #include "Core/Tween.h"
 #include "Core/Time.h"
 #include "Skin/SkinData.h"
+#include "Core/ChartScanner.h"
 
 GameState gGameState = GameState::Playing;
 GameState preGameState = GameState::Null;
@@ -19,7 +20,8 @@ GameState preGameState = GameState::Null;
 
 std::unique_ptr<Debug> db;
 std::unique_ptr<PlayScene> ps; // プレイシーン
-
+ChartScanner CS;
+std::vector<ChartScanner::ChartFile> ChartList;
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -28,13 +30,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(1280, 720, 32);
 	ChangeWindowMode(TRUE);
 	SetWindowSizeExtendRate(1.0);
+	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
-	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 	SetOutApplicationLogValidFlag(FALSE);
 	SetWaitVSyncFlag(FALSE);
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
@@ -42,6 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Skin::loadSkin();
 
+	ChartList = CS.scanCharts("Songs");
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{

@@ -6,11 +6,12 @@
 // ノーツデータと譜面データ
 
 enum class NoteType {
+	None,
 	Don,
 	Katsu,
 	DonBig,
 	KatsuBig,
-	Judge
+	Judge,
 };
 
 std::string GetNoteImageKey(NoteType type);
@@ -22,12 +23,23 @@ enum class JudgeType {
 	MISS
 };
 
+enum class CourseType {
+	Easy,
+	Normal,
+	Hard,
+	Oni,
+	InnerOni,
+
+};
+
 struct Note
 {
 
-	const double bpm;				// ノーツの速度(流れる速さはこれに依存する)			SCROLLは譜面読み込み時に計算して結果をここに入れてもいいかも？例)BPM 185, scroll 0.5 : 185*0.5 = bpm
-	const long long absTime;		// ノーツの絶対座標　(曲オフセットからの相対時間)	ノーツが流れてくる位置
-	const NoteType type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
+	double bpm;				// ノーツの速度(流れる速さはこれに依存する)			
+	long long absTime;		// ノーツの絶対座標　(曲オフセットからの相対時間)	ノーツが流れてくる位置
+	NoteType type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
+	double scroll = 1.0;		// ノーツのスクロール速度 (譜面読み込み時に計算して結果をここに入れる)	描画時にbpmにこれを掛けて描画
+	bool hasBarline = false;	// 小節線の有無
 
 	bool isJudged = false;  // 既に判定を下かどうかを保持
 	bool isMissed = false;
@@ -82,9 +94,21 @@ public:
 
 
 	SongData songData;
-	double bpm = 120.0;
 	std::vector<Note> notes; // マイクロ秒単位
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
+
+	std::string tjaPath = "";
+	
+	std::string Title = "";
+	std::string subTitle = "";
+	std::string songPath = "";
+	double offset = 0.0;
+	double bpm = 120.0;
+	double demoStart = 0.0;
+
+	CourseType course = CourseType::Easy;
+	double level = 0.0;
+	std::vector<size_t> balloon;
 
 	long long judgeGOOD = 33000; // 良判定範囲時間(us)
 	long long judgeOK = 66000; // 可判定範囲時間(us)
@@ -94,8 +118,11 @@ public:
 
 
 	int good=0, ok=0, bad=0, miss=0; // ノーツの判定結果集計 good:良 ok:可 bad:不可 miss:叩かずにスルー
-	int score = 0; // スコア
-	int scoreGOOD = 200;	// 良判定のスコア (とりあえずハードコードで)
+	
+	int score = 0; // 現在のスコア
+	
+
+	int scoreGOOD = 200;	// 良判定のスコア ベースとなるスコア OKはGOOD/2のスコア
 	int scoreOK = scoreGOOD / 2;
 	int scoreBAD = 0;
 	int scoreMISS = 0;
@@ -103,6 +130,7 @@ public:
 	int combo = 0;
 	int MAXcombo = 0;
 
+	void loadSong(const char* path);
 	void loadSong(const char* path, double bpm, double offset = 0.0);
 	void playSong(bool restart = false);
 

@@ -44,5 +44,5 @@ struct imgData {
 namespace Skin {
 	void loadSkin();
 	imgData& GetTexture(const std::string& key);
-	SoundHandle& GetSound(const std::string& key);
+		SoundHandle& GetSound(const std::string& key);
 }

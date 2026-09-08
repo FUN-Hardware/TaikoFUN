@@ -88,9 +88,11 @@
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
+      <AdditionalManifestFiles>.\manifest\ActiveCodePageUTF8.manifest</AdditionalManifestFiles>
     </Manifest>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /I "$(ProjectDir)Resource" "$(OutDir)Resource"</Command>
+      <Command>xcopy /Y /E /I "$(ProjectDir)Resource" "$(OutDir)Resource"
+xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,6 +116,7 @@
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
+      <AdditionalManifestFiles>.\manifest\ActiveCodePageUTF8.manifest</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,9 +137,11 @@
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
+      <AdditionalManifestFiles>.\manifest\ActiveCodePageUTF8.manifest</AdditionalManifestFiles>
     </Manifest>
     <PostBuildEvent>
-      <Command>xcopy /Y /E /I "$(ProjectDir)Resource" "$(OutDir)Resource"</Command>
+      <Command>xcopy /Y /E /I "$(ProjectDir)Resource" "$(OutDir)Resource"
+xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,10 +165,15 @@
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
+      <AdditionalManifestFiles>.\manifest\ActiveCodePageUTF8.manifest</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\File\FileUtil.h" />
+    <ClInclude Include="src\File\FIndAllTJA.h" />
+    <ClInclude Include="src\File\CharCode.h" />
     <ClInclude Include="src\Core\ChartScanner.h" />
+    <ClInclude Include="src\File\ChartLoader.h" />
     <ClInclude Include="src\Playing\PlayScene.h" />
     <ClInclude Include="src\Skin\SkinData.h" />
     <ClInclude Include="src\Audio\SoundHandle.h" />
@@ -180,7 +190,11 @@
     <ClInclude Include="src\Core\text.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\File\FileUtil.cpp" />
+    <ClCompile Include="src\File\FIndAllTJA.cpp" />
+    <ClCompile Include="src\File\CharCode.cpp" />
     <ClCompile Include="src\Core\ChartScanner.cpp" />
+    <ClCompile Include="src\File\ChartLoader.cpp" />
     <ClCompile Include="src\Playing\PlayScene.cpp" />
     <ClCompile Include="src\Skin\SkinData.cpp" />
     <ClCompile Include="src\Audio\SoundHandle.cpp" />
@@ -194,7 +208,6 @@
     <ClCompile Include="src\Core\Tween.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\text.cpp" />
-    <ClCompile Include="src\Test\UnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\..\..\Downloads\カンケーガール.mp3" />
