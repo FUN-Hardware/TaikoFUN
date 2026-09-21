@@ -6,16 +6,6 @@
 
 #include <algorithm>
 
-std::string GetNoteImageKey(NoteType type) {
-	switch (type) {
-	case NoteType::Don: return "note/Don";
-	case NoteType::Katsu: return "note/Katsu";
-	case NoteType::DonBig: return "note/BigDon";
-	case NoteType::KatsuBig: return "note/BigKatsu";
-	case NoteType::Judge: return "note/Judgeframe";
-	}
-	return "";
-}
 
 void SongData::playSong(bool restart) {
 	songHandle.play(restart);
@@ -111,16 +101,21 @@ void ChartData::Update() {
 
 void ChartData::Input() {
 
-
-	if (Input::isNoteKeyTriggered(NoteType::Don)) {
-		PlaySoundMem(Skin::GetSound("Don").handle, DX_PLAYTYPE_BACK, true);
-	}
-	if (Input::isNoteKeyTriggered(NoteType::Katsu)) {
-		PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);
+	if (!autoPlay) {
+		if (Input::isNoteKeyTriggered(NoteType::Don)) {
+			PlaySoundMem(Skin::GetSound("Don").handle, DX_PLAYTYPE_BACK, true);
+		}
+		if (Input::isNoteKeyTriggered(NoteType::Katsu)) {
+			PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);
+		}
 	}
 
 	if (Input::isKeyTriggered(KEY_INPUT_SPACE)) {
 		playSong(true);
+	}
+
+	if (Input::isKeyTriggered(KEY_INPUT_F1)) {
+		autoPlay = !autoPlay;
 	}
 
 	if (Input::isKeyTriggered(KEY_INPUT_KANJI)) playSong(true);
@@ -168,7 +163,23 @@ void ChartData::judgeNote() {
 	if (abs(noteRelativeTime(nextNoteIndex)) > judgeBAD) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
 
 
-	if (!Input::isNoteKeyTriggered(targetNote.type)) return; // 判定対象のノーツタイプの入力が無ければリターン
+	if (autoPlay) {
+		AutoplayHitNote();
+		return;
+	}
+
+
+
+	switch (targetNote.type) {	// switch文で入力を判定し、想定される入力ではない場合、早期リターン
+	case NoteType::Don:
+		if (!Input::isNoteKeyTriggered(NoteType::Don)) return; 
+		break;
+	case NoteType::Katsu:
+		if (!Input::isNoteKeyTriggered(NoteType::Katsu)) return;
+		break;
+	}
+
+	//if (!Input::isNoteKeyTriggered(targetNote.type)) return; // 判定対象のノーツタイプの入力が無ければリターン
 
 
 	targetNote.isJudged = true;
@@ -193,4 +204,40 @@ void ChartData::judgeNote() {
 
 	MAXcombo = max(combo, MAXcombo);
 	nextNotes();
+}
+
+void ChartData::AutoplayHitNote() {
+	Note& targetNote = notes[nextNoteIndex];
+	if (noteRelativeTime(nextNoteIndex) <= 0) {	// 良判定
+		targetNote.isJudged = true;
+		judgelogs.push_back({ JudgeType::GOOD, songData.getSongCurrentTimeUs() });
+		score += scoreGOOD;
+		good++;
+		combo++;
+		switch (targetNote.type) {
+		case NoteType::Don:
+			PlaySoundMem(Skin::GetSound("Don").handle, DX_PLAYTYPE_BACK, true);
+			break;
+		case NoteType::Katsu:
+			PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);
+			break;
+		}
+	}
+	else if (noteRelativeTime(nextNoteIndex) <= -judgeOK) {	// 可判定
+		targetNote.isJudged = true;
+		judgelogs.push_back({ JudgeType::OK, songData.getSongCurrentTimeUs() });
+		score += scoreOK;
+		ok++;
+		combo++;
+	}
+	else if (noteRelativeTime(nextNoteIndex) <= -judgeBAD) {	// 不可判定
+		targetNote.isJudged = true;
+		judgelogs.push_back({ JudgeType::BAD, songData.getSongCurrentTimeUs() });
+		score += scoreBAD;
+		bad++;
+		combo = 0;
+	}
+	if (targetNote.isJudged) {
+		nextNotes();
+	}
 }

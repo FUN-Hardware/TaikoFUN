@@ -1,14 +1,16 @@
-﻿  ChartLoader.cpp
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/File/ChartLoader.cpp' をコンパイルしています)
-  
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/File/ChartLoader.cpp' をコンパイルしています)
-  
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\CharCode.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/File/ChartLoader.cpp' をコンパイルしています)
-  
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\ChartLoader.cpp(230,18): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+﻿  General.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305: '引数': 'int' から 'const _Elem' へ切り詰めます。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         with
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         [
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:             _Elem=char
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         ]
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4309: '引数': 定数値が切り捨てられました。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305: '引数': 'int' から 'const _Elem' へ切り詰めます。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         with
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         [
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:             _Elem=char
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         ]
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4309: '引数': 定数値が切り捨てられました。
   TaikoFUN.vcxproj -> C:\Users\flank\source\repos\TaikoFUN\x64\Debug\TaikoFUN.exe
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\カンケーガール.mp3
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\シャイニングスター\シャイニングスター.ogg
@@ -69,10 +71,12 @@ C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\ChartLoader.cpp(230,18): 
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\don.wav
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\ka.wav
   58 個のファイルをコピーしました
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\8orochi-ura\8OROCHI(裏).tja
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\8orochi-ura\8OROCHI.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\万戈イムー一ノ十\万戈イムー一ノ十.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\万戈イムー一ノ十\万戈イムー一ノ十.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.tja
-  6 個のファイルをコピーしました
+  8 個のファイルをコピーしました

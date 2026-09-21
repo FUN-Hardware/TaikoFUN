@@ -12,6 +12,7 @@ class PlayScene
 	ChartData CD;
 	std::vector<std::string> tempTjaPath;
 	std::string debug;
+
 public:
 	
 	PlayScene();

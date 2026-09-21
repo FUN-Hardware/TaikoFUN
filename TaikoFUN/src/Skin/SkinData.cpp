@@ -1,5 +1,6 @@
 #include "SkinData.h"
 #include "DxLib.h"
+#include "Core/ChartData.h"
 
 #include <memory>
 #include <cassert>
@@ -165,5 +166,30 @@ namespace Skin {
 
 	SoundHandle& GetSound(const std::string& key) {
 		return g_SkinData.GetSound(key);
+	}
+
+	std::string GetNoteImageKey(NoteType type, bool isBig) {
+		switch (type) {
+		case NoteType::Don:		return (!isBig) ? "note/Don" : "note/BigDon";
+		case NoteType::Katsu:	return (!isBig) ? "note/Katsu" : "note/BigKatsu";
+		case NoteType::Judge:	return "note/Judgeframe";
+		}
+		return "";
+	}
+
+	std::string GetRollImageKey(RollPart part, bool isBig) {
+		switch (part) {
+		case RollPart::Head: return (!isBig) ? "note/RollHead" : "note/BigRollHead";
+		case RollPart::Body: return (!isBig) ? "note/RollBody" : "note/BigRollBody";
+		case RollPart::Tail: return (!isBig) ? "note/RollTail" : "note/BigRollTail";
+		}
+
+	}
+
+	std::string GetBalloonImageKey(RollPart part) {
+		switch (part) {
+		case RollPart::Head: return "note/BalloonHead";
+		case RollPart::Tail: return "note/BalloonTail";
+		}
 	}
 }

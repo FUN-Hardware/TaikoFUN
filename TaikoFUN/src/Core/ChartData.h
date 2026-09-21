@@ -9,12 +9,12 @@ enum class NoteType {
 	None,
 	Don,
 	Katsu,
-	DonBig,
-	KatsuBig,
 	Judge,
+	RollHead,
+	RollTail,
+	Balloon,
 };
 
-std::string GetNoteImageKey(NoteType type);
 
 enum class JudgeType {
 	GOOD,
@@ -40,10 +40,15 @@ struct Note
 	NoteType type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
 	double scroll = 1.0;		// ノーツのスクロール速度 (譜面読み込み時に計算して結果をここに入れる)	描画時にbpmにこれを掛けて描画
 	bool hasBarline = false;	// 小節線の有無
+	bool isBig = false;			// 大音符かどうか
 
 	bool isJudged = false;  // 既に判定を下かどうかを保持
 	bool isMissed = false;
 	// ToDo: 連打の実装、SCROLLなどの状態の実装
+
+	// 連打用パラメータ
+	long long rollDuration;
+	
 };
 
 struct SongData
@@ -96,6 +101,7 @@ public:
 	SongData songData;
 	std::vector<Note> notes; // マイクロ秒単位
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
+	bool autoPlay = true; // オートプレイ
 
 	std::string tjaPath = "";
 	
@@ -146,5 +152,6 @@ public:
 private: 
 	void updateMissNotes();	// ノーツが通り過ぎたことを更新する
 	void judgeNote();
+	void AutoplayHitNote();	// オートプレイの処理
 };
 

@@ -24,7 +24,7 @@ PlayScene::PlayScene() {
 	//	ChartLoad::load("Songs/シャイニングスター/シャイニングスター.tja", CD, CourseType::Oni);
 	debug = "走査対象のパス: " + fs::absolute("Songs").string(); // 絶対パスに変換して出力
 	tempTjaPath = FindAllTjaFiles("Songs");
-	ChartLoad::load(tempTjaPath[1].c_str(), CD, CourseType::Oni);
+	ChartLoad::load(tempTjaPath[0].c_str(), CD, CourseType::Oni);
 		//CD.loadSong("Resource/Debug/カンケーガール.mp3", 185.0, 4.2);
 	double soundVol = 0.8;
 	ChangeVolumeSoundMem(255 * soundVol, CD.songData.songHandle.handle);
@@ -60,7 +60,7 @@ void PlayScene::Draw() {
 	// レーン
 	DrawGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, Skin::GetTexture("play/ScrollField/bg").handle, true);
 
-	DrawExtendGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, SkinLayout::ScrollField.x + SkinLayout::NoteSize, SkinLayout::ScrollField.y + SkinLayout::NoteSize, Skin::GetTexture(GetNoteImageKey(NoteType::Judge)).handle, true);
+	DrawExtendGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, SkinLayout::ScrollField.x + SkinLayout::NoteSize, SkinLayout::ScrollField.y + SkinLayout::NoteSize, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge)).handle, true);
 	//DrawGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, Skin::GetTexture(GetNoteImageKey(NoteType::Judge)).handle, true);
 
 	int noteX;
@@ -79,7 +79,20 @@ void PlayScene::Draw() {
 			index++;
 			continue; // 0(空白ノーツは描画しない)
 		}
-		if (noteX < 1300 && noteX+SkinLayout::NoteSize > 0 && !note.isJudged)DrawExtendGraph(noteX, SkinLayout::ScrollField.y, noteX+SkinLayout::NoteSize, SkinLayout::ScrollField.y+SkinLayout::NoteSize, Skin::GetTexture(GetNoteImageKey(drawType)).handle, true); // 画面内のみ描画
+		std::string targetNoteTextureKey;
+		if (noteX < 1300 && noteX + SkinLayout::NoteSize > 0 && !note.isJudged) {
+			switch(drawType){
+			case NoteType::Don: case NoteType::Katsu:
+				targetNoteTextureKey = Skin::GetNoteImageKey(drawType, note.isBig);
+				DrawExtendGraph(noteX, SkinLayout::ScrollField.y, noteX + SkinLayout::NoteSize, SkinLayout::ScrollField.y + SkinLayout::NoteSize, Skin::GetTexture(targetNoteTextureKey).handle, true); // 画面内のみ描画
+				break;
+			
+			case NoteType::Roll:
+				targetNoteTextureKey = Skin::GetRollImageKey(, note.isBig);
+			}
+
+		}
+		
 		index++;
 	}
 	CD.notes; // デバッグで内部数値を確認する用

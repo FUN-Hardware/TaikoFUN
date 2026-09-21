@@ -42,7 +42,19 @@ struct imgData {
 
 
 namespace Skin {
+
+	enum class RollPart{
+	Head,
+	Body,
+	Tail
+	};
+
+
 	void loadSkin();
+
 	imgData& GetTexture(const std::string& key);
-		SoundHandle& GetSound(const std::string& key);
+	SoundHandle& GetSound(const std::string& key);
+	std::string GetNoteImageKey(NoteType type, bool isBig);
+	std::string GetRollImageKey(RollPart part, bool isBig);
+
 }
