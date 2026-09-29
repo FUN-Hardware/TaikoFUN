@@ -408,7 +408,8 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xsmf_control.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\sstream",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\file\\chartloader.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\file\\findalltja.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\file\\findalltja.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

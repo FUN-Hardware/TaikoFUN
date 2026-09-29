@@ -8,6 +8,7 @@
 #include "Core/ChartScanner.h"
 #include "File/ChartLoader.h"
 #include "File/FindAllTJA.h"
+#include "Core/text.h"
 
 namespace SkinLayout {
 
@@ -24,7 +25,7 @@ PlayScene::PlayScene() {
 	//	ChartLoad::load("Songs/シャイニングスター/シャイニングスター.tja", CD, CourseType::Oni);
 	debug = "走査対象のパス: " + fs::absolute("Songs").string(); // 絶対パスに変換して出力
 	tempTjaPath = FindAllTjaFiles("Songs");
-	ChartLoad::load(tempTjaPath[0].c_str(), CD, CourseType::Oni);
+	ChartLoad::load(tempTjaPath[4].c_str(), CD, CourseType::Oni);
 		//CD.loadSong("Resource/Debug/カンケーガール.mp3", 185.0, 4.2);
 	double soundVol = 0.8;
 	ChangeVolumeSoundMem(255 * soundVol, CD.songData.songHandle.handle);
@@ -60,42 +61,139 @@ void PlayScene::Draw() {
 	// レーン
 	DrawGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, Skin::GetTexture("play/ScrollField/bg").handle, true);
 
-	DrawExtendGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, SkinLayout::ScrollField.x + SkinLayout::NoteSize, SkinLayout::ScrollField.y + SkinLayout::NoteSize, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge)).handle, true);
-	//DrawGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, Skin::GetTexture(GetNoteImageKey(NoteType::Judge)).handle, true);
+	DrawExtendGraph( SkinLayout::ScrollField.x,
+					 SkinLayout::ScrollField.y, 
+					 SkinLayout::ScrollField.x + SkinLayout::NoteSize,
+					 SkinLayout::ScrollField.y + SkinLayout::NoteSize, 
+					 Skin::GetTexture( Skin::GetNoteImageKey( NoteType::Judge, false ) ).handle, 
+					 true );
 
 	int noteX;
 	long long noteRelativeTime; // 曲の再生位置によるノーツの相対時間(us)
-	/// ノーツ仮描画
+	/// ノーツ描画
+	////////////////　ヘルパー関数
+	auto isDrawable = []( int x, bool isJudged ) {
+		return x < 1300 && x + SkinLayout::NoteSize > 0 && !isJudged;
+	};
+
+	auto getNoteX = []( const Note& note, const long long& relativeTimeUs ) {
+		return ((relativeTimeUs / 1000000.0) / (240.0 / note.bpm)) * 900.0 * note.scroll + SkinLayout::ScrollField.x;
+	};
+
+	auto DrawNote = [&getNoteX]( const Note& note, const long long& relativeTimeUs, std::string& textureKey ) {
+		double noteX = getNoteX( note, relativeTimeUs);
+		DrawExtendGraph( noteX,
+						 SkinLayout::ScrollField.y,
+						 noteX + SkinLayout::NoteSize,
+						 SkinLayout::ScrollField.y + SkinLayout::NoteSize,
+						 Skin::GetTexture( textureKey ).handle,
+						 true );
+	};
+
+
+	//////////////////
 	size_t index = 0;
 	const size_t notesIndex = CD.nextNoteIndex;
-	std::vector<Note> InversedNotes(CD.notes.rbegin(), CD.notes.rend()); // 逆順にすることで、後ろのノーツから描画するようにする
-	for (const auto& note : InversedNotes) {
 
-		noteRelativeTime = CD.noteRelativeTime(CD.notes.size() - 1 - index);
-		noteX = ((noteRelativeTime / 1000000.0) / (240.0 / note.bpm)) * 900.0 * note.scroll + SkinLayout::ScrollField.x;
+	for ( size_t i = CD.notes.size(); i-- > 0; ) {
+		const auto& note = CD.notes[i];
+		noteRelativeTime = CD.noteRelativeTime( CD.notes.size() - 1 - index );
+		noteX = getNoteX( note, noteRelativeTime );
 		// 240/BPM = 1小節の秒数。1小節当たり960pxとする。よって、(相対時間)/(240/BPM) * 960 = ノーツのX座標
 		NoteType drawType = note.type;
-		if (note.type == NoteType::None){
+		if ( note.type == NoteType::None ) {
 			index++;
 			continue; // 0(空白ノーツは描画しない)
 		}
 		std::string targetNoteTextureKey;
-		if (noteX < 1300 && noteX + SkinLayout::NoteSize > 0 && !note.isJudged) {
-			switch(drawType){
-			case NoteType::Don: case NoteType::Katsu:
-				targetNoteTextureKey = Skin::GetNoteImageKey(drawType, note.isBig);
-				DrawExtendGraph(noteX, SkinLayout::ScrollField.y, noteX + SkinLayout::NoteSize, SkinLayout::ScrollField.y + SkinLayout::NoteSize, Skin::GetTexture(targetNoteTextureKey).handle, true); // 画面内のみ描画
-				break;
-			
-			case NoteType::Roll:
-				targetNoteTextureKey = Skin::GetRollImageKey(, note.isBig);
+		if ( isDrawable( noteX, note.isJudged ) ) {
+			switch ( drawType ) {
+				case NoteType::Don: case NoteType::Katsu:
+					targetNoteTextureKey = Skin::GetNoteImageKey( drawType, note.isBig );
+					DrawNote( note, noteRelativeTime, targetNoteTextureKey );
+					break;
+				//
+				case NoteType::RollHead:
+				{
+					const Note& rollHead = note;
+					const Note& rollTail = CD.notes[note.pairRollIndex];
+					size_t rollHeadIdx = rollTail.pairRollIndex;
+					size_t rollTailIdx = rollHead.pairRollIndex;
+
+					long long rollHeadRelT = CD.noteRelativeTime( rollHeadIdx );
+					long long rollTailRelT = CD.noteRelativeTime( rollTailIdx );
+
+					double rollHeadX = getNoteX();
+					double rollTailX = ((rollTailRelT / 1000000.0) / (240.0 / rollTail.bpm)) * 900.0 * rollTail.scroll + SkinLayout::ScrollField.x;
+
+					bool drawRoll = (isDrawable( rollHeadX, rollHead.isJudged ) || isDrawable( rollTailX, rollTail.isJudged ));
+					bool isBig = rollHead.isBig;
+
+					if ( !drawRoll ) break;
+
+
+					std::string headImgKey = Skin::GetRollImageKey( Skin::RollPart::Head, isBig );
+					std::string tailImgKey = Skin::GetRollImageKey( Skin::RollPart::Tail, isBig );
+					std::string bodyImgKey = Skin::GetRollImageKey( Skin::RollPart::Body, isBig );
+
+
+					DrawExtendGraph( rollTailX,
+					 SkinLayout::ScrollField.y,
+					 rollTailX + SkinLayout::NoteSize,
+					 SkinLayout::ScrollField.y + SkinLayout::NoteSize,
+					 Skin::GetTexture( tailImgKey ).handle,
+					 true );
+
+					DrawExtendGraph( rollHeadX + SkinLayout::NoteSize / 2,
+									 SkinLayout::ScrollField.y,
+									 rollTailX + SkinLayout::NoteSize / 2,
+									 SkinLayout::ScrollField.y + SkinLayout::NoteSize,
+									 Skin::GetTexture( bodyImgKey ).handle,
+									 true );
+
+
+					DrawExtendGraph( rollHeadX,
+									 SkinLayout::ScrollField.y,
+									 rollHeadX + SkinLayout::NoteSize,
+									 SkinLayout::ScrollField.y + SkinLayout::NoteSize,
+									 Skin::GetTexture( headImgKey ).handle,
+									 true );
+
+
+
+					break;
+
+				}
 			}
 
 		}
-		
+
 		index++;
 	}
 	CD.notes; // デバッグで内部数値を確認する用
+
+
+	int winx, winy;
+	GetWindowSize(&winx, &winy);
+
+
+
+
+	//////
+	if ( lastRollIdx != SIZE_MAX ) {
+		DrawFormatString2Right( winx,
+								0,
+								GetColor( 255, 255, 255 ),
+								std::to_string(CD.notes[lastRollIdx].rollHitCount)
+		);
+	}
+	//DrawExtendGraph( 0,
+	//			 0,
+	//			 winx,
+	//			 winy,
+	//			 Skin::GetTexture( Skin::GetRollImageKey( Skin::RollPart::Head, false ) ).handle,
+	//			 true );
+
 
 	std::string str = "";
 	int strW = 0;
@@ -126,10 +224,23 @@ void PlayScene::Draw() {
 	debugstrY += 16;
 
 	str = "[1]: " + tempTjaPath[1];
-	strW = GetDrawFormatStringWidth(str.c_str());
-	DrawBox(0, debugstrY, strW, debugstrY + 16, GetColor(0, 0, 0), true);
-	DrawFormatString(0, debugstrY, GetColor(255, 255, 255), str.c_str());
+	strW = GetDrawFormatStringWidth( str.c_str() );
+	DrawBox( 0, debugstrY, strW, debugstrY + 16, GetColor( 0, 0, 0 ), true );
+	DrawFormatString( 0, debugstrY, GetColor( 255, 255, 255 ), str.c_str() );
 	debugstrY += 16;
+
+	str = "[2]: " + tempTjaPath[2];
+	strW = GetDrawFormatStringWidth( str.c_str() );
+	DrawBox( 0, debugstrY, strW, debugstrY + 16, GetColor( 0, 0, 0 ), true );
+	DrawFormatString( 0, debugstrY, GetColor( 255, 255, 255 ), str.c_str() );
+	debugstrY += 16;
+
+	str = "[3]: " + tempTjaPath[3];
+	strW = GetDrawFormatStringWidth( str.c_str() );
+	DrawBox( 0, debugstrY, strW, debugstrY + 16, GetColor( 0, 0, 0 ), true );
+	DrawFormatString( 0, debugstrY, GetColor( 255, 255, 255 ), str.c_str() );
+	debugstrY += 16;
+
 
 	str = "Songs/シャイニングスター/シャイニングスター.tja"; // 自分で、"/"だけを使って、ハードコードする
 	strW = GetDrawFormatStringWidth(str.c_str());

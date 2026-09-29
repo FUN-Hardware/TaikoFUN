@@ -1,10 +1,10 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\dotdo\\source\\repos\\fun-hardware\\taikofun\\taikofun\\src\\core\\text.cpp",
+        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\dotdo\\source\\repos\\fun-hardware\\taikofun\\taikofun\\src\\core\\text.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\string",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\yvals_core.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\vcruntime.h",
@@ -97,7 +97,9 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xpolymorphic_allocator.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\ctype.h",
-            "c:\\users\\dotdo\\source\\repos\\fun-hardware\\taikofun\\taikofun\\src\\core\\general.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\vector",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_bit_utils.hpp",
             "c:\\dxlib_vc\\addproject_vc\\dxlib.h",
             "c:\\dxlib_vc\\addproject_vc\\dxcompileconfig.h",
             "c:\\dxlib_vc\\addproject_vc\\dxdatatype.h",
@@ -331,7 +333,9 @@
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\shared\\pshpack1.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\shared\\poppack.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\dpa_dsa.h",
-            "c:\\dxlib_vc\\addproject_vc\\dxfunctionwin.h"
+            "c:\\dxlib_vc\\addproject_vc\\dxfunctionwin.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\stack",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\deque"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

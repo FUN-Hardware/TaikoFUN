@@ -5,6 +5,7 @@
 
 #include "DxLib.h"
 #include "Audio/SoundHandle.h"
+#include "Core/ChartData.h"
 
 struct imgData {
 

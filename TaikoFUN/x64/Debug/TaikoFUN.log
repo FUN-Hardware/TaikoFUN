@@ -1,16 +1,42 @@
-﻿  General.cpp
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305: '引数': 'int' から 'const _Elem' へ切り詰めます。
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         with
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         [
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:             _Elem=char
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4305:         ]
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(9,40): warning C4309: '引数': 定数値が切り捨てられました。
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305: '引数': 'int' から 'const _Elem' へ切り詰めます。
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         with
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         [
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:             _Elem=char
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4305:         ]
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warning C4309: '引数': 定数値が切り捨てられました。
+﻿  PlayScene.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Playing/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Playing/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Skin\SkinData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Playing/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartScanner.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Playing/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(30,27): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(61,62): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(61,35): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(66,33): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(65,33): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(64,30): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(63,42): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(88,34): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(87,14): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(86,31): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(85,20): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(101,19): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(129,34): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(129,80): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(143,32): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(142,16): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(141,29): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(140,22): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(150,36): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(149,20): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(148,33): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(147,32): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(158,36): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(157,20): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(156,33): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp(155,22): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
   TaikoFUN.vcxproj -> C:\Users\flank\source\repos\TaikoFUN\x64\Debug\TaikoFUN.exe
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\カンケーガール.mp3
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\シャイニングスター\シャイニングスター.ogg
@@ -75,8 +101,10 @@ C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp(12,37): warni
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\8orochi-ura\8OROCHI.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.tja
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\ドンカマ2000\ドンカマ2000.ogg
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\ドンカマ2000\ドンカマ2000.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\万戈イムー一ノ十\万戈イムー一ノ十.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\万戈イムー一ノ十\万戈イムー一ノ十.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.tja
-  8 個のファイルをコピーしました
+  10 個のファイルをコピーしました

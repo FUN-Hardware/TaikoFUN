@@ -5,7 +5,9 @@
 
 #include <vector>
 #include <string>
+#include <climits>
 
+#include "Core/ChartData.h"
 class PlayScene
 {
 	
@@ -13,6 +15,7 @@ class PlayScene
 	std::vector<std::string> tempTjaPath;
 	std::string debug;
 
+	size_t lastRollIdx = SIZE_MAX;
 public:
 	
 	PlayScene();

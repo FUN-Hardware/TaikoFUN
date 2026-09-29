@@ -3,6 +3,7 @@
 #include <vector>
 #include "dxlib.h"
 #include "Audio/SoundHandle.h"
+#include "Time.h"
 // ノーツデータと譜面データ
 
 enum class NoteType {
@@ -20,7 +21,8 @@ enum class JudgeType {
 	GOOD,
 	OK,
 	BAD,
-	MISS
+	MISS,
+	ROLLHIT
 };
 
 enum class CourseType {
@@ -42,13 +44,16 @@ struct Note
 	bool hasBarline = false;	// 小節線の有無
 	bool isBig = false;			// 大音符かどうか
 
+	size_t idx;
 	bool isJudged = false;  // 既に判定を下かどうかを保持
 	bool isMissed = false;
 	// ToDo: 連打の実装、SCROLLなどの状態の実装
 
 	// 連打用パラメータ
-	long long rollDuration;
-	
+	size_t pairRollIndex = SIZE_MAX;	// 連打尾のインデックスを保持
+	size_t rollId;						// パース時に使用する連打のペアを保証するID
+
+	size_t rollHitCount = 0;			// 譜面再生時に連打した回数を保持
 };
 
 struct SongData
@@ -132,6 +137,7 @@ public:
 	int scoreOK = scoreGOOD / 2;
 	int scoreBAD = 0;
 	int scoreMISS = 0;
+	int scoreROLL = 10;
 
 	int combo = 0;
 	int MAXcombo = 0;
@@ -148,10 +154,22 @@ public:
 	void nextNotes();
 	long long noteRelativeTime(size_t noteIdx);	// 音源の再生位置からのノーツの相対座標を返す
 
+	
 
 private: 
+
+
+	const float rps = 20.0; // roll per sec
+	const long long rollIntervalUs = static_cast<long long>(static_cast<float>(Time::TIME_US) / rps);
+	
+
+	long long lastRollHitUs = 0;
+
+
 	void updateMissNotes();	// ノーツが通り過ぎたことを更新する
 	void judgeNote();
-	void AutoplayHitNote();	// オートプレイの処理
+	void autoplayHitNote();	// オートプレイの処理
+
+	bool applyNoteJudge(Note& targetNote, JudgeType judgeType);
 };
 

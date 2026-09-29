@@ -7,6 +7,7 @@ namespace {
 	long long g_dtUs = 0;
 	double g_dtSec = 0;
 	long long g_lastTime = 0;
+
 }
 
 

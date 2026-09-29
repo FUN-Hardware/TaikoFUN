@@ -167,7 +167,9 @@ void Debug::Draw() {
 
 //	DrawFormatString(10, strY, GetColor(255, 255, 255), "〇");//判定枠
 
-	DrawGraph(10, strY, Skin::GetTexture(GetNoteImageKey(NoteType::Judge)).handle, true);
+	DrawGraph(10, strY, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge, false) ).handle, true);
+
+	
 	int noteX;
 	long long noteRelativeTime; // 曲の再生位置によるノーツの相対時間(us)
 	/// ノーツ仮描画
@@ -178,7 +180,7 @@ void Debug::Draw() {
 		noteRelativeTime = chartData.noteRelativeTime(index);
 		noteX = ((noteRelativeTime/1000000.0) / (240.0/note.bpm)) * 960.0;
 		// 240/BPM = 1小節の秒数。1小節当たり960pxとする。よって、(相対時間)/(240/BPM) * 960 = ノーツのX座標
-		if(noteX < 1300 && noteX > 0)DrawGraph(noteX, strY, Skin::GetTexture(GetNoteImageKey(NoteType::Don)).handle, true); // 画面内のみ描画
+		if(noteX < 1300 && noteX > 0)DrawGraph(noteX, strY, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Don, false)).handle, true); // 画面内のみ描画
 		index++;
 	}
 
