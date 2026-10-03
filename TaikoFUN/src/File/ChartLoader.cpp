@@ -32,7 +32,7 @@ namespace {
 //std::string measurenotestr = "";	// 小節のノーツを格納する文字列。カンマが見つかるまでのノーツを格納し、1小節分として扱うためのバッファ
 //long long measureStartTime = 0;		// 小節の開始時間(us)
 //double nowMeasureScale = 1.0;		// 現在の小節のスケール(拍子) 1.0 = 4分音符, 0.5 = 8分音符, 2.0 = 2分音符
-//double ps.measureBPM = 120.0;		// 現在の小節のBPM
+//double pc.measureBPM = 120.0;		// 現在の小節のBPM
 //double nowScroll = 1.0;				// 現在のスクロール速度
 //bool BarlineFlag = false;			// 小節線の有無を示すフラグ
 
@@ -59,6 +59,12 @@ namespace {
 
 			size_t rollCount = 0;						// ロールidの蓄積
 			size_t lastRollId = SIZE_MAX;				// 最後のロールid。SIZE_MAXでペア処理終了状態.
+			
+			size_t balloonCount = 0;						// バルーンidの蓄積　バルーンのidはペア用ではなく、バルーンの必要ヒット数を取得するために使用する
+			size_t lastBalloonIdx = SIZE_MAX;						// 最後のバルーンのインデックス。8文字が来たとき、バルーンのデータを追加するために保持
+
+			NoteType pendingNoteType = NoteType::None;			// 連打尾のタイプに関して、RollTialとBalloonTailのどちらを生成するかを決定するための変数。文脈によって判断し、直前に来たノーツタイプを保持する。
+																// RollHeadの場合はRollTail、BalloonHeadの場合はBalloonTailが生成される。
 
 		};
 
@@ -117,7 +123,7 @@ namespace {
 
 		// データ取得系
 
-		void getHeaderData( std::string& line, ChartData& cd, ParseContexts& ps ) {
+		void getHeaderData( std::string& line, ChartData& cd, ParseContexts& pc ) {
 
 			if ( line.starts_with( "TITLE" ) ) {
 
@@ -132,7 +138,7 @@ namespace {
 			else if ( line.starts_with( "BPM" ) ) {
 
 				cd.bpm = std::stod( getValueAfterColon( line ) );
-				ps.measureBPM = cd.bpm; // 現在の小節のBPMを設定
+				pc.measureBPM = cd.bpm; // 現在の小節のBPMを設定
 
 			}
 			else if ( line.starts_with( "OFFSET" ) ) {
@@ -152,12 +158,12 @@ namespace {
 			}
 		}
 
-		void getCourseData( const std::string& line, ChartData& cd, ParseContexts& ps ) {
+		void getCourseData( const std::string& line, ChartData& cd, ParseContexts& pc ) {
 
 			if ( line.starts_with( "LEVEL" ) ) {
 
-				ps.level = std::stod( getValueAfterColon( line ) );
-				cd.level = ps.level;
+				pc.level = std::stod( getValueAfterColon( line ) );
+				cd.level = pc.level;
 
 			}
 			else if ( line.starts_with( "BALLOON" ) ) {
@@ -213,13 +219,13 @@ namespace {
 			return CourseType::Oni;
 		}
 
-		void getNoteData( const std::string& line, ChartData& cd, ParseContexts& ps ) {	// ノーツデータおよびコマンドの解析処理
+		void getNoteData( const std::string& line, ChartData& cd, ParseContexts& pc ) {	// ノーツデータおよびコマンドの解析処理
 
 
 			/// コマンド処理
 			if ( line.starts_with( "#" ) ) {
 
-				parseCommand( line, cd, ps);
+				parseCommand( line, cd, pc);
 
 			}
 			else {
@@ -229,13 +235,13 @@ namespace {
 
 					if ( std::isdigit( static_cast<unsigned char>(c) ) ) {	// 数字の場合はノーツとして扱う
 						//OutputDebugString(("Found digit char:" + std::string(1, c) + "\n").c_str());
-						ps.measureNoteStr += c;
+						pc.measureNoteStr += c;
 					}
 					else if ( c == ',' ) {
 					   // カンマが見つかったら、現在のノーツを解析して追加する
 					   // デバッグ用にノーツ数を表示
 					   //OutputDebugString(("Measure notes size:" + std::to_string(measurenotestr.size()) + ", Str: " + measurenotestr + "\n").c_str());
-						parseMeasureNoteStr( cd, ps );
+						parseMeasureNoteStr( cd, pc );
 					}
 
 				}
@@ -249,7 +255,7 @@ namespace {
 
 		}
 
-		void parseMeasureNoteStr( ChartData& cd, ParseContexts& ps) {	// measurenotestrに格納された1小節分のノーツを解析し、cd.notesに追加する
+		void parseMeasureNoteStr( ChartData& cd, ParseContexts& pc) {	// measurenotestrに格納された1小節分のノーツを解析し、cd.notesに追加する
 			// ここでmeasurenotestrを解析し、cd.notesにノーツを追加する処理を実装する
 			// 例: "001002003" -> ノーツの種類とタイミングを計算してcd.notesに追加する
 			// 解析後、measurenotestrをクリアする
@@ -265,19 +271,19 @@ namespace {
 					using enum commandEvent::CommandType;
 					switch ( event.type ) {
 						case BPMCHANGE:
-							ps.measureBPM = event.value;
+							pc.measureBPM = event.value;
 							break;
 						case MEASURE:
-							ps.measureScale = event.value;
+							pc.measureScale = event.value;
 							break;
 						case BARLINEOFF:
-							ps.BarlineFlag = false;
+							pc.BarlineFlag = false;
 							break;
 						case BARLINEON:
-							ps.BarlineFlag = true;
+							pc.BarlineFlag = true;
 							break;
 						case SCROLL:
-							ps.Scroll = event.value;
+							pc.Scroll = event.value;
 							break;
 					}
 				}
@@ -287,17 +293,17 @@ namespace {
 
 
 
-			long long measureDuration = static_cast<long long>((240.0 / ps.measureBPM) * 1000000.0 * ps.measureScale); // 小節の長さを計算する
+			long long measureDuration = static_cast<long long>((240.0 / pc.measureBPM) * 1000000.0 * pc.measureScale); // 小節の長さを計算する
 
-			int noteCount = ps.measureNoteStr.size(); // 小節内のノーツ数
+			int noteCount = pc.measureNoteStr.size(); // 小節内のノーツ数
 			long long noteInterval; // ノーツ間の時間間隔を計算する
 
 
 
 			if ( noteCount == 0 ) {
 				apllyCommandEvent( 0 ); // 小節内にノーツがない場合は、最初のノーツにコマンドイベントを適用する (これが無い場合スキップされてしまう)
-				measureDuration = static_cast<long long>((240.0 / ps.measureBPM) * 1000000.0 * ps.measureScale); // 小節の長さを計算する
-				ps.measureStartTime += measureDuration;
+				measureDuration = static_cast<long long>((240.0 / pc.measureBPM) * 1000000.0 * pc.measureScale); // 小節の長さを計算する
+				pc.measureStartTime += measureDuration;
 				return;
 			}
 
@@ -306,20 +312,31 @@ namespace {
 
 
 			/// 連打処理中にノーツが来たとき、連打尾ノーツを生成する
-			auto insertRollTail = [&]( const Note& note ) {
-				if ( ps.lastRollId != SIZE_MAX ) {
+			auto closePendingLongNote = [&]( const Note& note ) {
+
+				if ( pc.pendingNoteType != NoteType::None ) {
 					// 5または6の後に8を介さずにノーツを生成しようとしたときに呼ばれる
-					Note rollTail;
-					{
-						rollTail = note;
-						rollTail.type = NoteType::RollTail;
-						rollTail.absTime -= noteInterval;
-						rollTail.rollId = ps.lastRollId;
+					if ( pc.pendingNoteType == NoteType::RollHead ) {
+
+						Note Tail;
+						Tail = note;
+						Tail.absTime -= noteInterval;
+						Tail.type = NoteType::RollTail;
+						Tail.rollId = pc.lastRollId;
+						cd.notes.push_back( Tail );
+
+					} else {
+						Note& balloonHead = cd.notes[pc.lastBalloonIdx];
+						long long duration = 0;
+						duration = note.absTime - balloonHead.absTime - noteInterval;
+						balloonHead.duraiton = duration;
+
 					}
 
-					cd.notes.push_back( rollTail );
+					pc.pendingNoteType = NoteType::None;
 				}
 			};
+
 			///
 
 			for ( int i = 0; i < noteCount; ++i ) {
@@ -334,15 +351,15 @@ namespace {
 
 				Note note;
 
-				note.hasBarline = ((i == 0) && ps.BarlineFlag); // 最初のノーツに小節線を付与する
+				note.hasBarline = ((i == 0) && pc.BarlineFlag); // 最初のノーツに小節線を付与する
 
-				measureDuration = static_cast<long long>((240.0 / ps.measureBPM) * 1000000.0 * ps.measureScale); // 小節の長さを計算する
+				measureDuration = static_cast<long long>((240.0 / pc.measureBPM) * 1000000.0 * pc.measureScale); // 小節の長さを計算する
 				noteInterval = measureDuration / noteCount;
-				note.absTime = ps.measureStartTime + measureNoteRelativeTime; // ノーツの絶対時間を計算する
-				note.bpm = ps.measureBPM; // ノーツのBPMを設定する
-				note.scroll = ps.Scroll; // ノーツのスクロール速度を設定する
+				note.absTime = pc.measureStartTime + measureNoteRelativeTime; // ノーツの絶対時間を計算する
+				note.bpm = pc.measureBPM; // ノーツのBPMを設定する
+				note.scroll = pc.Scroll; // ノーツのスクロール速度を設定する
 
-				char noteStr = ps.measureNoteStr[i];
+				char noteStr = pc.measureNoteStr[i];
 				note.isBig = std::string( "346" ).find( noteStr ) != std::string::npos; // find関数を活用してこれで3, 4, 6を条件としてtrue/falseを分岐できる！！！かしこい！！！
 
 				switch ( noteStr ) {	// charごとにノーツを分岐
@@ -352,27 +369,52 @@ namespace {
 						break;
 					case '1':
 					case '3':
-						insertRollTail( note );
+						closePendingLongNote( note );
 						note.type = NoteType::Don;
 						break;
 					case '2':
 					case '4':
-						insertRollTail( note );
+						closePendingLongNote( note );
 						note.type = NoteType::Katsu;
 						break;
 					case '5':
 					case '6':
-						insertRollTail( note );
+						closePendingLongNote( note );
 						note.type = NoteType::RollHead;
-						note.rollId = ps.rollCount++;
-						ps.lastRollId = note.rollId;
+						note.rollId = pc.rollCount++;
+						pc.lastRollId = note.rollId;
+						pc.pendingNoteType = NoteType::RollHead;
 						break;
-					case '8':
 
-						skip = (i != 0 && ps.lastRollId == SIZE_MAX);	// 先頭ではないかつ、連打のペアがいない場合、存在価値が無い
-						note.type = NoteType::RollTail;
-						note.rollId = ps.lastRollId;
-						ps.lastRollId = SIZE_MAX;
+					case '7':
+						closePendingLongNote( note );
+						note.type = NoteType::BalloonHead;
+						note.balloonId = pc.balloonCount++;
+						pc.lastBalloonIdx = cd.notes.size(); // 風船のインデックスを保持する
+						if ( note.balloonId < cd.balloon.size() ) {
+							note.requiredHits = cd.balloon[note.balloonId];
+						}
+						else {
+							note.requiredHits = 1; // バルーンの必要ヒット数が設定されていない場合は1にする
+						}
+						pc.pendingNoteType = NoteType::BalloonHead;
+						break;
+
+
+					case '8':
+						skip = (i != 0 && pc.lastRollId == SIZE_MAX || pc.pendingNoteType == NoteType::BalloonHead);	// 先頭ではないかつ、連打のペアがいない場合、存在価値が無い。また、風船ノーツは尾を持たないので、風船ノーツの後に8が来た場合も存在価値が無いのでskipする
+						if (pc.pendingNoteType == NoteType::RollHead) {
+							note.type = NoteType::RollTail;
+							note.rollId = pc.lastRollId;
+							pc.lastRollId = SIZE_MAX;
+						}
+						else {
+							Note& balloonHead = cd.notes[pc.lastBalloonIdx];
+							long long duration = 0;
+							duration = note.absTime - balloonHead.absTime;
+							balloonHead.duraiton = duration;
+						}
+						pc.pendingNoteType = NoteType::None;
 						break;
 					default:
 						//assert(false && "不明なノーツタイプです。");
@@ -385,23 +427,23 @@ namespace {
 				measureNoteRelativeTime += noteInterval; // 次のノーツの相対時間を計算する
 			}
 
-			ps.measureStartTime += measureNoteRelativeTime; // 次の小節の開始時間を計算する (最終的なノーツの相対座標が次の小節の開始位置になる....はず)
-			ps.measureNoteStr.clear();
+			pc.measureStartTime += measureNoteRelativeTime; // 次の小節の開始時間を計算する (最終的なノーツの相対座標が次の小節の開始位置になる....はず)
+			pc.measureNoteStr.clear();
 			commandEventsMap.clear(); // 小節が終わったらコマンドイベントをクリアする
 		}
 
 
-		void parseCommand( const std::string& command, ChartData& cd, ParseContexts& ps ) {	// コマンドの処理
+		void parseCommand( const std::string& command, ChartData& cd, ParseContexts& pc ) {	// コマンドの処理
 
 			auto addCommandEvent = [&]( commandEvent::CommandType type, double value ) {
-				size_t noteIndex = static_cast<size_t>(ps.measureNoteStr.size()); // 現在のノーツ数を取得 (ノーツのインデックス)
+				size_t noteIndex = static_cast<size_t>(pc.measureNoteStr.size()); // 現在のノーツ数を取得 (ノーツのインデックス)
 				commandEvent event{ type, value };
 				commandEventsMap[noteIndex].push_back( event );
 			};
 
 
 
-			if ( command.starts_with( "#BPMCHANGE" ) ) {		// #BPMCHANGE 185 → ps.measureBPM = 185
+			if ( command.starts_with( "#BPMCHANGE" ) ) {		// #BPMCHANGE 185 → pc.measureBPM = 185
 				std::string bpmStr = getValueAfterWhitespace( command );
 				double bpm = std::stod( bpmStr );
 				addCommandEvent( commandEvent::CommandType::BPMCHANGE, std::stod( bpmStr ) );
@@ -416,11 +458,11 @@ namespace {
 				}
 			}
 			else if ( command.starts_with( "#BARLINEOFF" ) ) {
-				ps.BarlineFlag = false;
+				pc.BarlineFlag = false;
 				addCommandEvent( commandEvent::CommandType::BARLINEOFF, 0 );
 			}
 			else if ( command.starts_with( "#BARLINEON" ) ) {
-				ps.BarlineFlag = true;
+				pc.BarlineFlag = true;
 				addCommandEvent( commandEvent::CommandType::BARLINEON, 0 );
 			}
 			else if ( command.starts_with( "#SCROLL" ) ) {
@@ -434,8 +476,8 @@ namespace {
 					assert( false && "DEBUG: stop command found" );	// デバッグ用に譜面の読み込みを停止する。これにより、譜面の読み込みが途中で止まるので、譜面の解析が正しく行われているかを確認できる。
 				}
 				else if ( command.find( "out" ) != std::string::npos ) {
-					OutputDebugString( ("DEBUG: " + ps.measureNoteStr+ "\n" + \
-										 std::to_string( ps.measureScale ) + "\n" + \
+					OutputDebugString( ("DEBUG: " + pc.measureNoteStr+ "\n" + \
+										 std::to_string( pc.measureScale ) + "\n" + \
 										 std::to_string( commandEventsMap[0].size() ) + "\n"
 										 ).c_str() );	// デバッグ用にここに書いた内容を出力する。ノーツリストやnowScrollなどを確認できる
 
@@ -447,12 +489,12 @@ namespace {
 	public:
 		int LoadChart( const char* path, ChartData& cd, CourseType _course ) {
 
-			ParseContexts ps;
+			ParseContexts pc;
 
 
 			cd.tjaPath = path;
 
-			ps.targetCourse = _course;
+			pc.targetCourse = _course;
 			cd.course = _course;
 			std::vector<std::string> allLines;
 
@@ -492,18 +534,18 @@ namespace {
 
 				if ( noteDataSection ) {
 					// ノーツデータ
-					getNoteData( line, cd, ps );
+					getNoteData( line, cd, pc );
 					continue;
 				}
 				else {
 					if ( foundCourseData ) {
 						// コースデータ
-						getCourseData( line, cd, ps );
+						getCourseData( line, cd, pc );
 						continue;
 					}
 					else if ( line.starts_with( "COURSE:" ) ) {
 						CourseType _course = parseCourseType( getValueAfterColon( line ) );
-						if ( _course == ps.targetCourse ) {
+						if ( _course == pc.targetCourse ) {
 							foundCourseData = true;
 						}
 						continue;
@@ -511,7 +553,7 @@ namespace {
 				}
 
 
-				getHeaderData( line, cd, ps );	//譜面のヘッダー情報取得(TITLEやSUBTITLE, BPMなど)
+				getHeaderData( line, cd, pc );	//譜面のヘッダー情報取得(TITLEやSUBTITLE, BPMなど)
 			}
 
 
@@ -521,21 +563,28 @@ namespace {
 
 			// 連打の再接続とノーツのidxを設定
 
+			std::unordered_map<size_t, size_t> tailIdxByID;
+			
+			for ( size_t j = 0; j < cd.notes.size(); j++) {
+				Note& note = cd.notes[j];
+				if ( note.type == NoteType::RollTail ) tailIdxByID[note.rollId] = j;
+			}
+
+
 			for ( size_t i = 0; i < cd.notes.size(); i++) {
 				Note& note = cd.notes[i];
 				note.idx = i;
+
 				if ( note.type != NoteType::RollHead ) continue;
 				Note& rollHead = note;
 
-				// 手法1
-				for ( size_t j = 0; j < cd.notes.size(); j++) {
-					Note& rollTail = cd.notes[j];
-					if ( rollTail.type != NoteType::RollTail ) continue;
-					if ( rollTail.rollId != rollHead.rollId ) continue;
-
-					rollHead.pairRollIndex = j;
-					rollTail.pairRollIndex = i;
+				auto it = tailIdxByID.find(rollHead.rollId);
+				if ( it != tailIdxByID.end() ) {
+					size_t tailIdx = it->second;
+					rollHead.pairRollIndex = tailIdx;
+					cd.notes[tailIdx].pairRollIndex = i;
 				}
+
 
 
 			}

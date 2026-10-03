@@ -335,6 +335,7 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_string_view.hpp",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\iosfwd",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\debug\\fps.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\input\\input.h",
@@ -409,7 +410,8 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\sstream",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\file\\chartloader.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\file\\findalltja.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\text.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\unordered_set"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

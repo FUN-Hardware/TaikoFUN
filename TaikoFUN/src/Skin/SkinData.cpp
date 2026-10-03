@@ -119,7 +119,7 @@ void SkinData::LoadNotesImgs(const std::string& path) {
 	emplaceImg("note/BigRollBody",	handles[9], XSize, YSize, path);			// 大連打(体)
 	emplaceImg("note/BigRollTail",	handles[10], XSize, YSize, path);			// 大連打(尾)
 	emplaceImg("note/BalloonHead",	handles[11], XSize, YSize, path);			// 風船(頭)
-	emplaceImg("note/BalloonBody",	handles[12], XSize, YSize, path);			// 風船(体)
+	emplaceImg("note/BalloonTail",	handles[12], XSize, YSize, path);			// 風船(体)
 	emplaceImg("note/Kusudama",		handles[13], XSize, YSize, path);			// くす玉
 
 }

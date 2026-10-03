@@ -1,4 +1,4 @@
-#include "ChartData.h"
+﻿#include "ChartData.h"
 #include "dxlib.h"
 #include "Time.h"
 #include "Input/Input.h"
@@ -66,7 +66,7 @@ void ChartData::playSong(bool restart) {
 
 
 long long ChartData::noteRelativeTime(size_t noteIdx) {
-	return notes[noteIdx].absTime - songData.getSongCurrentTimeUs(true);
+	return notes[noteIdx].absTime - nowSongTime;
 }
 
 
@@ -95,6 +95,8 @@ void ChartData::init() {
 
 void ChartData::Update() {
 
+	nowTime = Time::nowTime();
+	nowSongTime = songData.getSongCurrentTimeUs( true );
 	updateMissNotes();
 
 }
@@ -133,24 +135,35 @@ void ChartData::updateMissNotes() {
 
 	if (targetNote.isJudged || targetNote.isMissed) return; // 既に判定済みまたはミス判定の出たノーツはスルー
 
-	if (abs(noteRelTime) > judgeBAD && noteRelTime < 0) {	// 判定ノーツを次に移行する条件は (ノーツの相対位置がマイナスであること) ⋏ (ノーツの絶対相対座標がjudgeBADの領域を超えていること) 要するに判定枠の後ろをBAD判定以上に進んでたら次ってこと
-		targetNote.isMissed = true;
-		judgelogs.push_back({JudgeType::MISS, songData.getSongCurrentTimeUs()});
-		miss++;
-		combo = 0;
-		nextNotes();
-		//PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);	//デバッグ用
-	}
+	switch ( targetNote.type ) {
+		case NoteType::Don: case NoteType::Katsu:
+			if ( abs( noteRelTime ) > judgeBAD && noteRelTime < 0 ) {	// 判定ノーツを次に移行する条件は (ノーツの相対位置がマイナスであること) ⋏ (ノーツの絶対相対座標がjudgeBADの領域を超えていること) 要するに判定枠の後ろをBAD判定以上に進んでたら次ってこと
+				targetNote.isMissed = true;
+				judgelogs.push_back( { JudgeType::MISS, nowSongTime } );
+				miss++;
+				combo = 0;
+				nextNotes();
+				//PlaySoundMem(Skin::GetSound("Katsu").handle, DX_PLAYTYPE_BACK, true);	//デバッグ用
+			}
+			break;
+
+		case NoteType::RollHead:
+			if ( !(noteRelativeTime( targetNote.pairRollIndex ) <= 0) )	return; // 連打ノーツの尾がすぎるまで進行しない
+			targetNote.isJudged = true;
+			nextNotes();
+			break;
 	
+	}
 
 }
 
 void ChartData::nextNotes() {
 	if (nextNoteIndex < notes.size()-1) {
 		nextNoteIndex++;
-		if (notes[nextNoteIndex].type == NoteType::None) {
+		if (notes[nextNoteIndex].type == NoteType::None || notes[nextNoteIndex].type == NoteType::RollTail ) {
 			nextNotes();
 		}
+		lastRollIdx = notes[nextNoteIndex].idx;
 	}
 }
 
@@ -160,13 +173,14 @@ void ChartData::judgeNote() {
 	if ( !(notes.size() >= 1) ) return;
 	Note& targetNote = notes[nextNoteIndex];
 
-	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
-
-
 	if ( autoPlay ) {
 		autoplayHitNote();
 		return;
 	}
+
+	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
+
+
 
 
 
@@ -185,19 +199,19 @@ void ChartData::judgeNote() {
 		case NoteType::Don: case NoteType::Katsu:
 			targetNote.isJudged = true;
 			if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeGOOD ) {	// 良判定
-				judgelogs.push_back( { JudgeType::GOOD, songData.getSongCurrentTimeUs() } );
+				judgelogs.push_back( { JudgeType::GOOD, nowSongTime } );
 				score += scoreGOOD;
 				good++;
 				combo++;
 			}
 			else if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeOK ) {	// 可判定
-				judgelogs.push_back( { JudgeType::OK, songData.getSongCurrentTimeUs() } );
+				judgelogs.push_back( { JudgeType::OK, nowSongTime } );
 				score += scoreOK;
 				ok++;
 				combo++;
 			}
 			else if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeBAD ) {	// 不可判定
-				judgelogs.push_back( { JudgeType::BAD, songData.getSongCurrentTimeUs() } );
+				judgelogs.push_back( { JudgeType::BAD, nowSongTime } );
 				score += scoreBAD;
 				bad++;
 				combo = 0;
@@ -209,8 +223,8 @@ void ChartData::judgeNote() {
 
 		case NoteType::RollHead:
 			assert( targetNote.pairRollIndex < notes.size() && "pairRollIndexが、範囲外です" );
-			if ( targetNote.absTime < songData.getSongCurrentTimeUs() && songData.getSongCurrentTimeUs() < notes[targetNote.pairRollIndex].absTime ) {
-				judgelogs.push_back( { JudgeType::ROLLHIT, songData.getSongCurrentTimeUs() } );
+			if ( targetNote.absTime < nowSongTime && nowSongTime < notes[targetNote.pairRollIndex].absTime ) {
+				judgelogs.push_back( { JudgeType::ROLLHIT, nowSongTime } );
 				score += scoreROLL;
 				targetNote.rollHitCount++;
 			}
@@ -221,15 +235,17 @@ void ChartData::judgeNote() {
 
 void ChartData::autoplayHitNote() {
 	Note& targetNote = notes[nextNoteIndex];
-	if ( !noteRelativeTime( nextNoteIndex ) <= 0 ) return;
+	long long noteTime = noteRelativeTime( nextNoteIndex );
+	if ( !(noteRelativeTime( nextNoteIndex ) <= 0) ) return;
 
 	switch ( targetNote.type ) {
 		case NoteType::RollHead:
 			
-			if ( lastRollHitUs > songData.getSongCurrentTimeUs() - rollIntervalUs) return;
-			if ( targetNote.absTime < songData.getSongCurrentTimeUs() && songData.getSongCurrentTimeUs() < notes[targetNote.pairRollIndex].absTime ) return;
-			lastRollHitUs = songData.getSongCurrentTimeUs();
-		case NoteType::Balloon:
+			if ( lastRollHitUs > nowSongTime - rollIntervalUs) return;
+			if ( !(targetNote.absTime < nowSongTime && nowSongTime < notes[targetNote.pairRollIndex].absTime) ) return;
+			lastRollHitUs = nowSongTime;
+			[[fallthrough]];
+		case NoteType::BalloonHead: [[fallthrough]];
 		case NoteType::Don:
 			PlaySoundMem( Skin::GetSound( "Don" ).handle, DX_PLAYTYPE_BACK, true );
 			break;
@@ -250,9 +266,9 @@ void ChartData::autoplayHitNote() {
 	}
 }
 
-bool ChartData::applyNoteJudge(Note& targetNote, JudgeType judgeType) {
+void ChartData::applyNoteJudge(Note& targetNote, JudgeType judgeType) {
 	
-	judgelogs.push_back( { judgeType, songData.getSongCurrentTimeUs() } );
+	judgelogs.push_back( { judgeType, nowSongTime } );
 
 	switch ( judgeType ) {
 		case JudgeType::GOOD:

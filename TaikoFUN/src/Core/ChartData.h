@@ -10,10 +10,10 @@ enum class NoteType {
 	None,
 	Don,
 	Katsu,
-	Judge,
 	RollHead,
 	RollTail,
-	Balloon,
+	BalloonHead,
+	Judge,
 };
 
 
@@ -22,7 +22,8 @@ enum class JudgeType {
 	OK,
 	BAD,
 	MISS,
-	ROLLHIT
+	ROLLHIT,
+	BALLOONHIT,
 };
 
 enum class CourseType {
@@ -54,6 +55,12 @@ struct Note
 	size_t rollId;						// パース時に使用する連打のペアを保証するID
 
 	size_t rollHitCount = 0;			// 譜面再生時に連打した回数を保持
+
+	// 風船用パラメータ	風船は連打と違い、尾を持たずに頭に情報を持たせる。
+	size_t balloonId;			// パース時に使用する風船のペアを保証するID
+	size_t requiredHits = 0;	// 風船を割るのに必要なヒット数
+	size_t balloonHitCount = 0;	// 譜面再生時に風船を叩いた回数を保持
+	long long duraiton = 0;	// 風船の持続時間(譜面上の長さ)を保持するためのパラメータ
 };
 
 struct SongData
@@ -117,6 +124,8 @@ public:
 	double bpm = 120.0;
 	double demoStart = 0.0;
 
+	long long nowTime;
+	long long nowSongTime;
 	CourseType course = CourseType::Easy;
 	double level = 0.0;
 	std::vector<size_t> balloon;
@@ -126,6 +135,7 @@ public:
 	long long judgeBAD = 100000; // 不可判定範囲時間(us)
 
 	std::vector<JudgeLog> judgelogs;
+	size_t lastRollIdx = SIZE_MAX;
 
 
 	int good=0, ok=0, bad=0, miss=0; // ノーツの判定結果集計 good:良 ok:可 bad:不可 miss:叩かずにスルー
@@ -170,6 +180,6 @@ private:
 	void judgeNote();
 	void autoplayHitNote();	// オートプレイの処理
 
-	bool applyNoteJudge(Note& targetNote, JudgeType judgeType);
+	void applyNoteJudge(Note& targetNote, JudgeType judgeType);
 };
 

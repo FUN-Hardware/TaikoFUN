@@ -57,5 +57,6 @@ namespace Skin {
 	SoundHandle& GetSound(const std::string& key);
 	std::string GetNoteImageKey(NoteType type, bool isBig);
 	std::string GetRollImageKey(RollPart part, bool isBig);
+	std::string GetBalloonImageKey( RollPart part );
 
 }
