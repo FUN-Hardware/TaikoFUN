@@ -36,6 +36,12 @@ enum class CourseType {
 
 };
 
+struct gogoTime
+{
+	long long startTime;
+	long long endTime;
+};
+
 struct Note
 {
 
@@ -45,11 +51,11 @@ struct Note
 	double scroll = 1.0;		// ノーツのスクロール速度 (譜面読み込み時に計算して結果をここに入れる)	描画時にbpmにこれを掛けて描画
 	bool hasBarline = false;	// 小節線の有無
 	bool isBig = false;			// 大音符かどうか
+	bool isGogo = false; 		// ゴーゴータイム中のノーツかどうか
 
 	size_t idx;
 	bool isJudged = false;  // 既に判定を下かどうかを保持
 	bool isMissed = false;
-	// ToDo: 連打の実装、SCROLLなどの状態の実装
 
 	// 連打用パラメータ
 	size_t pairRollIndex = SIZE_MAX;	// 連打尾のインデックスを保持
@@ -130,6 +136,9 @@ public:
 	CourseType course = CourseType::Easy;
 	double level = 0.0;
 	std::vector<size_t> balloon;
+	std::vector<gogoTime> gogoTimes;	// ゴーゴータイムの開始時間と終了時間のリスト
+	size_t gogoIndex = 0;	// 現在のゴーゴータイムのインデックス
+	bool isGogoTime = false;	// 現在ゴーゴータイム中かどうか
 
 	long long judgeGOOD = 33000; // 良判定範囲時間(us)
 	long long judgeOK = 66000; // 可判定範囲時間(us)
@@ -151,6 +160,8 @@ public:
 	int scoreROLL = 100;
 	int scoreBALLOONHIT = 10;
 	int scoreBALLOONCLEARED = 1000;
+
+	float GOGOSCOREMULTIPLIER = 1.2f;	// ゴーゴータイム中のスコア倍率
 
 	int combo = 0;
 	int MAXcombo = 0;
@@ -184,5 +195,6 @@ private:
 	void autoplayHitNote();	// オートプレイの処理
 
 	void applyNoteJudge(Note& targetNote, JudgeType judgeType);
+	void updateGogoTime();	// ゴーゴータイムの更新
 };
 

@@ -39,6 +39,14 @@ long long SongData::getSongCurrentTimeUs(bool applyOffset) {
 }
 
 
+void ChartData::Update() {
+
+	nowTime = Time::nowTime();
+	nowSongTime = songData.getSongCurrentTimeUs( true );
+	updateMissNotes();
+	updateGogoTime();
+
+}
 
 void ChartData::loadSong(const char* path) {
 	songData.loadSong(path);
@@ -93,13 +101,6 @@ void ChartData::init() {
 }
 
 
-void ChartData::Update() {
-
-	nowTime = Time::nowTime();
-	nowSongTime = songData.getSongCurrentTimeUs( true );
-	updateMissNotes();
-
-}
 
 void ChartData::Input() {
 
@@ -126,6 +127,7 @@ void ChartData::Input() {
 	judgeNote();
 
 }
+
 
 void ChartData::updateMissNotes() {
 
@@ -196,6 +198,8 @@ void ChartData::judgeNote() {
 		case NoteType::Katsu:
 			if ( !Input::isNoteKeyTriggered( NoteType::Katsu ) ) return;
 			break;
+		case NoteType::BalloonHead:
+			if ( !Input::isNoteKeyTriggered( NoteType::Don ) ) return;
 	}
 
 	//if (!Input::isNoteKeyTriggered(targetNote.type)) return; // 判定対象のノーツタイプの入力が無ければリターン
@@ -286,16 +290,17 @@ void ChartData::autoplayHitNote() {
 void ChartData::applyNoteJudge(Note& targetNote, JudgeType judgeType) {
 	
 	judgelogs.push_back( { judgeType, nowSongTime } );
-
+	float scoreMultiplier = 1.0f;
+	if ( targetNote.isGogo ) scoreMultiplier *= GOGOSCOREMULTIPLIER;
 	switch ( judgeType ) {
 		case JudgeType::GOOD:
-			score = scoreGOOD;
+			score = scoreGOOD * scoreMultiplier;
 			good++;
 			combo++;
 			targetNote.isJudged = true;
 			break;
 		case JudgeType::OK:
-			score += scoreOK;
+			score += scoreOK * scoreMultiplier;
 			ok++;
 			combo++;
 			targetNote.isJudged = true;
@@ -324,4 +329,17 @@ void ChartData::applyNoteJudge(Note& targetNote, JudgeType judgeType) {
 			break;
 	}
 
+}
+
+
+void ChartData::updateGogoTime() {
+	if (gogoTimes.size() == 0) return;
+	if (gogoIndex >= gogoTimes.size()) return;
+
+	if ( nowSongTime >= gogoTimes[gogoIndex].startTime && nowSongTime < gogoTimes[gogoIndex].endTime ) { 
+		isGogoTime = true;
+	}
+	else {
+		isGogoTime = false;
+	}
 }

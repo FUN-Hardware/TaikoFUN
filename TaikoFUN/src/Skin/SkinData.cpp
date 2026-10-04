@@ -85,7 +85,8 @@ void SkinData::LoadSkin() {
 
 void SkinData::LoadPlaySceneSkin() {
 	
-	emplaceImg("play/bg", "Resource/Image/SkinColor/bgstage.png");
+	emplaceImg( "play/bg", "Resource/Image/SkinColor/bgstage.png" );
+	emplaceImg("play/bg_clear", "Resource/Image/SkinColor/bgstage_clear.png");
 	emplaceImg("play/minitaiko", "Resource/Image/SkinColor/minitaiko.png");
 	emplaceImg("play/ScrollField/bg", "Resource/Image/Playing/scrollfield_bg.png");
 	emplaceImg("play/ScrollField/don", "Resource/Image/Playing/scrollfield_don.png");

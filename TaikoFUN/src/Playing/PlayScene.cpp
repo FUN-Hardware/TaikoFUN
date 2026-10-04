@@ -57,8 +57,12 @@ void PlayScene::Draw() {
 
 
 
-
-	DrawGraph( 0, 0, Skin::GetTexture( "play/bg" ).handle, true );
+	if (CD.isGogoTime) {
+		DrawGraph( 0, 0, Skin::GetTexture( "play/bg_clear" ).handle, true );
+	}
+	else {
+		DrawGraph( 0, 0, Skin::GetTexture( "play/bg" ).handle, true );
+	}
 
 	// レーン
 	DrawGraph( SkinLayout::ScrollField.x, SkinLayout::ScrollField.y, Skin::GetTexture( "play/ScrollField/bg" ).handle, true );
@@ -278,6 +282,12 @@ void PlayScene::Draw() {
 								32,
 								GetColor( 0, 0, 0 ),
 								s );
+
+	s = std::string("isGOGO: ") + ((CD.isGogoTime) ? "true" : "false");
+	DrawFormatString2Right( winx,
+							48,
+							GetColor( 0, 0, 0 ),
+							s );
 
 	//DrawExtendGraph( 0,
 	//			 0,

@@ -65,7 +65,9 @@ namespace {
 
 			NoteType pendingNoteType = NoteType::None;			// 連打尾のタイプに関して、RollTialとBalloonTailのどちらを生成するかを決定するための変数。文脈によって判断し、直前に来たノーツタイプを保持する。
 																// RollHeadの場合はRollTail、BalloonHeadの場合はBalloonTailが生成される。
-
+			gogoTime pendingGogoTime = {0, 0};								// ゴーゴータイムの開始時間と終了時間を保持する変数。ゴーゴータイムの開始と終了が別々の行に記述されるため、開始時間を保持しておく必要がある。
+			bool isGogoPending = false;								// ゴーゴータイムの開始が記述されたかどうかを示すフラグ。ゴーゴータイムの終了が記述されるまでtrueのままにする。
+			bool gogoFlag = false;
 		};
 
 
@@ -85,9 +87,13 @@ namespace {
 			{
 				BPMCHANGE,
 				MEASURE,
+				SCROLL,
+				GOGOSTART,
+				GOGOEND,
 				BARLINEOFF,
 				BARLINEON,
-				SCROLL
+				DELAY,
+
 			};
 
 
@@ -265,9 +271,14 @@ namespace {
 			// そのため、ノーツの絶対座標計算にmeasureStartTimeを使用するのではなく、直前のノーツからの相対座標計算を行う必要がある。 ←ダメかも。先頭ノーツの場合インデックスがマイナスになる。
 			// noteIntervalを蓄積させることでその小節内での相対座標を割り出す
 
+			long long measureDuration;
+			int noteCount;
+				
 			auto apllyCommandEvent = [&]( int noteIndex ) {
 				// コマンドイベントの適用
 				for ( const auto& event : commandEventsMap[noteIndex] ) {
+
+
 					using enum commandEvent::CommandType;
 					switch ( event.type ) {
 						case BPMCHANGE:
@@ -285,6 +296,45 @@ namespace {
 						case SCROLL:
 							pc.Scroll = event.value;
 							break;
+						case DELAY:
+							pc.measureStartTime += static_cast<long long>(event.value * 1000000.0);
+							break;
+						case GOGOSTART:
+							if ( pc.isGogoPending ) {	// GOGOSTARTが連続して来た場合、前のGOGO STARTの終了時間を設定する
+								if ( noteCount > 0 ) {
+									pc.pendingGogoTime.endTime = pc.measureStartTime + measureDuration / pc.measureNoteStr.size();
+								}
+								else {
+									pc.pendingGogoTime.endTime = pc.measureStartTime;
+								}
+								cd.gogoTimes.push_back( pc.pendingGogoTime );
+								pc.pendingGogoTime = { 0, 0 };
+							}
+							if ( noteCount > 0 ) {
+								pc.pendingGogoTime.startTime = pc.measureStartTime + measureDuration / pc.measureNoteStr.size();
+							}
+							else {
+								pc.pendingGogoTime.startTime = pc.measureStartTime;
+							}
+
+							pc.gogoFlag = true;
+							pc.isGogoPending = true;
+							break;
+						case GOGOEND:
+
+							measureDuration;
+							if ( noteCount > 0 ) {
+								pc.pendingGogoTime.endTime = pc.measureStartTime + measureDuration / pc.measureNoteStr.size();
+							}
+							else {
+								pc.pendingGogoTime.endTime = pc.measureStartTime;
+							}
+							OutputDebugString( (std::string( "endTime: " + std::to_string( pc.pendingGogoTime.endTime ) + "\n" )).c_str() );
+							cd.gogoTimes.push_back( pc.pendingGogoTime );
+							pc.gogoFlag = false;
+							pc.pendingGogoTime = { 0, 0 };
+							pc.isGogoPending = false;
+							break;
 					}
 				}
 			};
@@ -293,9 +343,10 @@ namespace {
 
 
 
-			long long measureDuration = static_cast<long long>((240.0 / pc.measureBPM) * 1000000.0 * pc.measureScale); // 小節の長さを計算する
+			noteCount = pc.measureNoteStr.size(); // 小節内のノーツ数
+			
+			measureDuration = static_cast<long long>((240.0 / pc.measureBPM) * 1000000.0 * pc.measureScale); // 小節の長さを計算する
 
-			int noteCount = pc.measureNoteStr.size(); // 小節内のノーツ数
 			long long noteInterval; // ノーツ間の時間間隔を計算する
 
 
@@ -358,6 +409,7 @@ namespace {
 				note.absTime = pc.measureStartTime + measureNoteRelativeTime; // ノーツの絶対時間を計算する
 				note.bpm = pc.measureBPM; // ノーツのBPMを設定する
 				note.scroll = pc.Scroll; // ノーツのスクロール速度を設定する
+				note.isGogo = pc.gogoFlag; // ノーツがゴーゴータイム中かどうかを設定する
 
 				char noteStr = pc.measureNoteStr[i];
 				note.isBig = std::string( "346" ).find( noteStr ) != std::string::npos; // find関数を活用してこれで3, 4, 6を条件としてtrue/falseを分岐できる！！！かしこい！！！
@@ -469,7 +521,17 @@ namespace {
 				std::string scrollStr = getValueAfterWhitespace( command );
 				addCommandEvent( commandEvent::CommandType::SCROLL, std::stod( scrollStr ) );
 			}
-
+			else if ( command.starts_with( "#GOGOSTART" ) ) {
+				addCommandEvent( commandEvent::CommandType::GOGOSTART, 0 );
+			}
+			else if ( command.starts_with( "#GOGOEND" ) ) {
+				addCommandEvent( commandEvent::CommandType::GOGOEND, 0 );
+			}
+			else if ( command.starts_with( "#DELAY" ) ) {
+				std::string delayStr = getValueAfterWhitespace( command );
+				double delay = std::stod( delayStr );
+				addCommandEvent( commandEvent::CommandType::DELAY, delay );
+			}
 
 			if ( command.starts_with( "#DEBUG" ) ) {
 				if ( command.find( "stop" ) != std::string::npos ) {
