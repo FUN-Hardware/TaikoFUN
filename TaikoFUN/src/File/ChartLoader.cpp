@@ -329,7 +329,7 @@ namespace {
 						Note& balloonHead = cd.notes[pc.lastBalloonIdx];
 						long long duration = 0;
 						duration = note.absTime - balloonHead.absTime - noteInterval;
-						balloonHead.duraiton = duration;
+						balloonHead.duration = duration;
 
 					}
 
@@ -412,7 +412,7 @@ namespace {
 							Note& balloonHead = cd.notes[pc.lastBalloonIdx];
 							long long duration = 0;
 							duration = note.absTime - balloonHead.absTime;
-							balloonHead.duraiton = duration;
+							balloonHead.duration = duration;
 						}
 						pc.pendingNoteType = NoteType::None;
 						break;

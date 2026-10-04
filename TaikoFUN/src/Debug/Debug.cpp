@@ -126,10 +126,24 @@ void Debug::Draw() {
 	DrawFormatString(10, h - 300, GetColor(255, 255, 255), "WindowSize h: %d", h);
 	strY += 20;
 
+	int tempHandle = LoadGraph( "Resource/Image/Poster/asset_05.png" );
+	int winW, winY;
+	GetWindowSize( &winW, &winY );
+
+	std::string str2 = "handle: " + std::to_string(tempHandle);
+	DrawFormatString2Right(winW, 16, GetColor(255, 255, 255), str2.c_str());
+	{
+		int tempW, tmepH;
+		GetGraphSize( tempHandle, &tempW, &tmepH );
+		int tempx, tempy;
+		tempx = 300; tempy = 300;
+		DrawExtendGraph( tempx, tempy, tempW/2 + tempx, tmepH/2 + tempy, tempHandle, true );
+	}
 	l.Draw();
 
 	strY = h - 200;
 
+	DeleteGraph(tempHandle);
 	/*
 	{//判定領域の表示 
 //		((noteRelativeTime / 1000000.0) / (240.0 / note.bpm)) * 960.0;

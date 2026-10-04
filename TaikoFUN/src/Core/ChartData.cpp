@@ -153,6 +153,11 @@ void ChartData::updateMissNotes() {
 			nextNotes();
 			break;
 	
+		case NoteType::BalloonHead:
+			if ( !(noteRelativeTime( targetNote.idx ) + targetNote.duration <= 0) )	return; // 風船ノーツの尾がすぎるまで進行しない
+			targetNote.isMissed = true;
+			nextNotes();
+			break;
 	}
 
 }
@@ -199,22 +204,13 @@ void ChartData::judgeNote() {
 		case NoteType::Don: case NoteType::Katsu:
 			targetNote.isJudged = true;
 			if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeGOOD ) {	// 良判定
-				judgelogs.push_back( { JudgeType::GOOD, nowSongTime } );
-				score += scoreGOOD;
-				good++;
-				combo++;
+				applyNoteJudge( targetNote, JudgeType::GOOD );
 			}
 			else if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeOK ) {	// 可判定
-				judgelogs.push_back( { JudgeType::OK, nowSongTime } );
-				score += scoreOK;
-				ok++;
-				combo++;
+				applyNoteJudge( targetNote, JudgeType::OK );
 			}
 			else if ( abs( noteRelativeTime( nextNoteIndex ) ) < judgeBAD ) {	// 不可判定
-				judgelogs.push_back( { JudgeType::BAD, nowSongTime } );
-				score += scoreBAD;
-				bad++;
-				combo = 0;
+				applyNoteJudge( targetNote, JudgeType::BAD );
 			}
 
 			MAXcombo = max( combo, MAXcombo );
@@ -224,12 +220,20 @@ void ChartData::judgeNote() {
 		case NoteType::RollHead:
 			assert( targetNote.pairRollIndex < notes.size() && "pairRollIndexが、範囲外です" );
 			if ( targetNote.absTime < nowSongTime && nowSongTime < notes[targetNote.pairRollIndex].absTime ) {
-				judgelogs.push_back( { JudgeType::ROLLHIT, nowSongTime } );
-				score += scoreROLL;
-				targetNote.rollHitCount++;
+				applyNoteJudge( targetNote, JudgeType::ROLLHIT );
 			}
 			break;
 
+		case NoteType::BalloonHead:
+
+			if ( targetNote.absTime < nowSongTime ) {
+				applyNoteJudge( targetNote, JudgeType::BALLOONHIT );
+
+				if ( targetNote.balloonHitCount >= targetNote.requiredHits ) {
+					applyNoteJudge( targetNote, JudgeType::BALLOONCLEAR );
+					nextNotes();
+				}
+			}
 	}
 }
 
@@ -240,12 +244,17 @@ void ChartData::autoplayHitNote() {
 
 	switch ( targetNote.type ) {
 		case NoteType::RollHead:
-			
+			[[fallthrough]];
+		case NoteType::BalloonHead:
 			if ( lastRollHitUs > nowSongTime - rollIntervalUs) return;
-			if ( !(targetNote.absTime < nowSongTime && nowSongTime < notes[targetNote.pairRollIndex].absTime) ) return;
+			if ( targetNote.type == NoteType::RollHead ) {
+				if ( !(targetNote.absTime < nowSongTime && nowSongTime < notes[targetNote.pairRollIndex].absTime) ) return;
+			}
+			else {
+				if ( !(targetNote.absTime < nowSongTime && nowSongTime < targetNote.absTime + targetNote.duration) ) return;
+			}
 			lastRollHitUs = nowSongTime;
 			[[fallthrough]];
-		case NoteType::BalloonHead: [[fallthrough]];
 		case NoteType::Don:
 			PlaySoundMem( Skin::GetSound( "Don" ).handle, DX_PLAYTYPE_BACK, true );
 			break;
@@ -262,6 +271,14 @@ void ChartData::autoplayHitNote() {
 
 		case NoteType::RollHead:
 			applyNoteJudge( targetNote, JudgeType::ROLLHIT);
+			break;
+
+		case NoteType::BalloonHead:
+			applyNoteJudge( targetNote, JudgeType::BALLOONHIT );
+			if ( targetNote.balloonHitCount >= targetNote.requiredHits ) {
+				applyNoteJudge( targetNote, JudgeType::BALLOONCLEAR );
+				nextNotes();
+			}
 			break;
 	}
 }
@@ -296,6 +313,14 @@ void ChartData::applyNoteJudge(Note& targetNote, JudgeType judgeType) {
 		case JudgeType::ROLLHIT:
 			score += scoreROLL;
 			targetNote.rollHitCount++;
+			break;
+		case JudgeType::BALLOONHIT:
+			score += scoreBALLOONHIT;
+			targetNote.balloonHitCount++;
+			break;
+		case JudgeType::BALLOONCLEAR:
+			score += scoreBALLOONCLEARED;
+			targetNote.isJudged = true;
 			break;
 	}
 

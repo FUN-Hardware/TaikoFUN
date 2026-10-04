@@ -24,6 +24,7 @@ enum class JudgeType {
 	MISS,
 	ROLLHIT,
 	BALLOONHIT,
+	BALLOONCLEAR,
 };
 
 enum class CourseType {
@@ -60,7 +61,7 @@ struct Note
 	size_t balloonId;			// パース時に使用する風船のペアを保証するID
 	size_t requiredHits = 0;	// 風船を割るのに必要なヒット数
 	size_t balloonHitCount = 0;	// 譜面再生時に風船を叩いた回数を保持
-	long long duraiton = 0;	// 風船の持続時間(譜面上の長さ)を保持するためのパラメータ
+	long long duration = 0;	// 風船の持続時間(譜面上の長さ)を保持するためのパラメータ
 };
 
 struct SongData
@@ -147,7 +148,9 @@ public:
 	int scoreOK = scoreGOOD / 2;
 	int scoreBAD = 0;
 	int scoreMISS = 0;
-	int scoreROLL = 10;
+	int scoreROLL = 100;
+	int scoreBALLOONHIT = 10;
+	int scoreBALLOONCLEARED = 1000;
 
 	int combo = 0;
 	int MAXcombo = 0;
