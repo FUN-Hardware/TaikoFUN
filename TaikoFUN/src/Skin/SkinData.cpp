@@ -4,10 +4,54 @@
 
 #include <memory>
 #include <cassert>
+#include <algorithm>
+#include <array>
+#include <cmath>
 
 
 
 namespace {
+	// Recolor the existing sprite pixels once at load time. Keep alpha, black
+	// outlines/shadows and the original antialiasing between fill and border.
+	void ApplyPosterNotePalette(BASEIMAGE& image) {
+		using Color = std::array<double, 3>;
+		const Color sourceBorder{ 255, 255, 240 };
+		const Color white{ 255, 255, 255 };
+		const auto dot = [](const Color& a, const Color& b) {
+			return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+		};
+		const int cellWidth = image.Width / 15;
+		for (int cell = 1; cell <= 10; ++cell) {
+			const bool don = cell == 1 || cell == 3;
+			const bool katsu = cell == 2 || cell == 4;
+			const Color sourceFill = don ? Color{ 255, 65, 40 }
+				: katsu ? Color{ 40, 176, 255 } : Color{ 255, 201, 40 };
+			const Color targetFill = don ? Color{ 218, 0, 16 } // #DA0010
+				: katsu ? Color{ 0, 134, 174 }                 // #0086AE
+				: Color{ 255, 214, 0 };                       // #FFD600
+			const double ff = dot(sourceFill, sourceFill);
+			const double fb = dot(sourceFill, sourceBorder);
+			const double bb = dot(sourceBorder, sourceBorder);
+			const double determinant = ff * bb - fb * fb;
+			for (int y = 0; y < image.Height; ++y) {
+				for (int x = cell * cellWidth; x < (cell + 1) * cellWidth; ++x) {
+					int r, g, b, alpha;
+					GetPixelBaseImage(&image, x, y, &r, &g, &b, &alpha);
+					if (alpha == 0) continue;
+					const Color pixel{ double(r), double(g), double(b) };
+					const double pf = dot(pixel, sourceFill);
+					const double pb = dot(pixel, sourceBorder);
+					const double fill = std::clamp((pf * bb - pb * fb) / determinant, 0.0, 1.0);
+					const double border = std::clamp((pb * ff - pf * fb) / determinant, 0.0, 1.0);
+					const auto channel = [&](int index) {
+						return std::clamp(int(std::lround(fill * targetFill[index] + border * white[index])), 0, 255);
+					};
+					SetPixelBaseImage(&image, x, y, channel(0), channel(1), channel(2), alpha);
+				}
+			}
+		}
+	}
+
 	class SkinData
 	{
 
@@ -93,20 +137,44 @@ void SkinData::LoadPlaySceneSkin() {
 	emplaceImg("play/ScrollField/katsu", "Resource/Image/Playing/scrollfield_ka.png");
 	emplaceImg("play/ScrollField/hit", "Resource/Image/Playing/scrollfield_hit.png");
 
+	// Register the 27 transparent poster assets once, outside Draw.
+	for (int assetIndex = 1; assetIndex <= 27; ++assetIndex) {
+		const std::string assetName = "asset_" + std::string(assetIndex < 10 ? "0" : "")
+			+ std::to_string(assetIndex);
+		emplaceImg("play/Poster/" + assetName, "Resource/Image/Poster/" + assetName + ".png");
+	}
+
+
 }
 
 void SkinData::LoadNotesImgs(const std::string& path) {
-	int baseImgHandle = LoadGraph(path.c_str());
-	int baseImgW = 0, baseImgH = 0;
-	GetGraphSize(baseImgHandle, &baseImgW, &baseImgH);
+	BASEIMAGE image{};
+	if (CreateBaseImageToFile(path.c_str(), &image) < 0) {
+		assert(false && "Failed to load note sprite sheet");
+		return;
+	}
+	// White song-title logos (06-10) and digits (21-30), rendered from SVG.
+	for (int assetIndex = 6; assetIndex <= 30; ++assetIndex) {
+		if (assetIndex > 10 && assetIndex < 21) continue;
+		const std::string assetName = "asset_" + std::string(assetIndex < 10 ? "0" : "")
+			+ std::to_string(assetIndex);
+		emplaceImg("play/Font/" + assetName, "Resource/Font/PNG/" + assetName + ".png");
+	}
 
 	int handles[15];
 	int DivNum = 15;
 	int DivX = 15;
 	int DivY = 1;
-	int XSize = baseImgW / DivX;
-	int YSize = baseImgH / DivY;
-	LoadDivGraph(path.c_str(), DivNum, DivX, DivY, XSize, YSize, handles);
+	int XSize = image.Width / DivX;
+	int YSize = image.Height / DivY;
+	ApplyPosterNotePalette(image);
+	const int result = CreateDivGraphFromBaseImage(&image, DivNum, DivX, DivY, XSize, YSize, handles);
+	ReleaseBaseImage(&image);
+	if (result < 0) {
+		assert(false && "Failed to create note textures");
+		return;
+	}
+	DeleteGraph(handles[14]); // The final cell in the sheet is unused.
 
 	emplaceImg("note/Judgeframe",	handles[0], XSize, YSize, path);			// 判定枠
 	emplaceImg("note/Don",			handles[1], XSize, YSize, path);			// ドン

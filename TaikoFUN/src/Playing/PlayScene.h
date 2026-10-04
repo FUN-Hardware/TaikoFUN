@@ -16,6 +16,15 @@ class PlayScene
 	std::string debug;
 
 	size_t lastRollIdx = SIZE_MAX;
+	// Drawing-only background state, calculated before Draw.
+	struct PosterDrawObject {
+		size_t sourceIndex;
+		double centerX;
+		double centerY;
+		double angle;
+	};
+	std::vector<PosterDrawObject> posterDrawObjects;
+	void UpdatePosterBackground(double elapsedSeconds);
 public:
 	
 	PlayScene();
