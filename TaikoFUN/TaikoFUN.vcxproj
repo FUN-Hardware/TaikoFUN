@@ -169,16 +169,19 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\SceneManager.h" />
+    <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\File\FileUtil.h" />
     <ClInclude Include="src\File\FIndAllTJA.h" />
     <ClInclude Include="src\File\CharCode.h" />
     <ClInclude Include="src\Core\ChartScanner.h" />
     <ClInclude Include="src\File\ChartLoader.h" />
-    <ClInclude Include="src\Playing\PlayScene.h" />
+    <ClInclude Include="src\Scene\Play\Play.h" />
+    <ClInclude Include="src\Scene\SceneContexts.h" />
     <ClInclude Include="src\Skin\SkinData.h" />
     <ClInclude Include="src\Audio\SoundHandle.h" />
     <ClInclude Include="src\Core\General.h" />
-    <ClInclude Include="src\Core\ChartData.h" />
+    <ClInclude Include="src\Chart\ChartData.h" />
     <ClInclude Include="src\Debug\Fps.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Debug\Debug.h" />
@@ -190,16 +193,17 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Core\text.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\SceneManager.cpp" />
     <ClCompile Include="src\File\FileUtil.cpp" />
     <ClCompile Include="src\File\FIndAllTJA.cpp" />
     <ClCompile Include="src\File\CharCode.cpp" />
     <ClCompile Include="src\Core\ChartScanner.cpp" />
     <ClCompile Include="src\File\ChartLoader.cpp" />
-    <ClCompile Include="src\Playing\PlayScene.cpp" />
+    <ClCompile Include="src\Scene\Play\Play.cpp" />
     <ClCompile Include="src\Skin\SkinData.cpp" />
     <ClCompile Include="src\Audio\SoundHandle.cpp" />
     <ClCompile Include="src\Core\General.cpp" />
-    <ClCompile Include="src\Core\ChartData.cpp" />
+    <ClCompile Include="src\Chart\ChartData.cpp" />
     <ClCompile Include="src\Debug\Fps.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Debug\Debug.cpp" />

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/ChartData.h"
+#include "Chart/ChartData.h"
 #include <string>
 #include <vector>
 

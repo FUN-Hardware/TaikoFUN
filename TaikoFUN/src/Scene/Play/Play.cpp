@@ -1,5 +1,5 @@
 ﻿#include "DxLib.h"
-#include "PlayScene.h"
+#include "Play.h"
 #include "Debug/FPS.h"
 
 #include "Input/Input.h"
@@ -9,9 +9,10 @@
 #include "File/ChartLoader.h"
 #include "File/FindAllTJA.h"
 #include "Core/text.h"
+#include "Scene/SceneContexts.h"
 
 #include <unordered_set>
-
+#include <memory>
 namespace SkinLayout {
 
 	Vector2d ScrollField{ 325, 254 - 65 };
@@ -21,12 +22,11 @@ namespace SkinLayout {
 namespace fs = std::filesystem;
 
 
-PlayScene::PlayScene() {
+PlayScene::PlayScene(GameContext* ctx) {
+	ctx_ = ctx;
 
-	//	ChartLoad::load(u8"(Songs/続・〆ドレー2000/続・〆ドレー2000.tja)", CD, CourseType::Oni);
-	//	ChartLoad::load("Songs/シャイニングスター/シャイニングスター.tja", CD, CourseType::Oni);
-	debug = "走査対象のパス: " + fs::absolute( "Songs" ).string(); // 絶対パスに変換して出力
-	tempTjaPath = FindAllTjaFiles( "Songs" );
+	CD = std::make_shared<ChartData>(ctx_->chartData);
+
 	ChartLoad::load( tempTjaPath[4].c_str(), CD, CourseType::Oni );
 		//CD.loadSong("Resource/Debug/カンケーガール.mp3", 185.0, 4.2);
 	double soundVol = 0.8;
@@ -43,10 +43,14 @@ PlayScene::PlayScene() {
 
 }
 
+void PlayScene::Init() {
+
+	chartDrawer = std::make_unique<ChartDrawer>();
+	chartPlayer = std::make_unique<ChartPlayer>( CD );
+}
 
 void PlayScene::Update() {
 
-	this->Input();
 	CD.Update();
 
 
@@ -393,7 +397,3 @@ void PlayScene::Draw() {
 
 }
 
-void PlayScene::Input() {
-
-	CD.Input();
-}

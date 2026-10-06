@@ -1,6 +1,6 @@
 #include "Input.h"
 #include "DxLib.h"
-#include "Core/ChartData.h"
+#include "Chart/ChartData.h"
 
 #include <algorithm>
 #include <iterator>

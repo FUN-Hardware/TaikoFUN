@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "Input/Input.h"
 #include "Fps.h"
-#include "Core/ChartData.h"
+#include "Chart/ChartData.h"
 #include <string>
 #include "Core/text.h"
 #include "Skin/SkinData.h"

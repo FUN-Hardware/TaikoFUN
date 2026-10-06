@@ -339,7 +339,7 @@
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\dpa_dsa.h",
             "c:\\dxlib_vc\\addproject_vc\\dxfunctionwin.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\soundhandle.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\chartdata.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\chartdata.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h"
         ],
         "ImportedModules": [],

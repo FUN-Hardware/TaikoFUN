@@ -1,6 +1,6 @@
 #include "SkinData.h"
 #include "DxLib.h"
-#include "Core/ChartData.h"
+#include "Chart/ChartData.h"
 
 #include <memory>
 #include <cassert>
@@ -129,8 +129,9 @@ void SkinData::LoadNotesImgs(const std::string& path) {
 
 
 void SkinData::LoadSoundData() {
-	emplaceSnd("Don", ("Resource/Sound/General/don.wav"));
-	emplaceSnd("Katsu", ("Resource/Sound/General/ka.wav"));
+	emplaceSnd( "Don", ("Resource/Sound/General/don.wav") );
+	emplaceSnd( "Katsu", ("Resource/Sound/General/ka.wav") );
+	emplaceSnd( "BalloonBreak", ("Resource/Sound/General/balloon_break.wav") );
 }
 /*
 imgData& SkinData::GetTexture(const std::string& key) {

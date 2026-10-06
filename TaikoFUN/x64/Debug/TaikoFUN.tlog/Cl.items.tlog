@@ -1,13 +1,14 @@
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\SceneManager.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SceneManager.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\FileUtil.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\FileUtil.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\FIndAllTJA.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\FIndAllTJA.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\CharCode.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\CharCode.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartScanner.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartScanner.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\ChartLoader.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartLoader.obj
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Playing\PlayScene.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\PlayScene.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Play.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Play.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Skin\SkinData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SkinData.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SoundHandle.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\General.obj
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartData.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\ChartData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartData.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Debug\Fps.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Fps.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Input\Input.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Input.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Debug\Debug.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Debug.obj

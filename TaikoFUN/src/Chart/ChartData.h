@@ -3,7 +3,8 @@
 #include <vector>
 #include "dxlib.h"
 #include "Audio/SoundHandle.h"
-#include "Time.h"
+#include "Core/Time.h"
+#include "Note.h"
 // ノーツデータと譜面データ
 
 enum class NoteType {
@@ -42,33 +43,6 @@ struct gogoTime
 	long long endTime;
 };
 
-struct Note
-{
-
-	double bpm;				// ノーツの速度(流れる速さはこれに依存する)			
-	long long absTime;		// ノーツの絶対座標　(曲オフセットからの相対時間)	ノーツが流れてくる位置
-	NoteType type;				// ノーツタイプ (1=ドン, 2=カツ, 3=大ドン, 4=大カツ)
-	double scroll = 1.0;		// ノーツのスクロール速度 (譜面読み込み時に計算して結果をここに入れる)	描画時にbpmにこれを掛けて描画
-	bool hasBarline = false;	// 小節線の有無
-	bool isBig = false;			// 大音符かどうか
-	bool isGogo = false; 		// ゴーゴータイム中のノーツかどうか
-
-	size_t idx;
-	bool isJudged = false;  // 既に判定を下かどうかを保持
-	bool isMissed = false;
-
-	// 連打用パラメータ
-	size_t pairRollIndex = SIZE_MAX;	// 連打尾のインデックスを保持
-	size_t rollId;						// パース時に使用する連打のペアを保証するID
-
-	size_t rollHitCount = 0;			// 譜面再生時に連打した回数を保持
-
-	// 風船用パラメータ	風船は連打と違い、尾を持たずに頭に情報を持たせる。
-	size_t balloonId;			// パース時に使用する風船のペアを保証するID
-	size_t requiredHits = 0;	// 風船を割るのに必要なヒット数
-	size_t balloonHitCount = 0;	// 譜面再生時に風船を叩いた回数を保持
-	long long duration = 0;	// 風船の持続時間(譜面上の長さ)を保持するためのパラメータ
-};
 
 struct SongData
 {
@@ -87,15 +61,8 @@ struct SongData
 	void playSong(bool restart = false);
 	void stopSong();
 	void loadSong(const char* path);
-	long long getSongCurrentTimeUs(bool applyOffset = false);
-	long long songProgTime() { 
-		_songProgTime = GetNowHiPerformanceCount() - songStartTime - totalPausedDuration;	// GetSoundCurrentTimeによって必要なくなりました。
-		return _songProgTime; 
-	}
-	long long songProgTimefromOffset() {
-		_songProgTimefromOffset = songProgTime() - offsetTime - totalPausedDuration;
-		return _songProgTimefromOffset;
-	}
+	long long getSongCurrentTimeUs(bool applyOffset = false) const;
+
 };
 
 

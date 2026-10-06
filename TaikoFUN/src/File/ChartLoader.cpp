@@ -1,7 +1,7 @@
 ﻿#include "Dxlib.h"
 #include "ChartLoader.h"
 
-#include "Core/ChartData.h"
+#include "Chart/ChartData.h"
 #include "Core/General.h"
 #include "File/FileUtil.h"
 

@@ -1,6 +1,6 @@
 ﻿#include "ChartData.h"
 #include "dxlib.h"
-#include "Time.h"
+#include "Core/Time.h"
 #include "Input/Input.h"
 #include "Skin/SkinData.h"
 
@@ -31,10 +31,10 @@ void SongData::loadSong(const char* path) {
 	songHandle.load(path);
 }
 
-long long SongData::getSongCurrentTimeUs(bool applyOffset) {
-	_songProgTime = GetSoundCurrentTime(songHandle.handle) * 1000.0;
-	if (applyOffset) _songProgTime -= offsetTime;
-	return _songProgTime;
+long long SongData::getSongCurrentTimeUs(bool applyOffset) const{
+	long long songProgTime = GetSoundCurrentTime(songHandle.handle) * 1000.0;
+	if (applyOffset) songProgTime -= offsetTime;
+	return songProgTime;
 
 }
 
