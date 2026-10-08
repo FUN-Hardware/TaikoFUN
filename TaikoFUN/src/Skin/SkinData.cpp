@@ -153,9 +153,10 @@ void SkinData::LoadNotesImgs(const std::string& path) {
 		assert(false && "Failed to load note sprite sheet");
 		return;
 	}
-	// White song-title logos (06-10) and digits (21-30), rendered from SVG.
-	for (int assetIndex = 6; assetIndex <= 30; ++assetIndex) {
+	// White song-title logos (06-10), digits (21-30) and judgments 良/可/不可 (34-36), rendered from SVG.
+	for (int assetIndex = 6; assetIndex <= 36; ++assetIndex) {
 		if (assetIndex > 10 && assetIndex < 21) continue;
+		if (assetIndex > 30 && assetIndex < 34) continue;
 		const std::string assetName = "asset_" + std::string(assetIndex < 10 ? "0" : "")
 			+ std::to_string(assetIndex);
 		emplaceImg("play/Font/" + assetName, "Resource/Font/PNG/" + assetName + ".png");

@@ -8,6 +8,7 @@
 #include <climits>
 
 #include "Core/ChartData.h"
+#include "Playing/PlayEffects.h"
 class PlayScene
 {
 	
@@ -25,6 +26,7 @@ class PlayScene
 	};
 	std::vector<PosterDrawObject> posterDrawObjects;
 	void UpdatePosterBackground(double elapsedSeconds);
+	PlayEffects effects; // 判定文字・コンボ・ヒット効果（描画専用）
 public:
 	
 	PlayScene();

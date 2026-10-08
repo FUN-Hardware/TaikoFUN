@@ -1,4 +1,4 @@
-﻿#include "DxLib.h"
+#include "DxLib.h"
 #include "PlayScene.h"
 #include "Debug/FPS.h"
 
@@ -298,6 +298,7 @@ void PlayScene::Update() {
 	const double backgroundSeconds = CD.songData.playing
 		? (std::max)(0.0, (CD.nowSongTime + CD.songData.offsetTime) / 1000000.0) : 0.0;
 	UpdatePosterBackground(backgroundSeconds);
+	effects.Update(CD, Time::deltaSec());
 
 
 }
@@ -331,6 +332,7 @@ void PlayScene::Draw() {
 	DrawBox(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y,
 		SkinLayout::ScrollField.x + lane.w, SkinLayout::ScrollField.y + lane.h,
 		GetColor(32, 42, 82), TRUE); // #202A52: darkened background blue
+	effects.DrawLane();
 
 	DrawExtendGraph( SkinLayout::ScrollField.x,
 					 SkinLayout::ScrollField.y,
@@ -510,6 +512,7 @@ void PlayScene::Draw() {
 		index++;
 	}
 	CD.notes; // デバッグで内部数値を確認する用
+	effects.DrawOverlay();
 
 
 	int winx, winy;
