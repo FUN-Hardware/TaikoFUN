@@ -1,34 +1,23 @@
 #pragma once
-// ChartDrawer.h
-#include "Chart/ChartData.h"
 
-#include "BackgroundRenderer.h" // 背景描画担当クラス
+#include "Chart/ChartData.h"
+#include "BackgroundRenderer.h"
 #include "NoteRenderer.h"
+#include "PlayEffects.h"
+
 #include <memory>
 
-// 譜面の描画を担当するクラス
 class ChartDrawer
-{ 
+{
 public:
-
-	ChartDrawer( ChartData& cd ): cd_( cd ) { 
-
-
-		nr_ = std::make_unique<NoteRenderer>(cd);
-
-	} // PlaySceneがシーンを生成するときに受け取る
-
+	ChartDrawer(ChartData& cd, PlayEffects& effects);
 	void Init();
-	void Update( const ChartPlayer& cp_ );
-	void Draw( const ChartPlayer& cp_ );
-	
+	void Update(const ChartPlayer& player);
+	void Draw(const ChartPlayer& player);
 
 private:
-	ChartData& cd_;	// PlaySceneが保有するChartDataのポインタを保持し、これを参照して描画する
+	ChartData& cd_;
+	PlayEffects& effects_;
 	std::unique_ptr<BackgroundRenderer> bg_;
 	std::unique_ptr<NoteRenderer> nr_;
-
-
-
 };
-
