@@ -8,3 +8,5 @@
 /.vs/
 TaikoFUN/Log.txt
 TaikoFUN/x64/Debug/ChartData.cpp.obj.dt.d.json
+/x64
+x64/Debug/TaikoFUN.exe
