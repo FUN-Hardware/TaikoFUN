@@ -667,6 +667,14 @@ void PlayScene::Draw() {
 }
 
 void PlayScene::Input() {
-
 	CD.Input();
+	// F1 の切り替え後のモードを使い、同じフレームの二重発光を防ぐ。
+	if (!CD.autoPlay) {
+		if (Input::isNoteKeyTriggered(NoteType::Don)) {
+			effects.TriggerLaneFlash(NoteType::Don);
+		}
+		if (Input::isNoteKeyTriggered(NoteType::Katsu)) {
+			effects.TriggerLaneFlash(NoteType::Katsu);
+		}
+	}
 }

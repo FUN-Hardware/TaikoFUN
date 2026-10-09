@@ -106,6 +106,14 @@ void PlayEffects::Reset() {
 	brokenCombo = 0;
 }
 
+void PlayEffects::TriggerLaneFlash(NoteType noteType) {
+	HitColor color = (noteType == NoteType::Katsu) ? HitColor::Katsu : HitColor::Don;
+	laneFlashes.push_back({ color, 0.0 });
+	if (laneFlashes.size() > 8) {
+		laneFlashes.erase(laneFlashes.begin(), laneFlashes.end() - 8);
+	}
+}
+
 void PlayEffects::OnJudge(const ChartData& cd, const JudgeLog& log) {
 	const double spin = (processedJudgeLogs * 37 % 360) * kPi / 180.0;
 	switch (log.type) {
@@ -129,7 +137,10 @@ void PlayEffects::OnJudge(const ChartData& cd, const JudgeLog& log) {
 			}
 		}
 		bursts.push_back({ color, big, log.type == JudgeType::GOOD, 0.0, spin });
-		laneFlashes.push_back({ color, 0.0 });
+		// 手動時は打鍵で発光済みなので、判定からの発光はオートプレイ時のみ
+		if (cd.autoPlay) {
+			laneFlashes.push_back({ color, 0.0 });
+		}
 		break;
 	}
 	case JudgeType::BAD:
@@ -139,11 +150,15 @@ void PlayEffects::OnJudge(const ChartData& cd, const JudgeLog& log) {
 	case JudgeType::ROLLHIT:
 	case JudgeType::BALLOONHIT:
 		bursts.push_back({ HitColor::Roll, false, false, 0.0, spin });
-		laneFlashes.push_back({ HitColor::Roll, 0.0 });
+		if (cd.autoPlay) {
+			laneFlashes.push_back({ HitColor::Roll, 0.0 });
+		}
 		break;
 	case JudgeType::BALLOONCLEAR:
 		bursts.push_back({ HitColor::Roll, true, true, 0.0, spin });
-		laneFlashes.push_back({ HitColor::Roll, 0.0 });
+		if (cd.autoPlay) {
+			laneFlashes.push_back({ HitColor::Roll, 0.0 });
+		}
 		break;
 	}
 	// 連打中に増えすぎないよう、古いものから捨てる

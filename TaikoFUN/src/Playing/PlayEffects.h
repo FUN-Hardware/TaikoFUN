@@ -9,6 +9,9 @@
 class PlayEffects
 {
 public:
+	// 手動打鍵（空打ち含む）によるレーン発光トリガー
+	void TriggerLaneFlash(NoteType noteType);
+
 	// 毎フレーム、CD.Input()/CD.Update() の後に呼ぶ
 	void Update(const ChartData& cd, double dtSec);
 
