@@ -31,7 +31,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	SetGraphMode(1280, 720, 32);
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(FALSE);
 	SetWindowSizeExtendRate(1.0);
 	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 
