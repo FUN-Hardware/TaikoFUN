@@ -84,6 +84,9 @@
     <ClCompile Include="src\Scene\Play\View\BackgroundRenderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\Play\View\PlayEffects.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="src\Scene\Play\View\NoteRenderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -177,6 +180,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\Play\View\BackgroundRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Play\View\PlayEffects.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\Play\View\NoteRenderer.h">

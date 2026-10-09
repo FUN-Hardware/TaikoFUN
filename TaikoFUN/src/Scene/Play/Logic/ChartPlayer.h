@@ -4,6 +4,9 @@
 #include "JudgeEvent.h"
 #include "PlayStats.h"
 
+#include <algorithm>
+#include <vector>
+
 
 // ChartData.updateをこのクラスに移動します
 class ChartPlayer
@@ -29,6 +32,14 @@ public:
 	// 済み
 	PlayStats getPlayStats() const { return stats_; } // 描画などで使用するためのゲッター
 
+	bool isAutoplay() const { return autoPlay; }
+	const std::vector<JudgeEvent>& getJudgeEvents() const { return events_; }
+	size_t getPlaybackGeneration() const { return playbackGeneration_; }
+	double getPlaybackElapsedSec() const {
+		return cd_.songData.playing
+			? (std::max)(0.0, (nowSongTime + cd_.songData.offsetTime) / 1000000.0) : 0.0;
+	}
+
 	bool isGogoTime() const;
 
 	void toggleAutoplay() { 
@@ -42,9 +53,10 @@ private:
 	
 	bool autoPlay = true; // オートプレイ
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
-	long long nowSongTime; //　cd.songData.getSongCurrentTimeUs(true)のキャッシュ
+	long long nowSongTime = 0; //　cd.songData.getSongCurrentTimeUs(true)のキャッシュ
 
-	JudgeEvent events_;
+	std::vector<JudgeEvent> events_; // このフレームの判定。描画側は読み取り専用。
+	size_t playbackGeneration_ = 0;
 
 	const float GOGOSCOREMULTIPLIER = 1.2f;	// ゴーゴータイム中のスコア倍率
 
