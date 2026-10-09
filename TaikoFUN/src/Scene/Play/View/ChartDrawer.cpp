@@ -70,13 +70,27 @@ void ChartDrawer::Draw(const ChartPlayer& player) {
 		SkinLayout::ScrollField.x + lane.w, SkinLayout::ScrollField.y + lane.h,
 		GetColor(32, 42, 82), TRUE);
 	effects_.DrawLane();
+	effects_.DrawHitEffects();
 
-	DrawExtendGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y,
-		SkinLayout::ScrollField.x + SkinLayout::NoteSize,
-		SkinLayout::ScrollField.y + SkinLayout::NoteSize,
-		Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge, false)).handle, TRUE);
+	// ノーツをレーン内に収め、左のミニ太鼓に重ねない。
+	RECT previousDrawArea{};
+	GetDrawArea(&previousDrawArea);
+	const int clipLeft = (std::max)(int(previousDrawArea.left), int(SkinLayout::ScrollField.x));
+	const int clipTop = (std::max)(int(previousDrawArea.top), int(SkinLayout::ScrollField.y));
+	const int clipRight = (std::min)(int(previousDrawArea.right), int(SkinLayout::ScrollField.x + lane.w));
+	const int clipBottom = (std::min)(int(previousDrawArea.bottom), int(SkinLayout::ScrollField.y + lane.h));
+	if (clipLeft < clipRight && clipTop < clipBottom) {
+		SetDrawArea(clipLeft, clipTop, clipRight, clipBottom);
 
-	nr_->Draw();
+		DrawExtendGraph(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y,
+			SkinLayout::ScrollField.x + SkinLayout::NoteSize,
+			SkinLayout::ScrollField.y + SkinLayout::NoteSize,
+			Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge, false)).handle, TRUE);
+
+		nr_->Draw();
+	}
+	SetDrawArea(previousDrawArea.left, previousDrawArea.top, previousDrawArea.right, previousDrawArea.bottom);
+	effects_.DrawMiniDrum();
 	effects_.DrawOverlay();
 
 	// 白文字の曲名。専用画像のない曲は既存フォントで表示する。

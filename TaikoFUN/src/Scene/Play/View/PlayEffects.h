@@ -17,7 +17,11 @@ public:
 
 	// レーンの上・ノーツより下に描く（レーンの光）
 	void DrawLane() const;
-	// ノーツより上に描く（ヒット効果・判定文字・コンボ）
+	// レーンの光より上・ノーツより下に描く（ヒット効果）
+	void DrawHitEffects() const;
+	// レーン左の空きに既存ポスター素材を組み合わせたミニ太鼓を描く
+	void DrawMiniDrum() const;
+	// ノーツより上に描く（判定文字・コンボ）
 	void DrawOverlay() const;
 
 private:

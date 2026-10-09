@@ -17,7 +17,7 @@ namespace {
 	constexpr double comboX = 47.0, comboY = 345.0, comboW = 270.0;
 
 	// 時間（秒）
-	constexpr double burstTime = 0.32, rollBurstTime = 0.22, laneFlashTime = 0.18;
+	constexpr double burstTime = 0.24, rollBurstTime = 0.18, laneFlashTime = 0.18;
 	constexpr double judgeTime = 0.5, comboPopTime = 0.16, milestoneTime = 0.45, brokenTime = 0.4;
 
 	struct Rgb { int r, g, b; };
@@ -84,7 +84,7 @@ namespace {
 		switch (type) {
 		case JudgeType::GOOD: return "play/Font/asset_34";	// 良
 		case JudgeType::OK:   return "play/Font/asset_35";	// 可
-		default:              return "play/Font/asset_36";	// 不可（叩かずに通過した場合も不可）
+		default:              return "play/Font/asset_36";	// 不可（叩いた場合のみ。MISSは表示しない）
 		}
 	}
 	Rgb JudgeTextColor(JudgeType type) {
@@ -130,8 +130,11 @@ void PlayEffects::OnJudge(const ChartPlayer& player, const JudgeEvent& event) {
 		break;
 	}
 	case JudgeType::BAD:
-	case JudgeType::MISS:
 		judgePop = { event.judgeType, 0.0 };
+		break;
+	case JudgeType::MISS:
+		// 見逃しでは判定文字を出さない。直前の文字も消して誤解を防ぐ。
+		judgePop.age = 1e9;
 		break;
 	case JudgeType::ROLLHIT:
 	case JudgeType::BALLOONHIT:
@@ -148,7 +151,7 @@ void PlayEffects::OnJudge(const ChartPlayer& player, const JudgeEvent& event) {
 		break;
 	}
 	// 連打中に増えすぎないよう、古いものから捨てる
-	if (bursts.size() > 24) bursts.erase(bursts.begin(), bursts.end() - 24);
+	if (bursts.size() > 8) bursts.erase(bursts.begin(), bursts.end() - 8);
 	if (laneFlashes.size() > 8) laneFlashes.erase(laneFlashes.begin(), laneFlashes.end() - 8);
 }
 
@@ -203,7 +206,7 @@ void PlayEffects::DrawLane() const {
 	ResetDrawState();
 }
 
-void PlayEffects::DrawOverlay() const {
+void PlayEffects::DrawHitEffects() const {
 	const auto& star = Skin::GetTexture("play/Poster/asset_19");	// 白い星（赤い縁）
 	const auto& streak = Skin::GetTexture("play/Poster/asset_12");	// 白い流線
 	const auto& dot = Skin::GetTexture("play/Poster/asset_16");		// 黄色い円（赤い縁）
@@ -214,38 +217,68 @@ void PlayEffects::DrawOverlay() const {
 			// 連打：小さな黄色い円が弾けて消える
 			const double t = b.age / rollBurstTime, e = EaseOutCubic(t);
 			const double ox = std::cos(b.spin) * 26.0 * e, oy = std::sin(b.spin) * 26.0 * e;
-			SetAlpha(1.0 - t);
-			DrawCentered(dot, judgeX + ox, judgeY + oy, 0.12 + 0.12 * e, 0.12 + 0.12 * e, 0.0);
+			SetAlpha((1.0 - t) * 0.65);
+			DrawCentered(dot, judgeX + ox, judgeY + oy, 0.08 + 0.06 * e, 0.08 + 0.06 * e, 0.0);
 			continue;
 		}
 		const double t = b.age / burstTime, e = EaseOutCubic(t);
 		const Rgb c = b.color == HitColor::Don ? donColor : b.color == HitColor::Katsu ? katsuColor : rollColor;
-		const double size = (b.big ? 1.3 : 1.0) * (b.good ? 1.0 : 0.75);
+		const double size = (b.big ? 1.15 : 1.0) * (b.good ? 1.0 : 0.75);
 
 		// 広がる輪
-		SetAlpha((1.0 - t) * 0.9);
-		DrawCircleAA(float(judgeX), float(judgeY), float((62.0 + 58.0 * e) * size), 64,
-			ToColor(c), FALSE, float(12.0 * (1.0 - t) + 1.0));
+		SetAlpha((1.0 - t) * 0.6);
+		DrawCircleAA(float(judgeX), float(judgeY), float((42.0 + 26.0 * e) * size), 64,
+			ToColor(c), FALSE, float(6.0 * (1.0 - t) + 1.0));
 
 		// 放射する流線（良のみ）。細い先端が外を向くように回転させる
 		if (b.good) {
-			for (int k = 0; k < 8; ++k) {
-				const double angle = b.spin + k * kPi / 4.0;
-				const double r = (70.0 + 75.0 * e) * size;
-				SetAlpha(std::pow(1.0 - t, 1.5));
+			for (int k = 0; k < 4; ++k) {
+				const double angle = b.spin + k * kPi / 2.0;
+				const double r = (48.0 + 28.0 * e) * size;
+				SetAlpha(std::pow(1.0 - t, 1.5) * 0.55);
 				SetTint(k % 2 == 0 ? white : c);
-				const double s = 0.1 * size * (1.0 - 0.5 * t);
+				const double s = 0.06 * size * (1.0 - 0.5 * t);
 				DrawCentered(streak, judgeX + std::cos(angle) * r, judgeY + std::sin(angle) * r, s, s, angle + kPi);
 			}
 			SetTint(white);
 		}
 
 		// 回転しながら開く星
-		const double starScale = (0.18 + 0.16 * e) * size;
-		SetAlpha(t < 0.4 ? 1.0 : 1.0 - (t - 0.4) / 0.6);
+		const double starScale = (0.12 + 0.08 * e) * size;
+		SetAlpha((t < 0.3 ? 1.0 : 1.0 - (t - 0.3) / 0.7) * 0.7);
 		DrawCentered(star, judgeX, judgeY, starScale, starScale, b.spin + e * 0.6);
 	}
 	ResetDrawState();
+
+	// 100コンボの星もノーツより下へ。コンボ枠の近くに収める。
+	if (milestoneAge < milestoneTime) {
+		const auto& frame = Skin::GetTexture("play/Poster/asset_09");
+		const double centerX = comboX + comboW / 2.0;
+		const double centerY = comboY + PairedHeight(frame, comboW) / 2.0;
+		const double t = milestoneAge / milestoneTime, e = EaseOutCubic(t);
+		SetAlpha((1.0 - t) * 0.7);
+		DrawCentered(star, centerX, centerY, 0.10 + 0.15 * e, 0.10 + 0.15 * e, e * 0.8);
+		ResetDrawState();
+	}
+
+}
+
+void PlayEffects::DrawMiniDrum() const {
+	// 円形素材を打面、青い帯と180度回転した複製を胴にする。
+	// レーン始点x=325の手前（x=192〜312）に収める。
+	const auto& body = Skin::GetTexture("play/Poster/asset_09");
+	const auto& face = Skin::GetTexture("play/Poster/asset_16");
+	constexpr double x = 246.0, y = judgeY;
+	DrawCentered(body, 282.0, y, 60.0 / body.w, 96.0 / body.h, 0.0);
+	DrawCentered(body, 282.0, y, 60.0 / body.w, 96.0 / body.h, kPi);
+	DrawCentered(face, x, y, 108.0 / face.w, 108.0 / face.h, 0.0);
+	DrawCircleAA(float(x), float(y), 44.0f, 64, GetColor(255, 250, 235), TRUE);
+	DrawCircleAA(float(x), float(y), 39.0f, 64, ToColor(outlineColor), FALSE, 1.0f);
+	DrawLine(int(x), int(y - 39), int(x), int(y + 39), ToColor(outlineColor), 1);
+	ResetDrawState();
+}
+
+void PlayEffects::DrawOverlay() const {
 
 	// ── 判定文字（良・可・不可）──
 	if (judgePop.age < judgeTime) {
@@ -272,13 +305,10 @@ void PlayEffects::DrawOverlay() const {
 	const double centerX = comboX + comboW / 2.0, centerY = comboY + frameH / 2.0;
 	const double baseY = centerY + digitH / 2.0;
 
-	// 100コンボごと：枠の後ろで星が開き、枠が弾む
+	// 100コンボごと：枠が弾む。星はDrawHitEffectsでノーツより下に描く。
 	double frameScale = 1.0;
 	if (milestoneAge < milestoneTime) {
-		const double t = milestoneAge / milestoneTime, e = EaseOutCubic(t);
-		SetAlpha(1.0 - t);
-		DrawCentered(star, centerX, centerY, 0.15 + 0.45 * e, 0.15 + 0.45 * e, e * 0.8);
-		ResetDrawState();
+		const double e = EaseOutCubic(milestoneAge / milestoneTime);
 		frameScale = 1.0 + 0.08 * (1.0 - e);
 	}
 	DrawPaired(frame, comboX, comboY, comboW, frameScale);
