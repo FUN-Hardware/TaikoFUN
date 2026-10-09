@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "status": "draft-awaiting-audio",
+  "gameRuntimeVerified": false,
+  "charts": [
+    {
+      "title": "さんぽ",
+      "file": "さんぽ/さんぽ_かんたん_draft.tja",
+      "status": "draft-awaiting-audio",
+      "levelTarget": 1,
+      "bpmProvisional": 120,
+      "offsetProvisional": 0,
+      "waveExpected": "さんぽ.ogg",
+      "audioIncluded": false,
+      "audioSynchronized": false,
+      "fullSongChart": false,
+      "measures": 48,
+      "courses": [
+        "Easy",
+        "Oni"
+      ],
+      "oniIsCompatibilityCopy": true,
+      "don": 60,
+      "katsu": 7,
+      "totalNotes": 67,
+      "patternDurationSec": 96,
+      "minNoteIntervalSec": 1,
+      "averageNotesPerSec": 0.698
+    },
+    {
+      "title": "夢をかなえてドラえもん",
+      "file": "夢をかなえてドラえもん/夢をかなえてドラえもん_かんたん_draft.tja",
+      "status": "draft-awaiting-audio",
+      "levelTarget": 1,
+      "bpmProvisional": 123,
+      "offsetProvisional": 0,
+      "waveExpected": "夢をかなえてドラえもん.ogg",
+      "audioIncluded": false,
+      "audioSynchronized": false,
+      "fullSongChart": false,
+      "measures": 48,
+      "courses": [
+        "Easy",
+        "Oni"
+      ],
+      "oniIsCompatibilityCopy": true,
+      "don": 66,
+      "katsu": 7,
+      "totalNotes": 73,
+      "patternDurationSec": 93.659,
+      "minNoteIntervalSec": 0.488,
+      "averageNotesPerSec": 0.779
+    },
+    {
+      "title": "おどるポンポコリン",
+      "file": "おどるポンポコリン/おどるポンポコリン_かんたん_draft.tja",
+      "status": "draft-awaiting-audio",
+      "levelTarget": 1,
+      "bpmProvisional": 140,
+      "offsetProvisional": 0,
+      "waveExpected": "おどるポンポコリン.ogg",
+      "audioIncluded": false,
+      "audioSynchronized": false,
+      "fullSongChart": false,
+      "measures": 48,
+      "courses": [
+        "Easy",
+        "Oni"
+      ],
+      "oniIsCompatibilityCopy": true,
+      "don": 58,
+      "katsu": 5,
+      "totalNotes": 63,
+      "patternDurationSec": 82.286,
+      "minNoteIntervalSec": 0.429,
+      "averageNotesPerSec": 0.766
+    },
+    {
+      "title": "紅蓮華",
+      "file": "紅蓮華/紅蓮華_かんたん_draft.tja",
+      "status": "draft-awaiting-audio",
+      "levelTarget": 2,
+      "bpmProvisional": 135,
+      "offsetProvisional": 0,
+      "waveExpected": "紅蓮華.ogg",
+      "audioIncluded": false,
+      "audioSynchronized": false,
+      "fullSongChart": false,
+      "measures": 48,
+      "courses": [
+        "Easy",
+        "Oni"
+      ],
+      "oniIsCompatibilityCopy": true,
+      "don": 58,
+      "katsu": 9,
+      "totalNotes": 67,
+      "patternDurationSec": 85.333,
+      "minNoteIntervalSec": 0.444,
+      "averageNotesPerSec": 0.785
+    },
+    {
+      "title": "夏祭り",
+      "file": "夏祭り/夏祭り_かんたん_draft.tja",
+      "status": "draft-awaiting-audio",
+      "levelTarget": 2,
+      "bpmProvisional": 141,
+      "offsetProvisional": 0,
+      "waveExpected": "夏祭り.ogg",
+      "audioIncluded": false,
+      "audioSynchronized": false,
+      "fullSongChart": false,
+      "measures": 48,
+      "courses": [
+        "Easy",
+        "Oni"
+      ],
+      "oniIsCompatibilityCopy": true,
+      "don": 67,
+      "katsu": 10,
+      "totalNotes": 77,
+      "patternDurationSec": 81.702,
+      "minNoteIntervalSec": 0.426,
+      "averageNotesPerSec": 0.942
+    }
+  ]
+}
