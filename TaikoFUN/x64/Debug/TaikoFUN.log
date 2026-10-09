@@ -1,38 +1,95 @@
-﻿  ChartPlayer.cpp
+<<<<<<< Updated upstream
+﻿  PlayEffects.cpp
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SongData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\Note.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\JudgeEvent.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\PlayStats.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
-  
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\Sounds.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Skin\SkinData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Scene/Play/Logic/ChartPlayer.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Scene/Play/View/PlayEffects.cpp' をコンパイルしています)
   
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.cpp(202,29): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.cpp(208,28): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.cpp(236,37): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  LINK : 前回のインクリメンタル リンクで C:\Users\flank\source\repos\TaikoFUN\x64\Debug\TaikoFUN.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+=======
+﻿  main.cpp
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\ChartData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SongData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\Note.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Play.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\JudgeEvent.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\PlayStats.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\ChartDrawer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\SceneContexts.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Skin\SkinData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartScanner.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\SceneManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/main.cpp' をコンパイルしています)
+  
+>>>>>>> Stashed changes
   TaikoFUN.vcxproj -> C:\Users\flank\source\repos\TaikoFUN\x64\Debug\TaikoFUN.exe
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\カンケーガール.mp3
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\シャイニングスター\シャイニングスター.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Debug\シャイニングスター\シャイニングスター.tja
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\README.md
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_06.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_07.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_08.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_09.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_10.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_21.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_22.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_23.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_24.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_25.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_26.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_27.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_28.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_29.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_30.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_34.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_35.png
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\PNG\asset_36.png
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\SVG\asset_01.svg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\SVG\asset_02.svg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Font\SVG\asset_03.svg
@@ -155,9 +212,11 @@ C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.c
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\balloon_break.wav
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\don.wav
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Resource\Sound\General\ka.wav
-  125 個のファイルをコピーしました
+  144 個のファイルをコピーしました
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\8orochi-ura\8OROCHI(裏).tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\8orochi-ura\8OROCHI.ogg
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\ごはん食べヨ\ごはん食べヨ.ogg
+  C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\ごはん食べヨ\ごはん食べヨ.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\シャイニングスター\シャイニングスター.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\ドンカマ2000\ドンカマ2000.ogg
@@ -166,4 +225,4 @@ C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.c
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\万戈イムー一ノ十.tja
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.ogg
   C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\Songs\続・〆ドレー2000\続・〆ドレー2000.tja
-  10 個のファイルをコピーしました
+  12 個のファイルをコピーしました

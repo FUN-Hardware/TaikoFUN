@@ -169,7 +169,12 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <ClInclude Include="src\Scene\Play\View\PlayEffects.h" />
+=======
+    <ClInclude Include="src\Chart\CourseType.h" />
+    <ClInclude Include="src\Scene\LoadingChart\LoadingChart.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="src\Scene\Play\View\NoteRenderer.h" />
     <ClInclude Include="src\Scene\Play\View\BackgroundRenderer.h" />
     <ClInclude Include="src\Scene\Play\View\ChartDrawer.h" />
@@ -205,7 +210,11 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Audio\Sounds.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <ClCompile Include="src\Scene\Play\View\PlayEffects.cpp" />
+=======
+    <ClCompile Include="src\Scene\LoadingChart\LoadingChart.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="src\Scene\Play\View\NoteRenderer.cpp" />
     <ClCompile Include="src\Scene\Play\View\BackgroundRenderer.cpp" />
     <ClCompile Include="src\Scene\Play\View\ChartDrawer.cpp" />

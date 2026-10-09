@@ -6,20 +6,13 @@
 #include "Audio/SongData.h"
 #include "Core/Time.h"
 #include "Note.h"
+#include "CourseType.h"
 // ノーツデータと譜面データ
 
 
 
 
 
-enum class CourseType {
-	Easy,
-	Normal,
-	Hard,
-	Oni,
-	InnerOni,
-
-};
 
 struct gogoTime
 {
