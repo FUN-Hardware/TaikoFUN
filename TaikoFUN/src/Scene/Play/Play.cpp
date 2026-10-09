@@ -54,6 +54,18 @@ void PlayScene::Update() {
 
 void PlayScene::Input() {
 	if (!chartPlayer->isAutoplay()) {
+		if (Input::isKeyTriggered(KEY_INPUT_D)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::LeftRim);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_F)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::LeftFace);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_J)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::RightFace);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_K)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::RightRim);
+		}
 		if (Input::isNoteKeyTriggered(NoteType::Don)) {
 			effects_->TriggerLaneFlash(NoteType::Don);
 		}

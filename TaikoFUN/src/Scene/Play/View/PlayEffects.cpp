@@ -18,11 +18,13 @@ namespace {
 
 	// 時間（秒）
 	constexpr double burstTime = 0.24, rollBurstTime = 0.18, laneFlashTime = 0.18;
+	constexpr double drumFlashTime = 0.18;
 	constexpr double judgeTime = 0.5, comboPopTime = 0.16, milestoneTime = 0.45, brokenTime = 0.4;
 
 	struct Rgb { int r, g, b; };
 	constexpr Rgb donColor{ 218, 0, 16 };		// #DA0010
 	constexpr Rgb katsuColor{ 0, 134, 174 };	// #0086AE
+	constexpr Rgb drumRimColor{ 70, 210, 255 };	// ミニ太鼓の縁は明るい水色
 	constexpr Rgb rollColor{ 255, 214, 0 };		// #FFD600
 	constexpr Rgb outlineColor{ 32, 42, 82 };	// #202A52（レーンと同じ）
 	constexpr Rgb white{ 255, 255, 255 };
@@ -101,9 +103,28 @@ void PlayEffects::Reset() {
 	bursts.clear();
 	laneFlashes.clear();
 	judgePop.age = 1e9;
+	drumFlashAges.fill(1e9);
+	autoDrumRight = false;
 	combo = 0;
 	comboAge = milestoneAge = brokenAge = 1e9;
 	brokenCombo = 0;
+}
+
+void PlayEffects::TriggerMiniDrumFlash(DrumPart part) {
+	drumFlashAges[static_cast<size_t>(part)] = 0.0;
+}
+
+void PlayEffects::TriggerAutoDrumFlash(NoteType noteType, bool big) {
+	const DrumPart left = noteType == NoteType::Katsu ? DrumPart::LeftRim : DrumPart::LeftFace;
+	const DrumPart right = noteType == NoteType::Katsu ? DrumPart::RightRim : DrumPart::RightFace;
+	if (big) {
+		TriggerMiniDrumFlash(left);
+		TriggerMiniDrumFlash(right);
+	}
+	else {
+		TriggerMiniDrumFlash(autoDrumRight ? right : left);
+		autoDrumRight = !autoDrumRight;
+	}
 }
 
 void PlayEffects::TriggerLaneFlash(NoteType noteType) {
@@ -126,6 +147,7 @@ void PlayEffects::OnJudge(const ChartPlayer& player, const JudgeEvent& event) {
 		// 手動時は入力から発光するので、判定からの発光はオートプレイ時のみ
 		if (player.isAutoplay()) {
 			laneFlashes.push_back({ color, 0.0 });
+			TriggerAutoDrumFlash(event.noteType, event.isBig);
 		}
 		break;
 	}
@@ -141,9 +163,11 @@ void PlayEffects::OnJudge(const ChartPlayer& player, const JudgeEvent& event) {
 		bursts.push_back({ HitColor::Roll, false, false, 0.0, spin });
 		if (player.isAutoplay()) {
 			laneFlashes.push_back({ HitColor::Roll, 0.0 });
+			TriggerAutoDrumFlash(NoteType::Don, false);
 		}
 		break;
 	case JudgeType::BALLOONCLEAR:
+		// 最後の一打は直前のBALLOONHITで発光済み。左右交互を二重に進めない。
 		bursts.push_back({ HitColor::Roll, true, true, 0.0, spin });
 		if (player.isAutoplay()) {
 			laneFlashes.push_back({ HitColor::Roll, 0.0 });
@@ -181,6 +205,7 @@ void PlayEffects::Update(const ChartPlayer& player, double dtSec) {
 
 	for (auto& b : bursts) b.age += dtSec;
 	for (auto& f : laneFlashes) f.age += dtSec;
+	for (auto& age : drumFlashAges) age = (std::min)(age + dtSec, drumFlashTime);
 	judgePop.age += dtSec;
 	comboAge += dtSec;
 	milestoneAge += dtSec;
@@ -264,6 +289,7 @@ void PlayEffects::DrawHitEffects() const {
 }
 
 void PlayEffects::DrawMiniDrum() const {
+	ResetDrawState();
 	// 円形素材を打面、青い帯と180度回転した複製を胴にする。
 	// レーン始点x=325の手前（x=192〜312）に収める。
 	const auto& body = Skin::GetTexture("play/Poster/asset_09");
@@ -273,6 +299,26 @@ void PlayEffects::DrawMiniDrum() const {
 	DrawCentered(body, 282.0, y, 60.0 / body.w, 96.0 / body.h, kPi);
 	DrawCentered(face, x, y, 108.0 / face.w, 108.0 / face.h, 0.0);
 	DrawCircleAA(float(x), float(y), 44.0f, 64, GetColor(255, 250, 235), TRUE);
+
+	// 各半円を独立して重ねる。面と縁は重ならず、同時押しも保持する。
+	RECT previousDrawArea{};
+	GetDrawArea(&previousDrawArea);
+	for (size_t i = 0; i < drumFlashAges.size(); ++i) {
+		if (drumFlashAges[i] >= drumFlashTime) continue;
+		const bool left = i < 2;
+		const bool rim = i == 0 || i == 3;
+		const int clipLeft = (std::max)(int(previousDrawArea.left), int(left ? x - 54 : x));
+		const int clipRight = (std::min)(int(previousDrawArea.right), int(left ? x : x + 54));
+		const int clipTop = (std::max)(int(previousDrawArea.top), int(y - 54));
+		const int clipBottom = (std::min)(int(previousDrawArea.bottom), int(y + 54));
+		if (clipLeft >= clipRight || clipTop >= clipBottom) continue;
+		SetDrawArea(clipLeft, clipTop, clipRight, clipBottom);
+		SetAlpha(0.9 * (1.0 - Clamp01(drumFlashAges[i] / drumFlashTime)));
+		DrawCircleAA(float(x), float(y), rim ? 49.0f : 43.0f, 64,
+			ToColor(rim ? drumRimColor : donColor), rim ? FALSE : TRUE, 8.0f);
+	}
+	SetDrawArea(previousDrawArea.left, previousDrawArea.top, previousDrawArea.right, previousDrawArea.bottom);
+	ResetDrawState();
 	DrawCircleAA(float(x), float(y), 39.0f, 64, ToColor(outlineColor), FALSE, 1.0f);
 	DrawLine(int(x), int(y - 39), int(x), int(y + 39), ToColor(outlineColor), 1);
 	ResetDrawState();
