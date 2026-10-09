@@ -13,6 +13,7 @@
 #include "Skin/SkinData.h"
 #include "Core/ChartScanner.h"
 #include "Scene/SceneContexts.h"
+#include "Scene/SceneManager.h"
 #include "File/FindAllTJA.h"
 #include "File/ChartLoader.h"
 
@@ -63,7 +64,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		printfDx( "Songs に tja が見つかりません\n" );   // 仮の表示でよい
 		// ここで止めるか return する
 	}
-	ctx.chartData = ChartLoad::load( tempTjaPath[0].c_str(), CourseType::Oni );
+	ctx.chartData = ChartLoad::load( tempTjaPath[1].c_str(), CourseType::Oni );
 
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)

@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\PlayEffects.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\PlayEffects.obj
+=======
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\LoadingChart\LoadingChart.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\LoadingChart.obj
+>>>>>>> Stashed changes
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\NoteRenderer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\NoteRenderer.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\BackgroundRenderer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\BackgroundRenderer.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\ChartDrawer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartDrawer.obj

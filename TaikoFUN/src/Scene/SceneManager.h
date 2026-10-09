@@ -15,8 +15,10 @@ class SceneManager
 {
 
 public:
-	void Init() {
+	void Init(SceneID firstScene) {
 		// 初期化処理
+		currentScene = Create(SceneID::Play);
+
 
 	}
 
@@ -36,7 +38,7 @@ public:
 
 	void Finalize() {
 		// 終了処理
-
+		
 
 	}
 
@@ -49,7 +51,7 @@ public:
 
 private:
 
-	Scene* currentScene = nullptr; // 現在のシーンを保持するポインタ
+	std::unique_ptr<Scene> currentScene = nullptr; // 現在のシーンを保持するポインタ
 	GameContext* ctx_; // ゲームの状態を保持するコンテキスト
 
 
