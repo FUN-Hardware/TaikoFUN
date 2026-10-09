@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\chartplayer.h",
+        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\chartplayer.h",
         "ProvidedModule": "",
         "Includes": [
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\chartdata.h",
@@ -336,8 +336,8 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\judgeevent.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\playstats.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\judgeevent.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\playstats.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

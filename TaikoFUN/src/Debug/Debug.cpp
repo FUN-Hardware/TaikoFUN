@@ -39,7 +39,6 @@ void Debug::Update() {
 
 	this->Input();
 	calledUpdate = true;
-	chartData.Update();
 	l.Update();
 
 
@@ -47,103 +46,6 @@ void Debug::Update() {
 
 void Debug::Draw() {
 
-
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "FPS: %d", FPS::getFps());
-
-	int strY = 16;
-	std::string temp = "#TITLE: シャイニングスター";
-	std::string substr = temp.substr(temp.find(':')+1);
-	switch(debugPage){
-	case 0:
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "Current Time: %lld, %ld", NowTime, NowTime/1000000);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "keyState_SPACE: %s", Input::isKeyDown(KEY_INPUT_SPACE) ? "TRUE" : "FALSE");
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "songHandle: %d", chartData.songData.songHandle.handle);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "song Start at: %lld", chartData.songData.songStartTime);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "song offset at: %lld", chartData.songData.offsetTime);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime us: %lld", chartData.songData.getSongCurrentTimeUs());
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime from offset us: %lld", chartData.songData.getSongCurrentTimeUs(true));
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "GetSoundCurrentTime us: %lf", GetSoundCurrentTime(chartData.songData.songHandle.handle)/ 1000.0);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "songTime sec: %lf", chartData.songData._songProgTime / 1000000.0);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "Last paused time stamp : %lld", chartData.songData.lastPausedTimeStamp);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "Total paused duration: %lf", chartData.songData.totalPausedDuration / 1000000.0);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "BPM: %.2f", chartData.bpm);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), ": %d", songHandle);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "songHandle: %d", songHandle);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "CheckSoundMem: %s", CheckSoundMem(chartData.songData.songHandle.handle) ? "TRUE" : "FALSE");
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "playingSongFlag: %s", songPlaying ? "TRUE" : "FALSE");
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "#: %d, :: %d, title: %s", temp.find("#"), temp.find(":"), substr.c_str());
-		strY += 20;
-		break;
-	case 1:
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "Score: %d", chartData.score);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "next Note: %d", chartData.nextNoteIndex);
-		strY += 20;
-		DrawFormatString(10, strY, GetColor(255, 255, 255), "GOOD: %d\nOK: %d\nBAD: %d\nMISS: %d", chartData.good, chartData.ok, chartData.bad, chartData.miss);
-		strY += 20;
-
-	}
-	int w, h;
-	GetWindowSize(&w, &h);
-
-	std::string str;
-	for (const auto& l : chartData.judgelogs) {
-		switch (l.type) {
-		case JudgeType::GOOD:
-			str = "GOOD";
-			break;
-		case JudgeType::OK:
-			str = "OK";
-			break;
-		case JudgeType::BAD:
-			str = "BAD";
-			break;
-		case JudgeType::MISS:
-			str = "MISS";
-		}
-		str += "\n";
-	}
-
-	DrawFormatString2Right(w, 0, GetColor(255, 255, 255), str.c_str());
-
-
-	DrawFormatString(10, h - 300, GetColor(255, 255, 255), "WindowSize h: %d", h);
-	strY += 20;
-
-	int tempHandle = LoadGraph( "Resource/Image/Poster/asset_05.png" );
-	int winW, winY;
-	GetWindowSize( &winW, &winY );
-
-	std::string str2 = "handle: " + std::to_string(tempHandle);
-	DrawFormatString2Right(winW, 16, GetColor(255, 255, 255), str2.c_str());
-	{
-		int tempW, tmepH;
-		GetGraphSize( tempHandle, &tempW, &tmepH );
-		int tempx, tempy;
-		tempx = 300; tempy = 300;
-		DrawExtendGraph( tempx, tempy, tempW/2 + tempx, tmepH/2 + tempy, tempHandle, true );
-	}
-	l.Draw();
-
-	strY = h - 200;
-
-	DeleteGraph(tempHandle);
 	/*
 	{//判定領域の表示 
 //		((noteRelativeTime / 1000000.0) / (240.0 / note.bpm)) * 960.0;
@@ -181,7 +83,6 @@ void Debug::Draw() {
 
 //	DrawFormatString(10, strY, GetColor(255, 255, 255), "〇");//判定枠
 
-	DrawGraph(10, strY, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Judge, false) ).handle, true);
 
 	
 	int noteX;
@@ -194,7 +95,7 @@ void Debug::Draw() {
 		noteRelativeTime = chartData.noteRelativeTime(index);
 		noteX = ((noteRelativeTime/1000000.0) / (240.0/note.bpm)) * 960.0;
 		// 240/BPM = 1小節の秒数。1小節当たり960pxとする。よって、(相対時間)/(240/BPM) * 960 = ノーツのX座標
-		if(noteX < 1300 && noteX > 0)DrawGraph(noteX, strY, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Don, false)).handle, true); // 画面内のみ描画
+		if(noteX < 1300 && noteX > 0)DrawGraph(noteX, 0, Skin::GetTexture(Skin::GetNoteImageKey(NoteType::Don, false)).handle, true); // 画面内のみ描画
 		index++;
 	}
 
@@ -255,7 +156,6 @@ void Debug::Input() {
 		//l.add(type + ", " + time + ", " + success, 10.0);
 	}
 
-	chartData.Input();
 
 
 

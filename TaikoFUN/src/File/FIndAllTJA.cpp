@@ -1,4 +1,4 @@
-#include "FIndAllTJA.h"
+﻿#include "FIndAllTJA.h"
 
 #include <filesystem>
 #include <vector>

@@ -29,6 +29,11 @@ public:
 	// 済み
 	PlayStats getPlayStats() const { return stats_; } // 描画などで使用するためのゲッター
 
+	bool isGogoTime() const;
+
+	void toggleAutoplay() { 
+		autoPlay = !autoPlay;
+	}
 
 private:
 
@@ -60,6 +65,7 @@ private:
 
 
 	size_t lastRollIdx = SIZE_MAX;
+	size_t gogoIndex = SIZE_MAX;
 	long long lastRollHitUs = 0;
 
 
@@ -75,7 +81,7 @@ private:
 	// 済み
 	void applyNoteJudge( Note& targetNote, JudgeType judgeType );
 	// 済み
-	void updateGogoTime();	// ゴーゴータイムの更新
+	//void updateGogoTime();	// ゴーゴータイムの更新
 
 };
 

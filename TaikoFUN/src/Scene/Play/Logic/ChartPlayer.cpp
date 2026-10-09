@@ -1,17 +1,19 @@
-#include "ChartPlayer.h"
+﻿#include "ChartPlayer.h"
 
 #include "Input/Input.h"
 #include "Audio/Sounds.h"
-
+#include "JudgeEvent.h"
+#include "Chart/Note.h"
 #include <cassert>
 
 void ChartPlayer::Update() {
+
+	cd_;
 	nowSongTime = cd_.songData.getSongCurrentTimeUs( true );
 
 	input();
 	updateMissNotes();
-	updateGogoTime();
-	autoplayHitNote();
+	if (autoPlay) autoplayHitNote();
 }
 
 void ChartPlayer::input() {
@@ -29,9 +31,7 @@ void ChartPlayer::input() {
 		playSong( true );
 	}
 
-	if ( Input::isKeyTriggered( KEY_INPUT_F1 ) ) {
-		autoPlay = !autoPlay;
-	}
+
 
 	if ( Input::isKeyTriggered( KEY_INPUT_KANJI ) ) playSong( true );
 
@@ -233,7 +233,7 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 			targetNote.isJudged = true;
 			break;
 	}
-
+	stats_.accuracy = stats_.goodCount / (stats_.goodCount + stats_.okCount + stats_.badCount + stats_.missCount);
 }
 
 void ChartPlayer::autoplayHitNote() {
@@ -280,4 +280,18 @@ void ChartPlayer::autoplayHitNote() {
 			}
 			break;
 	}
+}
+
+bool ChartPlayer::isGogoTime() const{
+	if ( cd_.gogoTimes.size() == 0 ) return false;
+	if ( gogoIndex >= cd_.gogoTimes.size() ) return false;
+
+	if ( nowSongTime >= cd_.gogoTimes[gogoIndex].startTime && nowSongTime < cd_.gogoTimes[gogoIndex].endTime ) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	return false;
 }

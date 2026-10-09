@@ -12,6 +12,9 @@
 #include "Core/Time.h"
 #include "Skin/SkinData.h"
 #include "Core/ChartScanner.h"
+#include "Scene/SceneContexts.h"
+#include "File/FindAllTJA.h"
+#include "File/ChartLoader.h"
 
 GameState gGameState = GameState::Playing;
 GameState preGameState = GameState::Null;
@@ -46,6 +49,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ChartList = CS.scanCharts("Songs");
 
+	// シーン関係の初期化を行う
+
+
+	GameContext ctx;
+
+
+	// 仮
+	
+	std::vector<std::string> tempTjaPath = FindAllTjaFiles( "Songs" );
+
+	if ( tempTjaPath.empty() ) {
+		printfDx( "Songs に tja が見つかりません\n" );   // 仮の表示でよい
+		// ここで止めるか return する
+	}
+	ctx.chartData = ChartLoad::load( tempTjaPath[0].c_str(), CourseType::Oni );
+
+
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
 
@@ -59,7 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 
 			if (gGameState == GameState::Playing) {
-				ps = std::make_unique<PlayScene>();
+				ps = std::make_unique<PlayScene>( &ctx );
 			}
 			if (preGameState == GameState::Playing) {
 				ps.reset();

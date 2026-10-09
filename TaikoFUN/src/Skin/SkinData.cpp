@@ -129,9 +129,9 @@ void SkinData::LoadNotesImgs(const std::string& path) {
 
 
 void SkinData::LoadSoundData() {
-	emplaceSnd( "Don", ("Resource/Sound/General/don.wav") );
-	emplaceSnd( "Katsu", ("Resource/Sound/General/ka.wav") );
-	emplaceSnd( "BalloonBreak", ("Resource/Sound/General/balloon_break.wav") );
+	emplaceSnd( "sound/Don", ("Resource/Sound/General/don.wav") );
+	emplaceSnd( "sound/Katsu", ("Resource/Sound/General/ka.wav") );
+	emplaceSnd( "sound/BalloonBreak", ("Resource/Sound/General/balloon_break.wav") );
 }
 /*
 imgData& SkinData::GetTexture(const std::string& key) {

@@ -169,6 +169,15 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\Play\View\NoteRenderer.h" />
+    <ClInclude Include="src\Scene\Play\View\BackgroundRenderer.h" />
+    <ClInclude Include="src\Scene\Play\View\ChartDrawer.h" />
+    <ClInclude Include="src\Audio\SongData.h" />
+    <ClInclude Include="src\Chart\Note.h" />
+    <ClInclude Include="src\Scene\Play\Logic\ChartPlayer.h" />
+    <ClInclude Include="src\Scene\Play\Logic\PlayStats.h" />
+    <ClInclude Include="src\Scene\Play\Logic\JudgeEvent.h" />
+    <ClInclude Include="src\Scene\Play\View\SkinLayout.h" />
     <ClInclude Include="src\Scene\SceneManager.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\File\FileUtil.h" />
@@ -178,6 +187,7 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\File\ChartLoader.h" />
     <ClInclude Include="src\Scene\Play\Play.h" />
     <ClInclude Include="src\Scene\SceneContexts.h" />
+    <ClInclude Include="src\Scene\SceneID.h" />
     <ClInclude Include="src\Skin\SkinData.h" />
     <ClInclude Include="src\Audio\SoundHandle.h" />
     <ClInclude Include="src\Core\General.h" />
@@ -191,8 +201,14 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Core\Tween.h" />
     <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Core\text.h" />
+    <ClInclude Include="src\Audio\Sounds.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\Play\View\NoteRenderer.cpp" />
+    <ClCompile Include="src\Scene\Play\View\BackgroundRenderer.cpp" />
+    <ClCompile Include="src\Scene\Play\View\ChartDrawer.cpp" />
+    <ClCompile Include="src\Audio\SongData.cpp" />
+    <ClCompile Include="src\Scene\Play\Logic\ChartPlayer.cpp" />
     <ClCompile Include="src\Scene\SceneManager.cpp" />
     <ClCompile Include="src\File\FileUtil.cpp" />
     <ClCompile Include="src\File\FIndAllTJA.cpp" />
@@ -201,7 +217,6 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClCompile Include="src\File\ChartLoader.cpp" />
     <ClCompile Include="src\Scene\Play\Play.cpp" />
     <ClCompile Include="src\Skin\SkinData.cpp" />
-    <ClCompile Include="src\Audio\SoundHandle.cpp" />
     <ClCompile Include="src\Core\General.cpp" />
     <ClCompile Include="src\Chart\ChartData.cpp" />
     <ClCompile Include="src\Debug\Fps.cpp" />
@@ -215,6 +230,7 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\..\..\Downloads\カンケーガール.mp3" />
+    <Media Include="..\..\..\..\ドキュメント\games\TaikoManyGimmicks ver0.6.6α\TaikoManyGimmicks ver0.6.6α\Skins\Default\Sound\balloon.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

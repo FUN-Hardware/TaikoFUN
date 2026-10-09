@@ -3,8 +3,8 @@
 #include "Chart/ChartData.h"
 #include "Core/General.h"
 #include "Scene/Scene.h"
-#include "ChartPlayer.h"
-#include "ChartDrawer.h"
+#include "Logic/ChartPlayer.h"
+#include "View/ChartDrawer.h"
 #include "Scene/SceneContexts.h"
 
 #include <vector>
@@ -14,7 +14,18 @@
 
 class PlayScene : public Scene // シーンクラスを継承
 {
+public:
 
+	PlayScene( GameContext* ctx );
+
+	void Init() override;
+	void Update() override;
+	void Draw() override;
+	void Finalize() override;
+
+	void Input() override;
+
+private:
 	GameContext* ctx_;
 
 	std::shared_ptr<ChartData> CD; // 譜面データの共有ポインタ ChartLoaderでロードし、PlaySceneで使用する。	
@@ -25,14 +36,6 @@ class PlayScene : public Scene // シーンクラスを継承
 	std::string debug;
 
 	size_t lastRollIdx = SIZE_MAX;
-public:
-	
-	PlayScene(GameContext* ctx);
-
-	void Init() override;
-	void Update() override;
-	void Draw() override;
-	void Finalize() override;
 
 };
 

@@ -1,3 +1,8 @@
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\NoteRenderer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\NoteRenderer.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\BackgroundRenderer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\BackgroundRenderer.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\View\ChartDrawer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartDrawer.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SongData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SongData.obj
+C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Logic\ChartPlayer.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartPlayer.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\SceneManager.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SceneManager.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\FileUtil.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\FileUtil.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\FIndAllTJA.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\FIndAllTJA.obj
@@ -6,7 +11,6 @@ C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\ChartScanner.cpp;C:\Users
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\File\ChartLoader.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartLoader.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Scene\Play\Play.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Play.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Skin\SkinData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SkinData.obj
-C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Audio\SoundHandle.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\SoundHandle.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Core\General.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\General.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Chart\ChartData.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\ChartData.obj
 C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\src\Debug\Fps.cpp;C:\Users\flank\source\repos\TaikoFUN\TaikoFUN\x64\Debug\Fps.obj

@@ -677,9 +677,12 @@ namespace {
 
 
 namespace ChartLoad {
-	int load( const char* path, ChartData& cd, CourseType course ) { // 譜面の読み込みに失敗した場合、-1を返し、選曲画面に戻す(Chartloadingシーン)
+	std::shared_ptr<ChartData> load( const char* path, CourseType course ) { // 譜面の読み込みに失敗した場合、-1を返し、選曲画面に戻す(Chartloadingシーン)
 
-		return cl.LoadChart( path, cd, course );
+		std::shared_ptr<ChartData> cd = std::make_shared<ChartData>();
+		cd->tjaPath = path;
+		cl.LoadChart( path, *cd, course );
+		return cd;
 	}
 }
 

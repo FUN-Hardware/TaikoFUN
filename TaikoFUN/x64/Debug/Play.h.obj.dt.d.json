@@ -338,11 +338,12 @@
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\general.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\scene.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\chartplayer.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\judgeevent.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\playstats.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\chartdrawer.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\scenecontexts.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\chartplayer.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\judgeevent.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\playstats.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\view\\chartdrawer.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\view\\backgroundrenderer.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\view\\noterenderer.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\memory",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\typeinfo",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\vcruntime_typeinfo.h",
@@ -352,7 +353,8 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xtimec.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\ctime",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\time.h",
-            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xatomic_wait.h"
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xatomic_wait.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\scenecontexts.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
