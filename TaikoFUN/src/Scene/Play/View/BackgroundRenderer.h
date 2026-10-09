@@ -1,19 +1,23 @@
 #pragma once
-#include "Scene/Play/Logic/ChartPlayer.h"
 
-class ChartPlayer; // 前方宣言
+#include <cstddef>
+#include <vector>
+
+class ChartPlayer;
 
 class BackgroundRenderer
 {
 public:
-
-	BackgroundRenderer() = default;
-
+	BackgroundRenderer();
 	void Init();
-	void Draw(const ChartPlayer& cp_);
-	void Update();
-
+	void Draw(const ChartPlayer& player) const;
+	void Update(const ChartPlayer& player);
 
 private:
-
+	struct PosterDrawObject {
+		size_t sourceIndex;
+		double centerX, centerY, angle;
+	};
+	std::vector<PosterDrawObject> posterDrawObjects;
+	void UpdatePosterBackground(double elapsedSeconds);
 };

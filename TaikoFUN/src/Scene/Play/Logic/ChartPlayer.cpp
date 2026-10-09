@@ -8,12 +8,11 @@
 
 void ChartPlayer::Update() {
 
-	cd_;
+	events_.clear();
 	nowSongTime = cd_.songData.getSongCurrentTimeUs( true );
 
 	input();
 	updateMissNotes();
-	if (autoPlay) autoplayHitNote();
 }
 
 void ChartPlayer::input() {
@@ -43,22 +42,19 @@ void ChartPlayer::input() {
 void ChartPlayer::init() {
 	cd_.songData.stopSong();
 
-	stats_.score = 0;
-	stats_.combo = 0;
-	stats_.maxCombo = 0;
-
-	stats_.goodCount = 0;
-	stats_.okCount = 0;
-	stats_.badCount = 0;
-	stats_.missCount = 0;
+	stats_ = {};
 	nextNoteIndex = 0;
 
 	for ( auto& Note : cd_.notes ) {
 		Note.isJudged = false;
 		Note.isMissed = false;
+		Note.rollHitCount = 0;
+		Note.balloonHitCount = 0;
 	}
 
-	events_ = {};
+	events_.clear();
+	++playbackGeneration_;
+	lastRollHitUs = 0;
 
 }
 
@@ -71,7 +67,8 @@ void ChartPlayer::playSong( bool restart ) {
 	}
 
 
-	cd_.songData.playSong( restart );
+	cd_.songData.playSong(restart);
+	nowSongTime = cd_.songData.getSongCurrentTimeUs(true);
 }
 
 void ChartPlayer::nextNotes() {
@@ -86,6 +83,7 @@ void ChartPlayer::nextNotes() {
 }
 
 void ChartPlayer::updateMissNotes() {
+	if (nextNoteIndex >= cd_.notes.size()) return;
 
 
 	Note& targetNote = cd_.notes[nextNoteIndex];
@@ -97,7 +95,7 @@ void ChartPlayer::updateMissNotes() {
 		case NoteType::Don: case NoteType::Katsu:
 			if ( abs( noteRelTime ) > judgeBAD && noteRelTime < 0 ) {	// 判定ノーツを次に移行する条件は (ノーツの相対位置がマイナスであること) ⋏ (ノーツの絶対相対座標がjudgeBADの領域を超えていること) 要するに判定枠の後ろをBAD判定以上に進んでたら次ってこと
 				targetNote.isMissed = true;
-				events_.setJudgeEvent( nowSongTime, targetNote.type, targetNote.isBig, JudgeType::MISS );
+				events_.push_back({ nowSongTime, targetNote.type, JudgeType::MISS, targetNote.isBig });
 				stats_.missCount++;
 				stats_.combo = 0;
 				nextNotes();
@@ -120,8 +118,9 @@ void ChartPlayer::updateMissNotes() {
 }
 
 void ChartPlayer::judgeNote() {
-	if ( !(cd_.notes.size() >= 1) ) return;
+	if (nextNoteIndex >= cd_.notes.size()) return;
 	Note& targetNote = cd_.notes[nextNoteIndex];
+	if (targetNote.isJudged || targetNote.isMissed) return;
 
 	if ( autoPlay ) {
 		autoplayHitNote();
@@ -193,7 +192,7 @@ long long ChartPlayer::noteRelativeTime( size_t noteIdx ) {
 
 void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 
-	events_.setJudgeEvent( nowSongTime, targetNote.type, targetNote.isBig, judgeType);
+	events_.push_back({ nowSongTime, targetNote.type, judgeType, targetNote.isBig });
 
 	float scoreMultiplier = 1.0f;
 	if ( targetNote.isGogo ) scoreMultiplier *= GOGOSCOREMULTIPLIER;
@@ -221,23 +220,29 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 			stats_.missCount++;
 			break;
 		case JudgeType::ROLLHIT:
+			++stats_.rollHitCount;
 			stats_.score += scoreROLL;
 			targetNote.rollHitCount++;
 			break;
 		case JudgeType::BALLOONHIT:
+			++stats_.balloonHitCount;
 			stats_.score += scoreBALLOONHIT;
 			targetNote.balloonHitCount++;
 			break;
 		case JudgeType::BALLOONCLEAR:
+			++stats_.balloonClearCount;
 			stats_.score += scoreBALLOONCLEARED;
 			targetNote.isJudged = true;
 			break;
 	}
-	stats_.accuracy = stats_.goodCount / (stats_.goodCount + stats_.okCount + stats_.badCount + stats_.missCount);
+	const int judgedCount = stats_.goodCount + stats_.okCount + stats_.badCount + stats_.missCount;
+	stats_.accuracy = judgedCount > 0 ? float(stats_.goodCount) / judgedCount : 0.0f;
 }
 
 void ChartPlayer::autoplayHitNote() {
+	if (nextNoteIndex >= cd_.notes.size()) return;
 	Note& targetNote = cd_.notes[nextNoteIndex];
+	if (targetNote.isJudged || targetNote.isMissed) return;
 	long long noteTime = noteRelativeTime( nextNoteIndex );
 	if ( !(noteRelativeTime( nextNoteIndex ) <= 0) ) return;
 
@@ -282,16 +287,9 @@ void ChartPlayer::autoplayHitNote() {
 	}
 }
 
-bool ChartPlayer::isGogoTime() const{
-	if ( cd_.gogoTimes.size() == 0 ) return false;
-	if ( gogoIndex >= cd_.gogoTimes.size() ) return false;
-
-	if ( nowSongTime >= cd_.gogoTimes[gogoIndex].startTime && nowSongTime < cd_.gogoTimes[gogoIndex].endTime ) {
-		return true;
+bool ChartPlayer::isGogoTime() const {
+	for (const auto& interval : cd_.gogoTimes) {
+		if (nowSongTime >= interval.startTime && nowSongTime < interval.endTime) return true;
 	}
-	else {
-		return false;
-	}
-
 	return false;
 }

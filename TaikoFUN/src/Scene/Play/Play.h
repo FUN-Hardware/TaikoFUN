@@ -5,6 +5,7 @@
 #include "Scene/Scene.h"
 #include "Logic/ChartPlayer.h"
 #include "View/ChartDrawer.h"
+#include "View/PlayEffects.h"
 #include "Scene/SceneContexts.h"
 
 #include <vector>
@@ -29,6 +30,7 @@ private:
 	GameContext* ctx_;
 
 	std::shared_ptr<ChartData> CD; // 譜面データの共有ポインタ ChartLoaderでロードし、PlaySceneで使用する。	
+	std::unique_ptr<PlayEffects> effects_;
 	std::unique_ptr<ChartPlayer> chartPlayer; // 演奏処理・判定処理を行うクラスのインスタンス。
 	std::unique_ptr<ChartDrawer> chartDrawer; // 描画処理を行うクラスのインスタンス。「
 

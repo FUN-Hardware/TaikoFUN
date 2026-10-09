@@ -21,8 +21,9 @@ namespace fs = std::filesystem;
 PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx){
 
 	CD = ctx_->chartData;
-	chartDrawer = std::make_unique<ChartDrawer>( *CD );
-	chartPlayer = std::make_unique<ChartPlayer>( *CD );
+	effects_ = std::make_unique<PlayEffects>();
+	chartPlayer = std::make_unique<ChartPlayer>(*CD);
+	chartDrawer = std::make_unique<ChartDrawer>(*CD, *effects_);
 
 
 }
@@ -40,21 +41,26 @@ void PlayScene::Draw() {
 }
 
 void PlayScene::Update() {
-
-	Input();
-	chartPlayer->Update();
-	chartDrawer->Update(*chartPlayer);
-
-
-}
-
-
-void PlayScene::Input() {
-
-	if ( Input::isKeyTriggered( KEY_INPUT_F1 ) ) {
+	// 自動判定と手動発光は、F1 切り替え後の同じモードを参照する。
+	if (Input::isKeyTriggered(KEY_INPUT_F1)) {
 		chartPlayer->toggleAutoplay();
 	}
+	chartPlayer->Update();
+	effects_->Update(*chartPlayer, Time::deltaSec());
+	// リスタートによる演出初期化の後に、当該フレームの空打ちを追加する。
+	Input();
+	chartDrawer->Update(*chartPlayer);
+}
 
+void PlayScene::Input() {
+	if (!chartPlayer->isAutoplay()) {
+		if (Input::isNoteKeyTriggered(NoteType::Don)) {
+			effects_->TriggerLaneFlash(NoteType::Don);
+		}
+		if (Input::isNoteKeyTriggered(NoteType::Katsu)) {
+			effects_->TriggerLaneFlash(NoteType::Katsu);
+		}
+	}
 }
 // 演奏終了時の処理
 void PlayScene::Finalize() {
