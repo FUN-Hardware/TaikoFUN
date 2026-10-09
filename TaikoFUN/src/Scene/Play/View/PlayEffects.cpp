@@ -288,6 +288,20 @@ void PlayEffects::DrawHitEffects() const {
 
 }
 
+void PlayEffects::DrawGogoFire(const ChartPlayer& player) const {
+	if (!player.isGogoTime()) return;
+	// 4列×2行の8コマ。再生時間を使うのでリスタートでも同期する。
+	constexpr double fps = 12.0, frameCount = 8.0;
+	const int frameIndex = (std::min)(7, int(std::fmod(player.getPlaybackElapsedSec(), frameCount / fps) * fps));
+	const auto& fire = Skin::GetTexture("play/GogoFire/" + std::to_string(frameIndex));
+	if (fire.handle < 0 || fire.w <= 0 || fire.h <= 0) return;
+	constexpr double size = 156.0;
+	ResetDrawState();
+	SetAlpha(0.85);
+	DrawCentered(fire, judgeX, judgeY, size / fire.w, size / fire.h, 0.0);
+	ResetDrawState();
+}
+
 void PlayEffects::DrawMiniDrum() const {
 	ResetDrawState();
 	// 円形素材を打面、青い帯と180度回転した複製を胴にする。

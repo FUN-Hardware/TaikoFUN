@@ -25,6 +25,8 @@ public:
 	void DrawLane() const;
 	// レーンの光より上・ノーツより下に描く（ヒット効果）
 	void DrawHitEffects() const;
+	// ゴーゴー中のみ、判定枠の周囲に炎を描く（ノーツより下）。
+	void DrawGogoFire(const ChartPlayer& player) const;
 	// レーン左の空きに既存ポスター素材を組み合わせたミニ太鼓を描く
 	void DrawMiniDrum() const;
 	// ノーツより上に描く（判定文字・コンボ）
