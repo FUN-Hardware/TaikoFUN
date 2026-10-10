@@ -19,7 +19,7 @@ public:
 		// 初期化処理
 		ctx_ = ctx;
 		currentScene = Create(firstScene);
-		currentScene->Init();
+		if (currentScene) currentScene->Init();
 	}
 
 	void Update() {
@@ -30,18 +30,17 @@ public:
 		}
 
 
-		if ( currentScene->Request() ) ChangeScene(*currentScene->Request());
+		if ( currentScene && currentScene->Request() ) ChangeScene(*currentScene->Request());
 	}
 
 	void Draw() {
 		// 描画処理
-		currentScene->Draw();
+		if (currentScene) currentScene->Draw();
 	}
 
 	void Finalize() {
-		// 終了処理
-		
-
+		if (currentScene) currentScene->Finalize();
+		currentScene.reset();
 	}
 
 	void ChangeScene( SceneID newSceneID ) {
@@ -51,7 +50,7 @@ public:
 
 		currentScene = Create(newSceneID);
 
-		currentScene->Init();
+		if (currentScene) currentScene->Init();
 
 	}
 

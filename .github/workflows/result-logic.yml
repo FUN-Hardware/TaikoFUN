@@ -1,0 +1,28 @@
+name: Result logic
+on:
+  push:
+    branches: [feature/result-screen]
+    paths:
+      - 'TaikoFUN/src/Scene/Result/**'
+      - 'tests/result_logic_tests.cpp'
+      - '.github/workflows/result-logic.yml'
+  pull_request:
+    branches: [feature/integrate-design-unit-test, main]
+    paths:
+      - 'TaikoFUN/src/Scene/Result/**'
+      - 'tests/result_logic_tests.cpp'
+      - '.github/workflows/result-logic.yml'
+permissions:
+  contents: read
+jobs:
+  portable-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile independent result rules
+        run: >-
+          c++ -std=c++20 -Wall -Wextra -Werror -pedantic
+          -fsanitize=undefined -fno-sanitize-recover=undefined
+          -I TaikoFUN/src tests/result_logic_tests.cpp -o /tmp/result-logic-tests
+      - name: Check result rules and input lifecycle
+        run: /tmp/result-logic-tests

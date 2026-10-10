@@ -7,6 +7,7 @@
 #include "View/ChartDrawer.h"
 #include "View/PlayEffects.h"
 #include "Scene/SceneContexts.h"
+#include "Scene/Result/ResultLogic.h"
 
 #include <vector>
 #include <string>
@@ -41,6 +42,9 @@ private:
 	bool isStarted = false;
 
 
-	long long sceneChangeDelay = 5000000;
+	void CaptureResult();
+	ResultLogic::PlayEndTransition endTransition_;
+	bool resultCaptured_ = false;
+	unsigned long long lastGeneration_ = 0;
 };
 

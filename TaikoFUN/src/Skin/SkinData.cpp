@@ -111,6 +111,7 @@ void SkinData::LoadSkin() {
 
 
 	LoadPlaySceneSkin(); // playシーンのスキン読み込み
+	LoadResultSceneSkin();
 
 	LoadNotesImgs("Resource/Image/Playing/note.png");	// ノーツ画像の読み込み (分割読み込み)
 
@@ -127,6 +128,10 @@ void SkinData::LoadSkin() {
 
 }
 
+
+void SkinData::LoadResultSceneSkin() {
+	emplaceImg("result/bg", "Resource/Image/SkinColor/resultbg_clear.png");
+}
 
 void SkinData::LoadPlaySceneSkin() {
 	
@@ -255,6 +260,10 @@ SoundHandle& SkinData::GetSound(const std::string& key) {
 }
 
 namespace Skin {
+	void unloadSkin() {
+		g_SkinData.Unload();
+	}
+
 	void loadSkin() {
 		g_SkinData.LoadSkin();
 	}
