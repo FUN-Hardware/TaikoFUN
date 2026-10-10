@@ -60,7 +60,7 @@
       "sampleRate": 44100,
       "channels": 2,
       "audioSynchronized": false,
-      "chartDraftDurationSec": 82.286,
+      "chartDraftDurationSec": 82.913472,
       "chartDraftLongerThanAudio": false,
       "sourceChannel": "【公式】ちびまる子ちゃんねる",
       "sourceVersion": "original-tv-size",
@@ -82,7 +82,9 @@
         "chartDraftDurationSec": 82.286,
         "chartDraftLongerThanAudio": true
       },
-      "replacedOn": "2026-10-11"
+      "replacedOn": "2026-10-11",
+      "timingAdjusted": true,
+      "timingAnalysisFile": "timing_analysis.json"
     },
     {
       "title": "紅蓮華",

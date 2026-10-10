@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "status": "audio-analysis-adjusted-awaiting-listening-and-playtest",
+  "title": "おどるポンポコリン",
+  "sourceUrl": "https://www.youtube.com/watch?v=OmTJQVnNq5Y",
+  "audioSha256": "9b05aef33575382215e0da1301195dbbbffa98b39af0868fa6a0fc0a225323a6",
+  "method": "whitened multi-band positive spectral flux and constant-tempo pulse grid",
+  "analysisHopSec": 0.004988662131519274,
+  "analysisWindowSec": 0.046439909297052155,
+  "oldBpm": 140,
+  "bpm": 138.94,
+  "oldOffset": 0,
+  "offset": -2.083,
+  "firstNoteAudioSec": 2.083,
+  "lastNoteAudioSec": 83.269108,
+  "audioDurationSec": 85.7512925170068,
+  "patternDurationSec": 82.913472,
+  "measures": 48,
+  "totalNotesPerCourse": 63,
+  "notesUnchanged": true,
+  "gameRuntimeVerified": false,
+  "audioTimeEquation": "audioTimeSec = chartTimeSec - OFFSET; ChartLoader negates OFFSET and SongData subtracts that value",
+  "segmentTempoFits": [
+    {
+      "startSec": 0,
+      "endSec": 20,
+      "score": 1.1908258832606784,
+      "bpm": 139.0600000000036,
+      "phaseSec": 0.37
+    },
+    {
+      "startSec": 20,
+      "endSec": 40,
+      "score": 1.264982717145181,
+      "bpm": 138.96000000000356,
+      "phaseSec": 0.355
+    },
+    {
+      "startSec": 40,
+      "endSec": 60,
+      "score": 1.1373888907853078,
+      "bpm": 138.94000000000355,
+      "phaseSec": 0.34500000000000003
+    },
+    {
+      "startSec": 60,
+      "endSec": 80,
+      "score": 1.0219580554122887,
+      "bpm": 138.68000000000342,
+      "phaseSec": 0.23500000000000001
+    },
+    {
+      "startSec": 1,
+      "endSec": 82,
+      "score": 0.8874385232599876,
+      "bpm": 138.98000000000357,
+      "phaseSec": 0.36
+    }
+  ],
+  "validation": {
+    "strongOnsetsMatched": 56,
+    "medianAbsOnsetResidualMs": 9.069,
+    "p95AbsOnsetResidualMs": 21.09,
+    "maxAbsOnsetResidualMs": 25.905
+  },
+  "lowConfidenceNotes": [
+    {
+      "note": 62,
+      "audioTimeSec": 81.541744,
+      "onsetSec": 81.582857,
+      "residualMs": 41.113,
+      "onsetStrength": 0.4641
+    },
+    {
+      "note": 63,
+      "audioTimeSec": 83.269108,
+      "onsetSec": 83.28898,
+      "residualMs": 19.872,
+      "onsetStrength": 0.189
+    }
+  ],
+  "unverified": [
+    "Listening review, especially sustained vocal ending and weak attacks",
+    "DxLib playback latency and manual/autoplay timing on a supported machine",
+    "Human downbeat/musical-phrase annotation; this is a beat-aligned practice pattern, not a melody transcription"
+  ],
+  "firstStrongNoteExamples": [
+    {
+      "note": 1,
+      "audioTimeSec": 2.083,
+      "onsetSec": 2.093515,
+      "residualMs": 10.515,
+      "onsetStrength": 1.3921
+    },
+    {
+      "note": 2,
+      "audioTimeSec": 3.810364,
+      "onsetSec": 3.82458,
+      "residualMs": 14.216,
+      "onsetStrength": 1.6661
+    },
+    {
+      "note": 3,
+      "audioTimeSec": 5.537728,
+      "onsetSec": 5.545669,
+      "residualMs": 7.941,
+      "onsetStrength": 1.7052
+    },
+    {
+      "note": 4,
+      "audioTimeSec": 6.40141,
+      "onsetSec": 6.408707,
+      "residualMs": 7.297,
+      "onsetStrength": 1.2118
+    },
+    {
+      "note": 5,
+      "audioTimeSec": 8.992456,
+      "onsetSec": 8.997823,
+      "residualMs": 5.367,
+      "onsetStrength": 1.6843
+    },
+    {
+      "note": 6,
+      "audioTimeSec": 10.71982,
+      "onsetSec": 10.733878,
+      "residualMs": 14.058,
+      "onsetStrength": 1.7315
+    }
+  ],
+  "middleStrongNoteExamples": [
+    {
+      "note": 31,
+      "audioTimeSec": 45.2671,
+      "onsetSec": 45.25542,
+      "residualMs": -11.68,
+      "onsetStrength": 1.6662
+    },
+    {
+      "note": 32,
+      "audioTimeSec": 46.130782,
+      "onsetSec": 46.113469,
+      "residualMs": -17.313,
+      "onsetStrength": 1.4847
+    },
+    {
+      "note": 33,
+      "audioTimeSec": 46.994464,
+      "onsetSec": 46.986485,
+      "residualMs": -7.979,
+      "onsetStrength": 1.4196
+    },
+    {
+      "note": 34,
+      "audioTimeSec": 47.858146,
+      "onsetSec": 47.839546,
+      "residualMs": -18.6,
+      "onsetStrength": 1.3613
+    },
+    {
+      "note": 35,
+      "audioTimeSec": 50.449192,
+      "onsetSec": 50.438639,
+      "residualMs": -10.553,
+      "onsetStrength": 1.8819
+    },
+    {
+      "note": 36,
+      "audioTimeSec": 51.312874,
+      "onsetSec": 51.296689,
+      "residualMs": -16.185,
+      "onsetStrength": 1.1942
+    }
+  ],
+  "lastStrongNoteExamples": [
+    {
+      "note": 56,
+      "audioTimeSec": 72.904924,
+      "onsetSec": 72.92254,
+      "residualMs": 17.616,
+      "onsetStrength": 1.7377
+    },
+    {
+      "note": 57,
+      "audioTimeSec": 74.632288,
+      "onsetSec": 74.653605,
+      "residualMs": 21.317,
+      "onsetStrength": 1.0813
+    },
+    {
+      "note": 58,
+      "audioTimeSec": 75.49597,
+      "onsetSec": 75.511655,
+      "residualMs": 15.685,
+      "onsetStrength": 1.2693
+    },
+    {
+      "note": 59,
+      "audioTimeSec": 76.359652,
+      "onsetSec": 76.379683,
+      "residualMs": 20.031,
+      "onsetStrength": 1.1701
+    },
+    {
+      "note": 60,
+      "audioTimeSec": 78.087016,
+      "onsetSec": 78.110748,
+      "residualMs": 23.732,
+      "onsetStrength": 1.5581
+    },
+    {
+      "note": 61,
+      "audioTimeSec": 78.518857,
+      "onsetSec": 78.544762,
+      "residualMs": 25.905,
+      "onsetStrength": 1.3415
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "status": "draft-awaiting-synchronization",
+  "status": "partially-timing-adjusted-awaiting-playtest",
   "gameRuntimeVerified": false,
   "charts": [
     {
@@ -62,10 +62,10 @@
     {
       "title": "おどるポンポコリン",
       "file": "おどるポンポコリン/おどるポンポコリン_かんたん_draft.tja",
-      "status": "draft-awaiting-synchronization",
+      "status": "audio-analysis-adjusted-awaiting-playtest",
       "levelTarget": 1,
-      "bpmProvisional": 140,
-      "offsetProvisional": 0,
+      "bpmProvisional": 138.94,
+      "offsetProvisional": -2.083,
       "waveExpected": "おどるポンポコリン.ogg",
       "audioIncluded": true,
       "audioSynchronized": false,
@@ -79,13 +79,15 @@
       "don": 58,
       "katsu": 5,
       "totalNotes": 63,
-      "patternDurationSec": 82.286,
-      "minNoteIntervalSec": 0.429,
-      "averageNotesPerSec": 0.766,
+      "patternDurationSec": 82.913472,
+      "minNoteIntervalSec": 0.431841,
+      "averageNotesPerSec": 0.759828,
       "audioFile": "おどるポンポコリン/おどるポンポコリン.ogg",
       "audioDurationSec": 85.754195,
       "audioSha256": "9b05aef33575382215e0da1301195dbbbffa98b39af0868fa6a0fc0a225323a6",
-      "sourceUrl": "https://www.youtube.com/watch?v=OmTJQVnNq5Y"
+      "sourceUrl": "https://www.youtube.com/watch?v=OmTJQVnNq5Y",
+      "timingAnalysisFile": "timing_analysis.json",
+      "timingAdjusted": true
     },
     {
       "title": "紅蓮華",
