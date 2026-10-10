@@ -15,6 +15,14 @@ void SongData::playSong( bool restart ) {
 	}
 }
 
+void SongData::playSongFrom( long long startAt ) {
+
+	songHandle.play( true );
+	SetCurrentPositionSoundMem( startAt, songHandle.handle );
+
+}
+
+
 void SongData::stopSong() {
 	lastPausedTimeStamp = Time::nowTime();
 	songHandle.stop();

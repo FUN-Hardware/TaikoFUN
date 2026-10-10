@@ -1,6 +1,6 @@
 #pragma once
 
-
+class SceneManager;
 
 
 enum class GameState
@@ -12,5 +12,5 @@ enum class GameState
 	Null
 };
 
-void Update(GameState state);
-void Draw(GameState state);
+void Update( SceneManager& sm );
+void Draw(SceneManager& sm);

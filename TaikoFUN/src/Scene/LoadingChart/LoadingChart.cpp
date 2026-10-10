@@ -5,10 +5,11 @@
 #include "Chart/CourseType.h"
 #include "Scene/SceneContexts.h"
 
-LoadingChart::LoadingChart(GameContext* ctx, const char* path, CourseType ct) {
+LoadingChart::LoadingChart(GameContext* ctx) {
 	
-	ctx->chartData = ChartLoad::load(path, ct);
-
+//	ctx->chartData = ChartLoad::load(ctx->songItemdata.tjaPath.c_str(), ctx->songItemdata.);
+	
+	RequestScene(SceneID::Play);
 }
 
 void LoadingChart::Init() {

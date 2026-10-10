@@ -15,7 +15,8 @@ public:
 
 
 
-	ChartPlayer( ChartData& data ): cd_( data ) { };
+	ChartPlayer( ChartData& data ): cd_( data ) { 
+	};
 
 
 
@@ -46,12 +47,14 @@ public:
 		autoPlay = !autoPlay;
 	}
 
+	bool isFinished = false;
+
 private:
 
 	ChartData& cd_; // このオブジェクトが生成される際にGameContextから譜面データを受け取る
 	PlayStats stats_; // 判定結果の集計などを保持するオブジェクト
 	
-	bool autoPlay = true; // オートプレイ
+	bool autoPlay = false; // オートプレイ
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
 	long long nowSongTime = 0; //　cd.songData.getSongCurrentTimeUs(true)のキャッシュ
 

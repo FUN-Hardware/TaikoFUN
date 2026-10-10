@@ -333,8 +333,10 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_string_view.hpp",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\iosfwd",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\songdata.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\coursetype.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

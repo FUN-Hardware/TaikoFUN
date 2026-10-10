@@ -1,6 +1,6 @@
 #pragma once
 #include "Chart/ChartData.h"
-
+#include "SongSelect/SelectedCourse.h"
 #include <memory>
 #include <string>
 // シーンのコンテキスト
@@ -32,6 +32,6 @@ struct GameContext
 
 	std::shared_ptr<ChartData> chartData; // 譜面データの共有ポインタ ChartLoaderでロードし、PlaySceneで使用する。
 	std::shared_ptr<ResultCtx> resultData; // リザルトデータの集まり。PlayScene終了時にPlayStatsから代入される。 使用箇所はリザルトシーン
-
+	SelectedCourse selectedCourse;
 
 };

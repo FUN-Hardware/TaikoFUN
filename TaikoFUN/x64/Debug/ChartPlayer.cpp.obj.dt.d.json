@@ -1,10 +1,10 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\chartplayer.cpp",
+        "Source": "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\chartplayer.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\chartplayer.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\chartplayer.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\chartdata.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\vector",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\yvals_core.h",
@@ -335,11 +335,27 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_string_view.hpp",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\iosfwd",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\songdata.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\judgeevent.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\playstats.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\input\\input.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\coursetype.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\judgeevent.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\play\\logic\\playstats.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\algorithm",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_heap_algorithms.hpp",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_int128.hpp",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_minmax.hpp",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\input\\input.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\sounds.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\skin\\skindata.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\unordered_map",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xhash",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cmath",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\list",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xbit_ops.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xnode_handle.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cassert",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\assert.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
