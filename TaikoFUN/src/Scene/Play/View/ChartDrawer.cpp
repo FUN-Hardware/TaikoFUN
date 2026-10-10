@@ -63,7 +63,7 @@ void ChartDrawer::Update(const ChartPlayer& player) {
 }
 
 void ChartDrawer::Draw(const ChartPlayer& player) {
-	//bg_->Draw(player);
+	bg_->Draw(player);
 
 	const auto& lane = Skin::GetTexture("play/ScrollField/bg");
 	DrawBox(SkinLayout::ScrollField.x, SkinLayout::ScrollField.y,

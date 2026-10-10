@@ -41,19 +41,6 @@ void PlayScene::Draw() {
 	chartDrawer->Draw(*chartPlayer);
 
 
-	DrawFormatString2( 0,
-					   0,
-					   BACKGROUND_GREEN,
-					   BLACKNESS,
-					   "FPS: %d", FPS::getFps());
-
-	// ループの先頭で
-	static long long prev = GetNowHiPerformanceCount();
-	long long now = GetNowHiPerformanceCount();
-	double ms = (now - prev) / 1000.0;  prev = now;
-	static double maxMs = 0;  if ( ms > maxMs ) maxMs = ms;
-	DrawFormatString( 10, 50, GetColor( 255, 255, 255 ), "frame=%.1fms max=%.1fms", ms, maxMs );
-
 
 }
 
@@ -69,9 +56,10 @@ void PlayScene::Update() {
 	Input();
 	chartDrawer->Update(*chartPlayer);
 
-	if ( chartPlayer->isFinished ) {
+	if ( chartPlayer->isFinished || chartPlayer->isStoped) {
 		sceneChangeDelay -= Time::deltaUs();
-		if ( sceneChangeDelay < 0 ) {
+		if ( sceneChangeDelay < 0 || chartPlayer->isStoped) {
+			chartPlayer->stopSong();
 			RequestScene( SceneID::SongSelect );
 		}
 	}

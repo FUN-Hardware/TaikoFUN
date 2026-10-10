@@ -52,9 +52,11 @@ public:
 	}
 
 	bool isFinished = false;
+	bool isStoped = false;
 	bool isStarted = false;
 private:
 
+	long long chartStartDelay = 3000000;
 	ChartData& cd_; // このオブジェクトが生成される際にGameContextから譜面データを受け取る
 	PlayStats stats_; // 判定結果の集計などを保持するオブジェクト
 	

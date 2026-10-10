@@ -31,7 +31,11 @@ void ChartPlayer::input() {
 		playSong( true );
 	}
 
-	if ( Input::isKeyTriggered( KEY_INPUT_BACK ) ) isFinished = true;
+	if ( Input::isKeyTriggered( KEY_INPUT_BACK ) ) 
+	{
+		stopSong();
+		isStoped = true;
+	}
 
 	if ( Input::isKeyTriggered( KEY_INPUT_KANJI ) ) playSong( true );
 

@@ -94,9 +94,6 @@ void SongSelect::Init() {
 		const auto rawLines = file_util::getAllLines(path);
 		sid.tjaPath = path;
 
-		if ( sid.title == "シャイニングスター" ) {
-
-		}
 		for ( const auto& rawLine : rawLines ) {
 			const auto& line = string_util::trimWhitespace(rawLine);
 
@@ -146,7 +143,10 @@ void SongSelect::Init() {
 void SongSelect::Update() {
 	if (intervalLeft > 0){ 
 		intervalLeft -= Time::deltaUs();
-		if ( intervalLeft <= 0 ) playDemo();
+		if ( intervalLeft <= 0 ) 
+		{
+			playDemo();
+		}
 	}
 
 	Input();
@@ -220,10 +220,11 @@ void SongSelect::Input() {
 
 
 void SongSelect::Draw() {
-	DrawFormatString(
-	0, 100, GetColor( 255, 255, 255 ),
-	"choosingCourse: %d", choosingCourse
-	);
+	DrawFormatString(0, 
+					  100, 
+					  GetColor( 255, 255, 255 ),
+					"choosingCourse: %d", choosingCourse
+					);
 
 	int w, h;
 	GetWindowSize(&w, &h);
@@ -294,6 +295,10 @@ void SongSelect::Finalize() {
 
 void SongSelect::playDemo() {
 
+	if (demo) 
+	{
+		demo->stopSong();
+	}
 	demo = std::make_unique<SongData>();
 	demo->loadSong( songList[nowSelectedSongIdx].songPath.c_str() );
 	demo->playSongFrom( songList[nowSelectedSongIdx].DemoStartAt );
