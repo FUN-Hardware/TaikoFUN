@@ -299,6 +299,7 @@ void SongSelect::playDemo() {
 	{
 		demo->stopSong();
 	}
+	demo.reset();
 	demo = std::make_unique<SongData>();
 	demo->loadSong( songList[nowSelectedSongIdx].songPath.c_str() );
 	demo->playSongFrom( songList[nowSelectedSongIdx].DemoStartAt );

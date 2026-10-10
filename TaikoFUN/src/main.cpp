@@ -74,22 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 
 
-		if (gGameState != preGameState) {
-			if (gGameState == GameState::Debug) {
-				db = std::make_unique<Debug>();
-			}
-			if (preGameState == GameState::Debug) {
-				db.reset();
-			}
 
-			if (gGameState == GameState::Playing) {
-				ps = std::make_unique<PlayScene>( &ctx );
-			}
-			if (preGameState == GameState::Playing) {
-				ps.reset();
-			}
-
-		}
 
 
 	Update(sm);
@@ -116,31 +101,6 @@ void Update(SceneManager& sm) {
 
 
 	sm.Update();
-	return;
-	GameState sa;
-	switch (sa)
-	{
-	case GameState::Title:
-
-		break;
-	case GameState::Playing:
-		
-		ps->Update();
-		break;	
-	case GameState::Result:
-
-		break;
-	case GameState::Debug:
-		
-		db->Update();
-		break;
-	default:
-		break;
-	}
-
-
-
-	preGameState = gGameState;
 }
 
 void Draw(SceneManager& sm) {
