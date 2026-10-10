@@ -40,5 +40,7 @@ private:
 	size_t lastRollIdx = SIZE_MAX;
 	bool isStarted = false;
 
+
+	long long sceneChangeDelay = 5000000;
 };
 

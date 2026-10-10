@@ -69,7 +69,12 @@ void PlayScene::Update() {
 	Input();
 	chartDrawer->Update(*chartPlayer);
 
-	if (chartPlayer->isFinished) RequestScene( SceneID::SongSelect );
+	if ( chartPlayer->isFinished ) {
+		sceneChangeDelay -= Time::deltaUs();
+		if ( sceneChangeDelay < 0 ) {
+			RequestScene( SceneID::SongSelect );
+		}
+	}
 
 }
 
