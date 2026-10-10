@@ -79,12 +79,15 @@ void ChartPlayer::nextNotes() {
 		}
 		lastRollIdx = cd_.notes[nextNoteIndex].idx;
 	}
+	else {
+		isFinished = true;
+	}
 
 }
 
 void ChartPlayer::updateMissNotes() {
 	if (nextNoteIndex >= cd_.notes.size()) return;
-
+	if ( cd_.notes[nextNoteIndex].type == NoteType::None || cd_.notes[nextNoteIndex].type == NoteType::RollTail ) nextNotes();
 
 	Note& targetNote = cd_.notes[nextNoteIndex];
 	long long noteRelTime = noteRelativeTime( nextNoteIndex );
@@ -127,7 +130,7 @@ void ChartPlayer::judgeNote() {
 		return;
 	}
 
-	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
+ 	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
 
 
 

@@ -169,12 +169,9 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <ClInclude Include="src\Scene\Play\View\PlayEffects.h" />
-=======
     <ClInclude Include="src\Chart\CourseType.h" />
     <ClInclude Include="src\Scene\LoadingChart\LoadingChart.h" />
->>>>>>> Stashed changes
     <ClInclude Include="src\Scene\Play\View\NoteRenderer.h" />
     <ClInclude Include="src\Scene\Play\View\BackgroundRenderer.h" />
     <ClInclude Include="src\Scene\Play\View\ChartDrawer.h" />
@@ -194,6 +191,9 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Scene\Play\Play.h" />
     <ClInclude Include="src\Scene\SceneContexts.h" />
     <ClInclude Include="src\Scene\SceneID.h" />
+    <ClInclude Include="src\Scene\SongSelect\SongSelect.h" />
+    <ClInclude Include="src\Scene\SongSelect\SongItemData.h" />
+    <ClInclude Include="src\Scene\SongSelect\SelectedCourse.h" />
     <ClInclude Include="src\Skin\SkinData.h" />
     <ClInclude Include="src\Audio\SoundHandle.h" />
     <ClInclude Include="src\Core\General.h" />
@@ -210,11 +210,8 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Audio\Sounds.h" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <ClCompile Include="src\Scene\Play\View\PlayEffects.cpp" />
-=======
     <ClCompile Include="src\Scene\LoadingChart\LoadingChart.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="src\Scene\Play\View\NoteRenderer.cpp" />
     <ClCompile Include="src\Scene\Play\View\BackgroundRenderer.cpp" />
     <ClCompile Include="src\Scene\Play\View\ChartDrawer.cpp" />
@@ -227,6 +224,7 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClCompile Include="src\Core\ChartScanner.cpp" />
     <ClCompile Include="src\File\ChartLoader.cpp" />
     <ClCompile Include="src\Scene\Play\Play.cpp" />
+    <ClCompile Include="src\Scene\SongSelect\SongSelect.cpp" />
     <ClCompile Include="src\Skin\SkinData.cpp" />
     <ClCompile Include="src\Core\General.cpp" />
     <ClCompile Include="src\Chart\ChartData.cpp" />

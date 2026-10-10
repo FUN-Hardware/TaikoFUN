@@ -82,7 +82,8 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xmmintrin.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\mmintrin.h",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\zmmintrin.h",
-            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\ammintrin.h"
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\ammintrin.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\scene\\sceneid.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

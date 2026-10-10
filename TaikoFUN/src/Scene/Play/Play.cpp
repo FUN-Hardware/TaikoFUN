@@ -24,7 +24,7 @@ PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx){
 	effects_ = std::make_unique<PlayEffects>();
 	chartPlayer = std::make_unique<ChartPlayer>(*CD);
 	chartDrawer = std::make_unique<ChartDrawer>(*CD, *effects_);
-
+	chartPlayer->playSong( true );
 
 }
 
@@ -50,10 +50,25 @@ void PlayScene::Update() {
 	// リスタートによる演出初期化の後に、当該フレームの空打ちを追加する。
 	Input();
 	chartDrawer->Update(*chartPlayer);
+
+	if (chartPlayer->isFinished) RequestScene( SceneID::SongSelect );
+
 }
 
 void PlayScene::Input() {
 	if (!chartPlayer->isAutoplay()) {
+		if (Input::isKeyTriggered(KEY_INPUT_D)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::LeftRim);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_F)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::LeftFace);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_J)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::RightFace);
+		}
+		if (Input::isKeyTriggered(KEY_INPUT_K)) {
+			effects_->TriggerMiniDrumFlash(PlayEffects::DrumPart::RightRim);
+		}
 		if (Input::isNoteKeyTriggered(NoteType::Don)) {
 			effects_->TriggerLaneFlash(NoteType::Don);
 		}
@@ -88,7 +103,7 @@ void PlayScene::Finalize() {
 	
 	
 	ctx_->resultData;
-	RequestScene(SceneID::Result);
+	
 
 }
 

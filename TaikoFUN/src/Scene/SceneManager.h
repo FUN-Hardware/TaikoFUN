@@ -15,11 +15,11 @@ class SceneManager
 {
 
 public:
-	void Init(SceneID firstScene) {
+	void Init(SceneID firstScene, GameContext* ctx) {
 		// 初期化処理
-		currentScene = Create(SceneID::Play);
-
-
+		ctx_ = ctx;
+		currentScene = Create(firstScene);
+		currentScene->Init();
 	}
 
 	void Update() {
@@ -29,6 +29,8 @@ public:
 			currentScene->Update();
 		}
 
+
+		if ( currentScene->Request() ) ChangeScene(*currentScene->Request());
 	}
 
 	void Draw() {
@@ -42,10 +44,14 @@ public:
 
 	}
 
-	void ChangeScene( Scene* newScene ) {
+	void ChangeScene( SceneID newSceneID ) {
 		// シーンの切り替え処理
 
 		if ( currentScene ) currentScene->Finalize();
+
+		currentScene = Create(newSceneID);
+
+		currentScene->Init();
 
 	}
 

@@ -11,7 +11,7 @@ enum class SoundKey
 };
 namespace Sounds {
 
-	int GetSoundHandle( SoundKey key ) {
+	inline int GetSoundHandle( SoundKey key ) {
 		switch ( key ) {
 			case SoundKey::Don:
 				return Skin::GetSound( "sound/Don" ).handle;

@@ -17,6 +17,7 @@ struct SongData
 
 
 	void playSong( bool restart = false );
+	void playSongFrom( long long startAt );
 	void stopSong();
 	void loadSong( const char* path );
 	long long getSongCurrentTimeUs( bool applyOffset = false );

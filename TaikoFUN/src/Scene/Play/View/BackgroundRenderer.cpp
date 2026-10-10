@@ -219,11 +219,8 @@ void BackgroundRenderer::Update(const ChartPlayer& player) {
 	UpdatePosterBackground(player.getPlaybackElapsedSec());
 }
 
-void BackgroundRenderer::Draw(const ChartPlayer& player) const {
-	if (player.isGogoTime()) {
-		DrawGraph(0, 0, Skin::GetTexture("play/bg_clear").handle, TRUE);
-		return;
-	}
+void BackgroundRenderer::Draw(const ChartPlayer&) const {
+	// ゴーゴータイムでも同じ背景モーションを継続する。
 
 	int width = 0, height = 0;
 	GetDrawScreenSize(&width, &height);
