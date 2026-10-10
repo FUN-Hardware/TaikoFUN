@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	SetGraphMode(1280, 720, 32);
-	ChangeWindowMode(FALSE);
+	ChangeWindowMode(TRUE);
 	SetWindowSizeExtendRate(1.0);
 	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 
@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	SetOutApplicationLogValidFlag(FALSE);
-	SetWaitVSyncFlag(FALSE);
+	SetWaitVSyncFlag( FALSE );
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
 
 
@@ -150,28 +150,8 @@ void Draw(SceneManager& sm) {
 
 	sm.Draw();
 
-	return;
-	GameState sa;
-	switch (sa)
-	{
-	case GameState::Title:
-
-		break;
-	case GameState::Playing:
-
-		ps->Draw();
-		break;
-	case GameState::Result:
-
-		break;
-	case GameState::Debug:
-
-		db->Draw();
-		break;
-	default:
-		break;
-	}
-
 	ScreenFlip();
+
+
 
 }

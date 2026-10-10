@@ -80,21 +80,23 @@ void SongSelect::Init() {
 		return string_util::trimWhitespace( str.substr( str.find( ':' ) + 1 ) );
 	};
 
-	SongItemData sid;
 
 	std::string Title = "";
-	float lvs[5];
-	bool courses[5];
+	float lvs[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+	bool courses[5] = {false, false, false, false, false};
 	size_t lastFindCourseNum = 3;
 	long long DEMO = 0;
 
 
 	for ( const auto& path : pathList ) {
 
+		SongItemData sid;
 		const auto rawLines = file_util::getAllLines(path);
 		sid.tjaPath = path;
-		
 
+		if ( sid.title == "シャイニングスター" ) {
+
+		}
 		for ( const auto& rawLine : rawLines ) {
 			const auto& line = string_util::trimWhitespace(rawLine);
 
@@ -218,6 +220,10 @@ void SongSelect::Input() {
 
 
 void SongSelect::Draw() {
+	DrawFormatString(
+	0, 100, GetColor( 255, 255, 255 ),
+	"choosingCourse: %d", choosingCourse
+	);
 
 	int w, h;
 	GetWindowSize(&w, &h);
@@ -259,7 +265,7 @@ void SongSelect::Draw() {
 				dif += (songList[nowSelectedSongIdx].Courses[4]) ? "おに裏" : "　　　";
 
 
-				DrawFormatString2Right( w, 0, GetColor( 0, 0, 0 ), dif );
+				DrawFormatString2Right( w/2, 32, GetColor( 0, 0, 0 ), dif );
 
 			}
 

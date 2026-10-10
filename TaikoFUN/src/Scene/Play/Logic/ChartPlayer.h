@@ -16,12 +16,16 @@ public:
 
 
 	ChartPlayer( ChartData& data ): cd_( data ) { 
+		if ( !isStarted ) playSong();
+	
 	};
+
 
 
 
 	void Update();
 	// 済み
+	void stopSong();
 	void loadSong( const char* path );
 	void loadSong( const char* path, double bpm, double offset = 0.0 );
 	void playSong( bool restart = false );
@@ -48,7 +52,7 @@ public:
 	}
 
 	bool isFinished = false;
-
+	bool isStarted = false;
 private:
 
 	ChartData& cd_; // このオブジェクトが生成される際にGameContextから譜面データを受け取る

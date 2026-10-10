@@ -16,5 +16,5 @@ struct SongItemData
 	std::string songPath;
 	long long DemoStartAt = 0;
 	float levels[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
-	bool Courses[5] = { 0, 0, 0, 0, 0 };
+	bool Courses[5] = { false, false, false, false, false };
 };

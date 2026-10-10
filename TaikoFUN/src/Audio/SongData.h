@@ -12,6 +12,8 @@ struct SongData
 	long long lastPausedTimeStamp;	// 最後に一時停止した時間 (us)
 	long long totalPausedDuration; // 一時停止した時間の合計 (us)
 
+	long long lastAudioUs_;
+	long long lastCounterUs_;
 	SoundHandle songHandle;				// 曲のハンドル
 	bool playing = false;
 
@@ -21,5 +23,5 @@ struct SongData
 	void stopSong();
 	void loadSong( const char* path );
 	long long getSongCurrentTimeUs( bool applyOffset = false );
-
+	long long getSmoothTimeUs( bool applyOffset = false );
 };

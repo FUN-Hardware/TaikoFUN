@@ -9,7 +9,8 @@
 void ChartPlayer::Update() {
 
 	events_.clear();
-	nowSongTime = cd_.songData.getSongCurrentTimeUs( true );
+	nowSongTime = cd_.songData.getSmoothTimeUs( true ); ;
+	cd_.nowSongTime = nowSongTime;
 
 	input();
 	updateMissNotes();
@@ -30,7 +31,7 @@ void ChartPlayer::input() {
 		playSong( true );
 	}
 
-
+	if ( Input::isKeyTriggered( KEY_INPUT_BACK ) ) isFinished = true;
 
 	if ( Input::isKeyTriggered( KEY_INPUT_KANJI ) ) playSong( true );
 
@@ -56,6 +57,10 @@ void ChartPlayer::init() {
 	++playbackGeneration_;
 	lastRollHitUs = 0;
 
+}
+
+void ChartPlayer::stopSong() {
+	cd_.songData.stopSong();
 }
 
 void ChartPlayer::playSong( bool restart ) {

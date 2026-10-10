@@ -16,6 +16,7 @@ namespace file_util {
 		}
 
 		while (std::getline(file, line)) {
+
 			if (isFirstLine) {
 				// BOM(EF BB BF)が先頭にあれば、取り除く
 				if (line.size() >= 3 &&

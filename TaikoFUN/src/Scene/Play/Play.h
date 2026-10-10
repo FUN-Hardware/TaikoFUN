@@ -38,6 +38,7 @@ private:
 	std::string debug;
 
 	size_t lastRollIdx = SIZE_MAX;
+	bool isStarted = false;
 
 };
 

@@ -22,6 +22,19 @@ void SongData::playSongFrom( long long startAt ) {
 
 }
 
+// SongData に追加するイメージ
+long long SongData::getSmoothTimeUs( bool applyOffset ) {
+	long long nowCounter = GetNowHiPerformanceCount();      // マイクロ秒単位のタイマー
+	long long audioUs = GetSoundCurrentTime( songHandle.handle ) * 1000LL;
+
+	if ( audioUs != lastAudioUs_ ) {                         // 音源の値が進んだ瞬間だけ基準を更新する
+		lastAudioUs_ = audioUs;
+		lastCounterUs_ = nowCounter;
+	}
+	long long t = lastAudioUs_ + (nowCounter - lastCounterUs_);   // 間の時間はタイマーで補う
+	if ( applyOffset ) t -= offsetTime;
+	return t;
+}
 
 void SongData::stopSong() {
 	lastPausedTimeStamp = Time::nowTime();
