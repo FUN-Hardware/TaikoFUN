@@ -28,6 +28,10 @@ jobs:
           ln -s DxLib.h /tmp/demo-dxlib/dxlib.h
           c++ -std=c++20 -Wall -Wextra -Wno-switch -fsanitize=undefined -fno-sanitize-recover=undefined -I /tmp/demo-dxlib -I TaikoFUN/src tests/chart_player_demo_tests.cpp TaikoFUN/src/Scene/Play/Logic/ChartPlayer.cpp TaikoFUN/src/Audio/SongData.cpp TaikoFUN/src/Input/Input.cpp -o /tmp/demo-player
           /tmp/demo-player
+      - name: Check actual song selection and cursor lifetime with memory sanitizers
+        run: |
+          c++ -std=c++20 -Wall -Wextra -fsanitize=address,undefined -fno-sanitize-recover=all -D_GLIBCXX_ASSERTIONS -I /tmp/demo-dxlib -I TaikoFUN/src tests/song_select_tests.cpp TaikoFUN/src/Scene/SongSelect/SongSelect.cpp TaikoFUN/src/Core/General.cpp TaikoFUN/src/Audio/SongData.cpp TaikoFUN/src/Input/Input.cpp -o /tmp/song-select
+          /tmp/song-select
       - name: Check existing result rules
         run: |
           c++ -std=c++20 -Wall -Wextra -Werror -pedantic -fsanitize=undefined -fno-sanitize-recover=undefined -I TaikoFUN/src tests/result_logic_tests.cpp -o /tmp/result-rules
