@@ -4,6 +4,9 @@
 void SongData::playSong( bool restart ) {
 	songHandle.play( restart );
 	playing = true;
+	// Seed interpolation even when the first audio position is still zero.
+	lastAudioUs_ = GetSoundCurrentTime(songHandle.handle) * 1000LL;
+	lastCounterUs_ = GetNowHiPerformanceCount();
 	if ( restart ) {
 		totalPausedDuration = 0;
 		lastPausedTimeStamp = 0;

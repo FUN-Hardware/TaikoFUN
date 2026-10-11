@@ -3,6 +3,7 @@
 #include "Core/Time.h"
 #include "JudgeEvent.h"
 #include "PlayStats.h"
+#include "Scene/Demo/DemoLogic.h"
 
 #include <algorithm>
 #include <vector>
@@ -15,8 +16,9 @@ public:
 
 
 
-	ChartPlayer( ChartData& data ): cd_( data ) { 
-		if ( !isStarted ) playSong();
+	ChartPlayer( ChartData& data, PlayMode mode = PlayMode::Normal ): cd_( data ), mode_(mode) {
+		autoPlay = mode_ == PlayMode::Demo;
+		playSong(true);
 	
 	};
 
@@ -48,7 +50,7 @@ public:
 	bool isGogoTime() const;
 
 	void toggleAutoplay() { 
-		autoPlay = !autoPlay;
+		if (mode_ == PlayMode::Normal) autoPlay = !autoPlay;
 	}
 
 	bool isFinished = false;
@@ -58,6 +60,7 @@ private:
 
 	long long chartStartDelay = 3000000;
 	ChartData& cd_; // このオブジェクトが生成される際にGameContextから譜面データを受け取る
+	const PlayMode mode_;
 	PlayStats stats_; // 判定結果の集計などを保持するオブジェクト
 	
 	bool autoPlay = false; // オートプレイ

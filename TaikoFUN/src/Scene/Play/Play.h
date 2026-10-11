@@ -29,6 +29,10 @@ public:
 
 private:
 	GameContext* ctx_;
+	const PlayMode mode_;
+	DemoLogic::Session demoSession_;
+	int demoFont_ = -1;
+	void ReturnFromDemo();
 
 	std::shared_ptr<ChartData> CD; // 譜面データの共有ポインタ ChartLoaderでロードし、PlaySceneで使用する。	
 	std::unique_ptr<PlayEffects> effects_;

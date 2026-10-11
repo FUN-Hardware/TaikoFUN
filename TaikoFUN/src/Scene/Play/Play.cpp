@@ -16,16 +16,17 @@
 
 #include <unordered_set>
 #include <memory>
+#include <cstring>
 
 namespace fs = std::filesystem;
 
 
-PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx){
+PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx), mode_(ctx->playMode){
 
 
 	CD = ctx_->chartData;
 	effects_ = std::make_unique<PlayEffects>();
-	chartPlayer = std::make_unique<ChartPlayer>(*CD);
+	chartPlayer = std::make_unique<ChartPlayer>(*CD, mode_);
 	chartDrawer = std::make_unique<ChartDrawer>(*CD, *effects_);
 
 
@@ -36,11 +37,27 @@ void PlayScene::Init() {
 	lastGeneration_ = chartPlayer->getPlaybackGeneration();
 	resultCaptured_ = false;
 	endTransition_.Reset();
+	demoSession_.Reset();
+	if (mode_ == PlayMode::Demo)
+		demoFont_ = CreateFontToHandle("メイリオ", 24, 6, DX_FONTTYPE_ANTIALIASING);
 }
 
 void PlayScene::Draw() {
 
 	chartDrawer->Draw(*chartPlayer);
+	if (mode_ == PlayMode::Demo) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 220);
+		DrawBox(365, 642, 915, 705, GetColor(32, 42, 82), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		const char* prompt = "DEMO  /  キーを押すと選曲へ戻ります";
+		if (demoFont_ >= 0) {
+			const int width = GetDrawStringWidthToHandle(prompt, int(std::strlen(prompt)), demoFont_);
+			DrawStringToHandle(640 - width / 2, 658, prompt, GetColor(255,255,255), demoFont_);
+		} else DrawString(390, 658, prompt, GetColor(255,255,255));
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, int(demoSession_.FadeOpacity() * 255));
+		DrawBox(0, 0, 1280, 720, GetColor(0,0,0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 	if (resultCaptured_) {
 		const int alpha = int(endTransition_.FadeOpacity() * 255);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
@@ -50,6 +67,17 @@ void PlayScene::Draw() {
 }
 
 void PlayScene::Update() {
+	if (mode_ == PlayMode::Demo) {
+		const bool cancel = GetWindowActiveFlag() == TRUE &&
+			(Input::isAnyKeyTriggered() || Input::isAnyKeyDown());
+		if (cancel) { ReturnFromDemo(); return; }
+		chartPlayer->Update();
+		effects_->Update(*chartPlayer, Time::deltaSec());
+		chartDrawer->Update(*chartPlayer);
+		if (demoSession_.Update(Time::deltaSec(), chartPlayer->isFinished, false) != DemoLogic::Exit::None)
+			ReturnFromDemo();
+		return;
+	}
 	// Abort also works during the linger and never publishes a result.
 	if (Input::isKeyTriggered(KEY_INPUT_BACK)) {
 		ctx_->resultData.reset();
@@ -152,6 +180,20 @@ void PlayScene::CaptureResult() {
 
 void PlayScene::Finalize() {
 	chartPlayer->stopSong();
+	if (demoFont_ >= 0) DeleteFontToHandle(demoFont_);
+	demoFont_ = -1;
+	if (mode_ == PlayMode::Demo) {
+		ctx_->resultData.reset();
+		ctx_->chartData.reset();
+		ctx_->playMode = PlayMode::Normal;
+	}
+}
+
+void PlayScene::ReturnFromDemo() {
+	chartPlayer->stopSong();
+	ctx_->resultData.reset();
+	ctx_->blockSongSelectInputUntilRelease = true;
+	RequestScene(SceneID::SongSelect);
 }
 
 

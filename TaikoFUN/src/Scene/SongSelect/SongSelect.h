@@ -36,6 +36,14 @@ private:
     std::unique_ptr<SongData> demo;
 
     void playDemo();
+    void stopPreview();
+    void rememberCursor();
+    bool startPlay(PlayMode mode, size_t courseIndex);
+    DemoLogic::IdleTimer idleTimer_;
+    DemoLogic::ReleaseGate returnGate_;
+    bool demoUnavailable_ = false;
+    std::string errorMessage_;
+    double returnFadeLeft_ = 0.0;
 
     const long long demoInterval = 500000;
     long long intervalLeft = 0;
