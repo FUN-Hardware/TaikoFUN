@@ -110,8 +110,9 @@ void SongSelectView::Draw(const std::vector<SongItemData>& songs,size_t selected
         const size_t safeCourse=(std::min)(course,size_t(4));
         Panel(44,150,614,614,0xD7C3BC,24);
         Panel(40,144,610,608,Cream,24);
-        Panel(70,168,215,195,Ink,12);
-        Center(142,173,"SELECTED TRACK",Small,Cream);
+        const int badgeWidth=Width("SELECTED TRACK",Small)+32;
+        Panel(70,168,70+badgeWidth,195,Ink,12);
+        Center(70+badgeWidth/2,173,"SELECTED TRACK",Small,Cream);
         Drum(553,180,25);
         TitleLines(song.title);
         // A restrained equalizer indicates preview playback; no extra audio owner.
@@ -183,6 +184,9 @@ void SongSelectView::Draw(const std::vector<SongItemData>& songs,size_t selected
         Text(56,619,Fit(error,Small,537),Small,Cream);
     }
     DrawBox(0,657,1280,720,Ink,TRUE);
+    if (songs.empty() || selected>=songs.size()) {
+        Text(40,680,"曲を追加すると、ここから演奏を選べます",Label,Cream);
+    } else {
     Panel(40,673,123,706,0x0086AE,8);
     Center(81,679,"D / K",Label,Cream);
     Text(137,680,choosingCourse?"難易度を移動":"曲を移動",Label,Cream);
@@ -190,6 +194,7 @@ void SongSelectView::Draw(const std::vector<SongItemData>& songs,size_t selected
     Center(361,679,"F / J",Label,Cream);
     Text(417,680,"決定",Label,Cream);
     Text(596,683,choosingCourse?"左端で D：曲一覧へ戻る":"30秒操作がないと自動デモを開始",Small,0xE1D4CE);
+    }
     Text(1115,681,"ESC  終了",Label,Cream);
     const double fade=std::isfinite(returnFade)?std::clamp(returnFade/DemoLogic::FadeSeconds,0.0,1.0):0.0;
     if (fade>0) {

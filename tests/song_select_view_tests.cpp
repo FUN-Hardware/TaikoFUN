@@ -39,8 +39,10 @@ int main() {
         view.Finalize(); view.Finalize();
         Check(graphs==0 && DrawRecorder::LiveFonts()==0,"resources not released");
         failGraph=true; DrawRecorder::FailFonts(true); view.Init();
+        songs.emplace_back(); songs[0].title="素材が読み込めない場合の選曲表示";
+        songs[0].Courses[3]=true; songs[0].levels[3]=5;
         view.Update(std::numeric_limits<double>::quiet_NaN(),0,false);
-        capture("missing-assets",0,0,false,false);
+        capture("missing-assets",0,3,true,false);
     }
     Check(graphs==0 && DrawRecorder::LiveFonts()==0,"destructor resource leak");
     std::cout<<"View captures and lifecycle checks passed\n";
