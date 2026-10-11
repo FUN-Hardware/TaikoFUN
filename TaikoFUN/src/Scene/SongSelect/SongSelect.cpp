@@ -1,7 +1,7 @@
 ﻿#include "SongSelect.h"
 
 #include "DxLib.h"
-#include "File/FindAllTJA.h"
+#include "File/FIndAllTJA.h"
 #include "File/FileUtil.h"
 #include "Core/General.h"
 #include "Chart/CourseType.h"

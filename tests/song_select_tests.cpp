@@ -115,7 +115,7 @@ int main() {
     paths.clear();
     {
         SongSelect menu(&ctx); menu.Init();
-        for (int key : {0,KEY_INPUT_D,KEY_INPUT_K,KEY_INPUT_F}) Frame(menu,key);
+        for (int key : std::array<int,4>{0,KEY_INPUT_D,KEY_INPUT_K,KEY_INPUT_F}) Frame(menu,key);
         menu.Finalize();
         Check(!menu.Request(), "empty catalog remains safe");
     }
