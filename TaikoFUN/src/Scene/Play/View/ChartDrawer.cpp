@@ -71,6 +71,7 @@ void ChartDrawer::Draw(const ChartPlayer& player) {
 		GetColor(32, 42, 82), TRUE);
 	effects_.DrawLane();
 	effects_.DrawHitEffects();
+	effects_.DrawGogoFire(player);
 
 	// ノーツをレーン内に収め、左のミニ太鼓に重ねない。
 	RECT previousDrawArea{};

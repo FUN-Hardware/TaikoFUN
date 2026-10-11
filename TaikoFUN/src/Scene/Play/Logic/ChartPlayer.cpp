@@ -5,17 +5,31 @@
 #include "JudgeEvent.h"
 #include "Chart/Note.h"
 #include <cassert>
+#include <algorithm>
 
 void ChartPlayer::Update() {
 
 	events_.clear();
-	nowSongTime = cd_.songData.getSongCurrentTimeUs( true );
+	nowSongTime = cd_.songData.getSmoothTimeUs( true ); ;
+	cd_.nowSongTime = nowSongTime;
+	// Advance visuals and clear the last event, but freeze judgments after finish.
+	if (isFinished && (mode_ == PlayMode::Demo || (!Input::isKeyTriggered(KEY_INPUT_SPACE) &&
+		!Input::isKeyTriggered(KEY_INPUT_KANJI)))) return;
+	if (cd_.notes.empty()) {
+		isFinished = true;
+		return;
+	}
 
 	input();
 	updateMissNotes();
 }
 
 void ChartPlayer::input() {
+	// Demo playback never interprets keys as strikes, restart or mode changes.
+	if (mode_ == PlayMode::Demo) {
+		judgeNote();
+		return;
+	}
 
 	if ( !autoPlay ) {
 		if ( Input::isNoteKeyTriggered( NoteType::Don ) ) {
@@ -30,7 +44,11 @@ void ChartPlayer::input() {
 		playSong( true );
 	}
 
-
+	if ( Input::isKeyTriggered( KEY_INPUT_BACK ) ) 
+	{
+		stopSong();
+		isStoped = true;
+	}
 
 	if ( Input::isKeyTriggered( KEY_INPUT_KANJI ) ) playSong( true );
 
@@ -43,6 +61,8 @@ void ChartPlayer::init() {
 	cd_.songData.stopSong();
 
 	stats_ = {};
+	isFinished = false;
+	isStoped = false;
 	nextNoteIndex = 0;
 
 	for ( auto& Note : cd_.notes ) {
@@ -56,6 +76,10 @@ void ChartPlayer::init() {
 	++playbackGeneration_;
 	lastRollHitUs = 0;
 
+}
+
+void ChartPlayer::stopSong() {
+	cd_.songData.stopSong();
 }
 
 void ChartPlayer::playSong( bool restart ) {
@@ -79,12 +103,15 @@ void ChartPlayer::nextNotes() {
 		}
 		lastRollIdx = cd_.notes[nextNoteIndex].idx;
 	}
+	else {
+		isFinished = true;
+	}
 
 }
 
 void ChartPlayer::updateMissNotes() {
 	if (nextNoteIndex >= cd_.notes.size()) return;
-
+	if ( cd_.notes[nextNoteIndex].type == NoteType::None || cd_.notes[nextNoteIndex].type == NoteType::RollTail ) nextNotes();
 
 	Note& targetNote = cd_.notes[nextNoteIndex];
 	long long noteRelTime = noteRelativeTime( nextNoteIndex );
@@ -127,7 +154,7 @@ void ChartPlayer::judgeNote() {
 		return;
 	}
 
-	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
+ 	if ( abs( noteRelativeTime( nextNoteIndex ) ) > judgeBAD ) return; // 判定対象の相対位置がjudgeBad判定領域より大きければリターン
 
 
 
@@ -198,7 +225,7 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 	if ( targetNote.isGogo ) scoreMultiplier *= GOGOSCOREMULTIPLIER;
 	switch ( judgeType ) {
 		case JudgeType::GOOD:
-			stats_.score = scoreGOOD * scoreMultiplier;
+			stats_.score += scoreGOOD * scoreMultiplier;
 			stats_.goodCount++;
 			stats_.combo++;
 			targetNote.isJudged = true;
@@ -235,6 +262,7 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 			targetNote.isJudged = true;
 			break;
 	}
+	stats_.maxCombo = (std::max)(stats_.combo, stats_.maxCombo);
 	const int judgedCount = stats_.goodCount + stats_.okCount + stats_.badCount + stats_.missCount;
 	stats_.accuracy = judgedCount > 0 ? float(stats_.goodCount) / judgedCount : 0.0f;
 }

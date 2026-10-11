@@ -3,6 +3,7 @@
 #include "Core/Time.h"
 #include "JudgeEvent.h"
 #include "PlayStats.h"
+#include "Scene/Demo/DemoLogic.h"
 
 #include <algorithm>
 #include <vector>
@@ -15,12 +16,18 @@ public:
 
 
 
-	ChartPlayer( ChartData& data ): cd_( data ) { };
+	ChartPlayer( ChartData& data, PlayMode mode = PlayMode::Normal ): cd_( data ), mode_(mode) {
+		autoPlay = mode_ == PlayMode::Demo;
+		playSong(true);
+	
+	};
+
 
 
 
 	void Update();
 	// 済み
+	void stopSong();
 	void loadSong( const char* path );
 	void loadSong( const char* path, double bpm, double offset = 0.0 );
 	void playSong( bool restart = false );
@@ -43,15 +50,20 @@ public:
 	bool isGogoTime() const;
 
 	void toggleAutoplay() { 
-		autoPlay = !autoPlay;
+		if (mode_ == PlayMode::Normal) autoPlay = !autoPlay;
 	}
 
+	bool isFinished = false;
+	bool isStoped = false;
+	bool isStarted = false;
 private:
 
+	long long chartStartDelay = 3000000;
 	ChartData& cd_; // このオブジェクトが生成される際にGameContextから譜面データを受け取る
+	const PlayMode mode_;
 	PlayStats stats_; // 判定結果の集計などを保持するオブジェクト
 	
-	bool autoPlay = true; // オートプレイ
+	bool autoPlay = false; // オートプレイ
 	size_t nextNoteIndex = 0; // 判定するノーツの位置
 	long long nowSongTime = 0; //　cd.songData.getSongCurrentTimeUs(true)のキャッシュ
 

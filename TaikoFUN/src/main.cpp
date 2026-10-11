@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	SetGraphMode(1280, 720, 32);
-	ChangeWindowMode(FALSE);
+	ChangeWindowMode(TRUE);
 	SetWindowSizeExtendRate(1.0);
 	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 
@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	SetOutApplicationLogValidFlag(FALSE);
-	SetWaitVSyncFlag(FALSE);
+	SetWaitVSyncFlag( FALSE );
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
 
 
@@ -55,54 +55,37 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	GameContext ctx;
 
-
-	// 仮
+	SceneManager sm;
 	
-	std::vector<std::string> tempTjaPath = FindAllTjaFiles( "Songs" );
 
-	if ( tempTjaPath.empty() ) {
-		printfDx( "Songs に tja が見つかりません\n" );   // 仮の表示でよい
-		// ここで止めるか return する
-	}
-	ctx.chartData = ChartLoad::load( tempTjaPath[1].c_str(), CourseType::Oni );
-
+	// Charts are loaded only when a normal or demo session is requested.
+	sm.Init( SceneID::SongSelect, &ctx );
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
 
 
-		if (gGameState != preGameState) {
-			if (gGameState == GameState::Debug) {
-				db = std::make_unique<Debug>();
-			}
-			if (preGameState == GameState::Debug) {
-				db.reset();
-			}
-
-			if (gGameState == GameState::Playing) {
-				ps = std::make_unique<PlayScene>( &ctx );
-			}
-			if (preGameState == GameState::Playing) {
-				ps.reset();
-			}
-
-		}
 
 
-	Update(gGameState);
 
-	Draw(gGameState);
+	Update(sm);
+
+	Draw(sm);
 	
 	}
 	
+	sm.Finalize();
+	ctx.resultData.reset();
+	ctx.chartData.reset();
 	db.reset();
 	ps.reset();
+	Skin::unloadSkin();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
 	return 0;				// ソフトの終了
 }
 
-void Update(GameState state) {
+void Update(SceneManager& sm) {
 
 	Time::Update();
 
@@ -110,56 +93,20 @@ void Update(GameState state) {
 	Input::Update();
 	FPS::Update();
 
-	switch (state)
-	{
-	case GameState::Title:
-
-		break;
-	case GameState::Playing:
-		
-		ps->Update();
-		break;	
-	case GameState::Result:
-
-		break;
-	case GameState::Debug:
-		
-		db->Update();
-		break;
-	default:
-		break;
-	}
 
 
-
-	preGameState = gGameState;
+	sm.Update();
 }
 
-void Draw(GameState state) {
+void Draw(SceneManager& sm) {
 
 	DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
 
 
-	switch (state)
-	{
-	case GameState::Title:
-
-		break;
-	case GameState::Playing:
-
-		ps->Draw();
-		break;
-	case GameState::Result:
-
-		break;
-	case GameState::Debug:
-
-		db->Draw();
-		break;
-	default:
-		break;
-	}
+	sm.Draw();
 
 	ScreenFlip();
+
+
 
 }

@@ -1,11 +1,11 @@
-// DRAFT: 音源なし・同期未検証。完成した曲の譜面ではありません。
+// 音源解析から拍のタイミングを調整した練習譜面です。試聴・ゲーム内の同期確認待ち。
 // 本家譜面の転記ではなく、TaikoFUN向けに作った48小節の練習パターン案です。
-// BPMは参考資料からの仮値、OFFSET:0は未調整です。
+// BPMとOFFSETは公式TVサイズ音源の拍解析から調整。詳細は ../timing_analysis.json。
 TITLE:おどるポンポコリン
 SUBTITLE:--TaikoFUN 自作かんたん 下書き
-BPM:140
+BPM:138.94
 WAVE:おどるポンポコリン.ogg
-OFFSET:0
+OFFSET:-2.083
 DEMOSTART:0
 SONGVOL:80
 SEVOL:100
@@ -78,7 +78,7 @@ BALLOON:
 1000, // 48
 #END
 
-// 現在のmain.cppがOni固定のための互換コピー。難しい譜面ではありません。
+// Easyと同じ練習譜面の互換コピー。難しい譜面ではありません。
 COURSE:Oni
 LEVEL:1
 BALLOON:

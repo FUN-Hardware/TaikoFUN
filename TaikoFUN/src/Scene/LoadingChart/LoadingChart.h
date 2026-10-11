@@ -14,7 +14,7 @@ class LoadingChart:
 
 public:
 
-    LoadingChart(GameContext* ctx, const char* path, CourseType ct);
+    LoadingChart(GameContext* ctx);
 
     void Init() override;
     void Update() override;

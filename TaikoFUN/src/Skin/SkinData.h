@@ -52,6 +52,7 @@ namespace Skin {
 
 
 	void loadSkin();
+	void unloadSkin();
 
 	imgData& GetTexture(const std::string& key);
 	SoundHandle& GetSound(const std::string& key);

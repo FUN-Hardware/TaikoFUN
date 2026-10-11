@@ -334,7 +334,20 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_string_view.hpp",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\iosfwd",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cctype",
-            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\time.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\songdata.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\coursetype.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\memory",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\typeinfo",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\vcruntime_typeinfo.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\atomic",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xthreads.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\__msvc_threads_core.hpp",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xtimec.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\ctime",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\time.h",
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xatomic_wait.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

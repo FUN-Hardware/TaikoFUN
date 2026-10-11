@@ -71,6 +71,7 @@ namespace {
 	private:
 		void LoadPlaySceneSkin();
 		void LoadNotesImgs(const std::string& path);
+		void LoadGogoFireImgs(const std::string& path);
 
 		void LoadResultSceneSkin();
 		void LoadSongSelectSceneSkin();
@@ -110,6 +111,7 @@ void SkinData::LoadSkin() {
 
 
 	LoadPlaySceneSkin(); // playシーンのスキン読み込み
+	LoadResultSceneSkin();
 
 	LoadNotesImgs("Resource/Image/Playing/note.png");	// ノーツ画像の読み込み (分割読み込み)
 
@@ -127,6 +129,10 @@ void SkinData::LoadSkin() {
 }
 
 
+void SkinData::LoadResultSceneSkin() {
+	emplaceImg("result/bg", "Resource/Image/SkinColor/resultbg_clear.png");
+}
+
 void SkinData::LoadPlaySceneSkin() {
 	
 	emplaceImg( "play/bg", "Resource/Image/SkinColor/bgstage.png" );
@@ -136,6 +142,7 @@ void SkinData::LoadPlaySceneSkin() {
 	emplaceImg("play/ScrollField/don", "Resource/Image/Playing/scrollfield_don.png");
 	emplaceImg("play/ScrollField/katsu", "Resource/Image/Playing/scrollfield_ka.png");
 	emplaceImg("play/ScrollField/hit", "Resource/Image/Playing/scrollfield_hit.png");
+	LoadGogoFireImgs("Resource/Image/Playing/gogofire.png");
 
 	// Register the 27 transparent poster assets once, outside Draw.
 	for (int assetIndex = 1; assetIndex <= 27; ++assetIndex) {
@@ -145,6 +152,33 @@ void SkinData::LoadPlaySceneSkin() {
 	}
 
 
+}
+
+void SkinData::LoadGogoFireImgs(const std::string& path) {
+	BASEIMAGE image{};
+	if (CreateBaseImageToFile(path.c_str(), &image) < 0) {
+		assert(false && "Failed to load gogo fire sprite sheet");
+		return;
+	}
+	constexpr int columns = 4, rows = 2, count = columns * rows;
+	if (image.Width <= 0 || image.Height <= 0 || image.Width % columns != 0 || image.Height % rows != 0) {
+		ReleaseBaseImage(&image);
+		assert(false && "Invalid gogo fire sprite sheet size");
+		return;
+	}
+	const int w = image.Width / columns, h = image.Height / rows;
+	std::array<int, count> handles;
+	handles.fill(-1);
+	const int result = CreateDivGraphFromBaseImage(&image, count, columns, rows, w, h, handles.data());
+	ReleaseBaseImage(&image);
+	if (result < 0) {
+		for (const int handle : handles) if (handle >= 0) DeleteGraph(handle);
+		assert(false && "Failed to create gogo fire textures");
+		return;
+	}
+	for (int i = 0; i < count; ++i) {
+		emplaceImg("play/GogoFire/" + std::to_string(i), handles[i], w, h, path);
+	}
 }
 
 void SkinData::LoadNotesImgs(const std::string& path) {
@@ -226,6 +260,10 @@ SoundHandle& SkinData::GetSound(const std::string& key) {
 }
 
 namespace Skin {
+	void unloadSkin() {
+		g_SkinData.Unload();
+	}
+
 	void loadSkin() {
 		g_SkinData.LoadSkin();
 	}

@@ -438,6 +438,7 @@ namespace {
 						pc.pendingNoteType = NoteType::RollHead;
 						break;
 
+					case '9':
 					case '7':
 						closePendingLongNote( note );
 						note.type = NoteType::BalloonHead;
@@ -460,7 +461,7 @@ namespace {
 							note.rollId = pc.lastRollId;
 							pc.lastRollId = SIZE_MAX;
 						}
-						else {
+						else if (pc.pendingNoteType == NoteType::BalloonHead){
 							Note& balloonHead = cd.notes[pc.lastBalloonIdx];
 							long long duration = 0;
 							duration = note.absTime - balloonHead.absTime;

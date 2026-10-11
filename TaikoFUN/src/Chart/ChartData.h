@@ -47,6 +47,7 @@ public:
 	double demoStart = 0.0;
 
 	long long nowTime;
+	long long nowSongTime = 0;
 	CourseType course = CourseType::Easy;
 	double level = 0.0;
 	std::vector<size_t> balloon;

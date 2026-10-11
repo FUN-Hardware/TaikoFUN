@@ -341,7 +341,10 @@
             "c:\\dxlib_vc\\addproject_vc\\dxfunctionwin.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\soundhandle.h",
             "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\chartdata.h",
-            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h"
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\audio\\songdata.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\core\\time.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\note.h",
+            "c:\\users\\flank\\source\\repos\\taikofun\\taikofun\\src\\chart\\coursetype.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

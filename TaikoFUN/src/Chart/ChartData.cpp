@@ -46,7 +46,7 @@ void ChartData::init() {
 }; // 初期化処理
 
 long long ChartData::noteRelativeTime(size_t noteIdx) {
-	return notes[noteIdx].absTime - songData.getSongCurrentTimeUs(true);
+	return notes[noteIdx].absTime - nowSongTime;
 }
 
 
