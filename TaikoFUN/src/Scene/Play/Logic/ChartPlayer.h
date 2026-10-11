@@ -15,7 +15,7 @@ public:
 
 
 
-	ChartPlayer( ChartData& data ): cd_( data ) { 
+	ChartPlayer( ChartData& data, long long judgeoffset ): cd_( data ), judgeAdjust(judgeoffset) { 
 		if ( !isStarted ) playSong();
 	
 	};
@@ -23,7 +23,7 @@ public:
 
 
 
-	void Update();
+	void Update(long long j);
 	// 済み
 	void stopSong();
 	void loadSong( const char* path );
@@ -54,6 +54,9 @@ public:
 	bool isFinished = false;
 	bool isStoped = false;
 	bool isStarted = false;
+
+	long long judgeAdjust = 0; // 判定の調整パラメータ;
+
 private:
 
 	long long chartStartDelay = 3000000;

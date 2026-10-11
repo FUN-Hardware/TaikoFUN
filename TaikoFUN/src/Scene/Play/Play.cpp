@@ -25,7 +25,7 @@ PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx){
 
 	CD = ctx_->chartData;
 	effects_ = std::make_unique<PlayEffects>();
-	chartPlayer = std::make_unique<ChartPlayer>(*CD);
+	chartPlayer = std::make_unique<ChartPlayer>(*CD, ctx_->judgeOffsetUs);
 	chartDrawer = std::make_unique<ChartDrawer>(*CD, *effects_);
 
 
@@ -62,7 +62,7 @@ void PlayScene::Update() {
 	if (Input::isKeyTriggered(KEY_INPUT_F1)) {
 		chartPlayer->toggleAutoplay();
 	}
-	chartPlayer->Update();
+	chartPlayer->Update(ctx_->judgeOffsetUs);
 	if (lastGeneration_ != chartPlayer->getPlaybackGeneration()) {
 		lastGeneration_ = chartPlayer->getPlaybackGeneration();
 		resultCaptured_ = false;

@@ -7,10 +7,11 @@
 #include <cassert>
 #include <algorithm>
 
-void ChartPlayer::Update() {
+void ChartPlayer::Update(long long j) {
 
 	events_.clear();
-	nowSongTime = cd_.songData.getSmoothTimeUs( true ); ;
+	nowSongTime = cd_.songData.getSmoothTimeUs( true ) + j;
+
 	cd_.nowSongTime = nowSongTime;
 	// Advance visuals and clear the last event, but freeze judgments after finish.
 	if (isFinished && !Input::isKeyTriggered(KEY_INPUT_SPACE) &&
@@ -87,7 +88,7 @@ void ChartPlayer::playSong( bool restart ) {
 
 
 	cd_.songData.playSong(restart);
-	nowSongTime = cd_.songData.getSongCurrentTimeUs(true);
+	nowSongTime = cd_.songData.getSongCurrentTimeUs(true) + judgeAdjust;
 }
 
 void ChartPlayer::nextNotes() {

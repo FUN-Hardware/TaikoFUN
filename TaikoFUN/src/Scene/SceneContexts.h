@@ -34,4 +34,5 @@ struct GameContext
 	std::shared_ptr<ResultCtx> resultData; // リザルトデータの集まり。PlayScene終了時にPlayStatsから代入される。 使用箇所はリザルトシーン
 	SelectedCourse selectedCourse;
 
+	long long judgeOffsetUs = 0;
 };
