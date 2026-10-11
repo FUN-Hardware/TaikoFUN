@@ -3,6 +3,13 @@
 基点: PR #17がマージされた`feature/integrate-design-unit-test`の`c41b19b`。
 実装ブランチ: `feature/song-select-redesign`。
 
+## 表示プレビュー
+
+本番描画コードの命令から生成したレイアウト確認用画像。曲・レベルは検証用データで、文字計測は近似。実ゲームのスクリーンショットではない。
+
+![曲選択](previews/song-select.png)
+![難易度選択](previews/song-select-difficulty.png)
+
 ## 画面
 
 - 1280×720のゲーム描画領域。既存の和柄素材に薄い色を重ね、赤・生成り・墨色で統一。
