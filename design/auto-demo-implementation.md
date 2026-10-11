@@ -30,6 +30,7 @@ GitHub Actions `Auto demo behavior` は次をUbuntuで実行する。
 1. DemoLogic: 30秒境界、入力優先、押しっぱなし、非アクティブ/復帰、難易度選択、解除ゲート、入場/終了フェード、終了と中断の競合。
 2. 実際のChartPlayer.cpp・SongData.cpp・Input.cppを、テスト専用のDxLib音声/時計/キー境界と組み合わせてコンパイル。先頭0ms、通常判定、連打、風船、終了後の固定、デモ内コントロール禁止、通常のF1相当切り替え/リスタート/中断を検査。
 3. 既存リザルトの精度・ランク・演出/入力テストを再実行する。
+4. 実際のSongSelect.cpp・General.cpp・SongData.cpp・Input.cppで、初回Updateのカーソル保存、曲リスト両端の100回往復、無操作デモ開始、シーン破棄/再生成、戻り入力の消費、通常演奏開始、空/変更後の曲リストを検査。UbuntuのAddressSanitizer/UndefinedBehaviorSanitizerとWindows/MSVCのAddressSanitizerを使う。描画・入力デバイス・曲探索/譜面ロードはテスト境界に置き換える。
 
 模擬環境テストはDxLib描画・音声デバイス・Windowsでのアプリ実行の検証ではない。
 本番のDxLib呼び出し順や表示/音声は次の実機確認で検証する。
@@ -44,3 +45,19 @@ GitHub Actions `Auto demo behavior` は次をUbuntuで実行する。
 6. デモ→選曲→通常演奏→リザルトを繰り返し、オート状態・成績が混入せず、試聴音源が重ならないこと。
 7. 空のSongs、欠損音源、空の譜面、曲リストの変更でクラッシュ/無限再試行がないこと。
 8. Escで終了し、音源・デモ用フォントが終了前に解放されること。
+
+## rememberCursorのアクセス違反報告への対応（2026-10-11）
+
+`SongSelect::Update`から`rememberCursor`へ進んだ際の読み取りアクセス違反が報告された。
+停止時の曲番号、共有コンテキストの値、使用ブランチはまだ確認できておらず、原因は未確定。
+
+Git管理下の`TaikoFUN/x64/`には旧定義で作った`.obj`や`.tlog`が残っている。
+デモ実装では`GameContext`と`SongSelect`のサイズ/配置を変更しているため、異なる定義のオブジェクトが混ざるとアクセス違反になり得る。
+対策として全構成の中間生成先を`TaikoFUN/.build/obj/<Platform>/<Configuration>/`へ移し、Gitの対象外にした。
+既存の生成物は削除せず、exeの出力先も維持する。これは古い生成物の再利用を防ぐ対策であり、報告されたクラッシュの原因を確定するものではない。
+
+確認手順: `feature/auto-demo-play`の更新を取り込み、Visual Studioでプロジェクト変更を再読み込みして「ソリューションのリビルド」を行う。
+古いexeを直接開かず、このビルド結果を起動する。再発時は停止時の`nowSelectedSongIdx`、`songList.size()`、`ctx_`、`ctx_->songSelectCursor.path`、コールスタック、HEADを確認する。
+
+`0ff3abb`の[CI検証](https://github.com/FUN-Hardware/TaikoFUN/actions/runs/38102903330)はUbuntu/Windowsとも成功。
+今回の模擬境界を使うテストではアクセス違反を再現していない。実機での解消確認は継続中。
