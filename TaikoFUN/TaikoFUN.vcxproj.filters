@@ -101,6 +101,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\Demo\DemoLogic.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scene\Result\Result.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

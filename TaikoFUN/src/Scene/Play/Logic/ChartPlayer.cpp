@@ -13,8 +13,8 @@ void ChartPlayer::Update() {
 	nowSongTime = cd_.songData.getSmoothTimeUs( true ); ;
 	cd_.nowSongTime = nowSongTime;
 	// Advance visuals and clear the last event, but freeze judgments after finish.
-	if (isFinished && !Input::isKeyTriggered(KEY_INPUT_SPACE) &&
-		!Input::isKeyTriggered(KEY_INPUT_KANJI)) return;
+	if (isFinished && (mode_ == PlayMode::Demo || (!Input::isKeyTriggered(KEY_INPUT_SPACE) &&
+		!Input::isKeyTriggered(KEY_INPUT_KANJI)))) return;
 	if (cd_.notes.empty()) {
 		isFinished = true;
 		return;
@@ -25,6 +25,11 @@ void ChartPlayer::Update() {
 }
 
 void ChartPlayer::input() {
+	// Demo playback never interprets keys as strikes, restart or mode changes.
+	if (mode_ == PlayMode::Demo) {
+		judgeNote();
+		return;
+	}
 
 	if ( !autoPlay ) {
 		if ( Input::isNoteKeyTriggered( NoteType::Don ) ) {

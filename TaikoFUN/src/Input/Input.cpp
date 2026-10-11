@@ -68,6 +68,16 @@ namespace Input {
 		return g_state.isKeyDown(keyCode);
 	}
 
+	bool isAnyKeyDown() {
+		for (int key = 0; key < 256; ++key) if (g_state.isKeyDown(key)) return true;
+		return false;
+	}
+
+	bool isAnyKeyTriggered() {
+		for (int key = 0; key < 256; ++key) if (g_state.isKeyTriggered(key)) return true;
+		return false;
+	}
+
 	bool isNoteKeyTriggered(NoteType type) {
 		return g_state.isNoteKeyTriggered(type);
 	}

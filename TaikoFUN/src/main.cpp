@@ -58,16 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager sm;
 	
 
-	// 仮
-	
-	std::vector<std::string> tempTjaPath = FindAllTjaFiles( "Songs" );
-
-	if ( tempTjaPath.empty() ) {
-		printfDx( "Songs に tja が見つかりません\n" );   // 仮の表示でよい
-		// ここで止めるか return する
-	}
-	ctx.chartData = ChartLoad::load( tempTjaPath[0].c_str(), CourseType::Hard );
-
+	// Charts are loaded only when a normal or demo session is requested.
 	sm.Init( SceneID::SongSelect, &ctx );
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
