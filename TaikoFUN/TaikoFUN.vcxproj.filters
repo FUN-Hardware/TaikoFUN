@@ -18,6 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\SongSelect\SongSelectView.cpp"><Filter>ソース ファイル</Filter></ClCompile>
     <ClCompile Include="src\Scene\Result\Result.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -101,6 +102,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\SongSelect\SongSelectView.h"><Filter>ヘッダー ファイル</Filter></ClInclude>
     <ClInclude Include="src\Scene\Demo\DemoLogic.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

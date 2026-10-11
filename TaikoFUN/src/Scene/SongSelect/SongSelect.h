@@ -6,6 +6,7 @@
 #include "Scene/SceneContexts.h"
 #include "SelectedCourse.h"
 #include "Audio/SongData.h"
+#include "SongSelectView.h"
 
 #include <memory>
 #include <vector>
@@ -34,6 +35,7 @@ private:
     bool choosingCourse = false;
 
     std::unique_ptr<SongData> demo;
+    SongSelectView view_;
 
     void playDemo();
     void stopPreview();

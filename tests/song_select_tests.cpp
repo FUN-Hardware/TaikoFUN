@@ -4,6 +4,7 @@
 #include "Input/Input.h"
 #include "Skin/SkinData.h"
 #include "File/ChartLoader.h"
+#include "stubs/DrawRecorder.h"
 #include <array>
 #include <cstring>
 #include <filesystem>
@@ -41,11 +42,6 @@ int GetGraphSize(int,int* w,int* h) { *w=*h=1; return 0; }
 int DeleteGraph(int) { return 0; }
 int GetWindowActiveFlag() { return focused; }
 int GetWindowSize(int* w,int* h) { *w=1280; *h=720; return 0; }
-unsigned int GetColor(int,int,int) { return 0; }
-int DrawBox(int,int,int,int,unsigned int,int) { return 0; }
-int DrawString(int,int,const char*,unsigned int) { return 0; }
-int DrawFormatString(int,int,unsigned int,const char*,...) { return 0; }
-int SetDrawBlendMode(int,int) { return 0; }
 void OutputDebugString(const char*) {}
 void DrawFormatString2Right(int,int,unsigned int,std::string) {}
 namespace Time {
@@ -126,6 +122,8 @@ int main() {
         Check(ctx.songSelectCursor.path == paths[0], "removed saved song falls back safely");
         menu.Finalize();
     }
+    Check(DrawRecorder::LiveFonts()==0, "scene lifetimes release all view fonts");
+    Check(DrawRecorder::BlendReset(), "drawing restores blend state");
     std::filesystem::remove(fixture);
     std::cout << "Actual SongSelect scene lifecycle checks passed\n";
 }

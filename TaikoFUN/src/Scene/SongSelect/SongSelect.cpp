@@ -74,6 +74,7 @@ SongSelect::SongSelect( GameContext* ctx ) : ctx_(ctx){
 
 
 void SongSelect::Init() {
+	view_.Init();
 	stopPreview();
 	songList.clear();
 	nowSelectedSongIdx = 0;
@@ -157,6 +158,7 @@ void SongSelect::Init() {
 }
 
 void SongSelect::Update() {
+	view_.Update(Time::deltaSec(), nowSelectedSongIdx, choosingCourse);
 	const bool focused = GetWindowActiveFlag() == TRUE;
 	if (!focused) { idleTimer_.Reset(); return; }
 	returnFadeLeft_ = (std::max)(0.0, returnFadeLeft_ - (std::max)(0.0, Time::deltaSec()));
@@ -255,76 +257,16 @@ void SongSelect::Input() {
 
 
 void SongSelect::Draw() {
-	DrawFormatString(0, 
-					  100, 
-					  GetColor( 255, 255, 255 ),
-					"choosingCourse: %d", choosingCourse
-					);
-
-	int w, h;
-	GetWindowSize(&w, &h);
-	DrawBox( 0, 0, w, h, GetColor( 64, 84, 163 ), TRUE );
-	if (songList.empty()) {
-		DrawString(32, 32, "演奏できる曲がありません", GetColor(255,255,255));
-		return;
-	}
-
-	
-	int arrowY = nowSelectedSongIdx * 16;
-	DrawFormatString( 0,
-				  arrowY,
-				  GetColor( 255, 255, 255 ),
-				  "→"
-	);
-
-
-	int y = 0;
-	int i = 0;
-	for ( const auto& song : songList ) {
-
-		DrawFormatString( 16,
-						  y,
-						  GetColor( 0, 0, 0 ),
-						  "%s", song.title.c_str()
-							);
-			y += 16;
-	
-			if ( choosingCourse && nowSelectedSongIdx == i ) {
-
-				std::string dif;
-
-				if ( nowSelectedCourseIdx == 0 ) dif += "　→"; else dif += "　　";
-				dif += (songList[nowSelectedSongIdx].Courses[0]) ? "簡単" : "　　　";
-				if ( nowSelectedCourseIdx == 1 ) dif += "　→"; else dif += "　　";
-				dif += (songList[nowSelectedSongIdx].Courses[1]) ? "普通" : "　　　";
-				if ( nowSelectedCourseIdx == 2 ) dif += "　→"; else dif += "　　";
-				dif += (songList[nowSelectedSongIdx].Courses[2]) ? "難しい" : "　　　";
-				if ( nowSelectedCourseIdx == 3 ) dif += "　→"; else dif += "　　";
-				dif += (songList[nowSelectedSongIdx].Courses[3]) ? "おに" : "　　　";
-				if ( nowSelectedCourseIdx == 4 ) dif += "　→"; else dif += "　　";
-				dif += (songList[nowSelectedSongIdx].Courses[4]) ? "おに裏" : "　　　";
-
-
-				DrawFormatString2Right( w/2, 32, GetColor( 0, 0, 0 ), dif );
-
-			}
-
-				i++;
-	}
-
-	DrawString(24, h - 38, errorMessage_.empty() ? "30秒操作がないと自動デモを開始します" :
-		errorMessage_.c_str(), GetColor(255,255,255));
-	if (returnFadeLeft_ > 0.0) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, int(255 * returnFadeLeft_ / DemoLogic::FadeSeconds));
-		DrawBox(0, 0, w, h, GetColor(0,0,0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
+    view_.Draw(songList, nowSelectedSongIdx, nowSelectedCourseIdx, choosingCourse,
+        demo && demo->songHandle.handle >= 0 && intervalLeft <= 0,
+        errorMessage_, returnFadeLeft_);
 }
 
 void SongSelect::Finalize() {
 	// Loading belongs to startPlay; shutdown and menu return must not load a chart.
 	rememberCursor();
 	stopPreview();
+	view_.Finalize();
 }
 
 

@@ -173,6 +173,7 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\SongSelect\SongSelectView.h" />
     <ClInclude Include="src\Scene\Demo\DemoLogic.h" />
     <ClInclude Include="src\Scene\Result\Result.h" />
     <ClInclude Include="src\Scene\Result\ResultLogic.h" />
@@ -217,6 +218,7 @@ xcopy /Y /E /I "$(ProjectDir)Songs" "$(OutDir)Songs"</Command>
     <ClInclude Include="src\Audio\Sounds.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\SongSelect\SongSelectView.cpp" />
     <ClCompile Include="src\Scene\Result\Result.cpp" />
     <ClCompile Include="src\Scene\Play\View\PlayEffects.cpp" />
     <ClCompile Include="src\Scene\LoadingChart\LoadingChart.cpp" />
