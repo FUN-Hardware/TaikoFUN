@@ -32,35 +32,65 @@ PlayScene::PlayScene(GameContext* ctx) : ctx_(ctx){
 }
 
 void PlayScene::Init() {
-
-
+	ctx_->resultData.reset();
+	lastGeneration_ = chartPlayer->getPlaybackGeneration();
+	resultCaptured_ = false;
+	endTransition_.Reset();
 }
 
 void PlayScene::Draw() {
 
 	chartDrawer->Draw(*chartPlayer);
-
-
-
+	if (resultCaptured_) {
+		const int alpha = int(endTransition_.FadeOpacity() * 255);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+		DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 void PlayScene::Update() {
+	// Abort also works during the linger and never publishes a result.
+	if (Input::isKeyTriggered(KEY_INPUT_BACK)) {
+		ctx_->resultData.reset();
+		chartPlayer->stopSong();
+		RequestScene(SceneID::SongSelect);
+		return;
+	}
 
 	// 自動判定と手動発光は、F1 切り替え後の同じモードを参照する。
 	if (Input::isKeyTriggered(KEY_INPUT_F1)) {
 		chartPlayer->toggleAutoplay();
 	}
 	chartPlayer->Update();
+	if (lastGeneration_ != chartPlayer->getPlaybackGeneration()) {
+		lastGeneration_ = chartPlayer->getPlaybackGeneration();
+		resultCaptured_ = false;
+		ctx_->resultData.reset();
+		endTransition_.Reset();
+	}
 	effects_->Update(*chartPlayer, Time::deltaSec());
 	// リスタートによる演出初期化の後に、当該フレームの空打ちを追加する。
 	Input();
 	chartDrawer->Update(*chartPlayer);
 
-	if ( chartPlayer->isFinished || chartPlayer->isStoped) {
-		sceneChangeDelay -= Time::deltaUs();
-		if ( sceneChangeDelay < 0 || chartPlayer->isStoped) {
+	if (chartPlayer->isStoped) {
+		ctx_->resultData.reset();
+		chartPlayer->stopSong();
+		RequestScene(SceneID::SongSelect);
+		return;
+	}
+	if (chartPlayer->isFinished) {
+		if (!resultCaptured_) {
+			CaptureResult();
+			resultCaptured_ = true;
+			endTransition_.Reset();
+		} else {
+			endTransition_.Update(Time::deltaSec());
+		}
+		if (endTransition_.Complete()) {
 			chartPlayer->stopSong();
-			RequestScene( SceneID::SongSelect );
+			RequestScene(SceneID::Result);
 		}
 	}
 
@@ -93,7 +123,7 @@ void PlayScene::Input() {
 
 
 // 演奏終了時の処理
-void PlayScene::Finalize() {
+void PlayScene::CaptureResult() {
 	// PlayStatsからscoreなどのリザルト用データを抽出
 	
 	ResultCtx r;
@@ -113,13 +143,15 @@ void PlayScene::Finalize() {
 		r.rollHitCount = ps.rollHitCount;
 		r.balloonHitCount = ps.balloonHitCount;
 		r.balloonClearCount = ps.balloonClearCount;
-		r.accuracy = ps.accuracy;
+		r.accuracy = float(ResultLogic::Calculate(ps.goodCount, ps.okCount, ps.badCount,
+			ps.missCount, ps.rollHitCount, ps.balloonHitCount).Fraction());
 	}
 	
-	chartPlayer->stopSong();
-	ctx_->resultData;
-	
+	ctx_->resultData = std::make_shared<ResultCtx>(r);
+}
 
+void PlayScene::Finalize() {
+	chartPlayer->stopSong();
 }
 
 

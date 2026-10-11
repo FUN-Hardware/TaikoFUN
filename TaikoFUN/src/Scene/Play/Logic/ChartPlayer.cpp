@@ -5,12 +5,20 @@
 #include "JudgeEvent.h"
 #include "Chart/Note.h"
 #include <cassert>
+#include <algorithm>
 
 void ChartPlayer::Update() {
 
 	events_.clear();
 	nowSongTime = cd_.songData.getSmoothTimeUs( true ); ;
 	cd_.nowSongTime = nowSongTime;
+	// Advance visuals and clear the last event, but freeze judgments after finish.
+	if (isFinished && !Input::isKeyTriggered(KEY_INPUT_SPACE) &&
+		!Input::isKeyTriggered(KEY_INPUT_KANJI)) return;
+	if (cd_.notes.empty()) {
+		isFinished = true;
+		return;
+	}
 
 	input();
 	updateMissNotes();
@@ -48,6 +56,8 @@ void ChartPlayer::init() {
 	cd_.songData.stopSong();
 
 	stats_ = {};
+	isFinished = false;
+	isStoped = false;
 	nextNoteIndex = 0;
 
 	for ( auto& Note : cd_.notes ) {
@@ -210,7 +220,7 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 	if ( targetNote.isGogo ) scoreMultiplier *= GOGOSCOREMULTIPLIER;
 	switch ( judgeType ) {
 		case JudgeType::GOOD:
-			stats_.score = scoreGOOD * scoreMultiplier;
+			stats_.score += scoreGOOD * scoreMultiplier;
 			stats_.goodCount++;
 			stats_.combo++;
 			targetNote.isJudged = true;
@@ -247,6 +257,7 @@ void ChartPlayer::applyNoteJudge( Note& targetNote, JudgeType judgeType ) {
 			targetNote.isJudged = true;
 			break;
 	}
+	stats_.maxCombo = (std::max)(stats_.combo, stats_.maxCombo);
 	const int judgedCount = stats_.goodCount + stats_.okCount + stats_.badCount + stats_.missCount;
 	stats_.accuracy = judgedCount > 0 ? float(stats_.goodCount) / judgedCount : 0.0f;
 }

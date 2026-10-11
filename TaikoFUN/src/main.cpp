@@ -83,8 +83,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	}
 	
+	sm.Finalize();
+	ctx.resultData.reset();
+	ctx.chartData.reset();
 	db.reset();
 	ps.reset();
+	Skin::unloadSkin();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
 	return 0;				// ソフトの終了
